@@ -1,0 +1,25 @@
+#!/bin/sh
+# postrm script for openmediavault-greyhole
+#
+# $Id: postrm 5 2011-11-03 11:57:25Z imooreyahoo@gmail.com $
+#
+
+set -e
+
+. /etc/default/openmediavault
+. /usr/share/openmediavault/scripts/helper-functions
+
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+
+	if [ "$1" = "purge" ]; then
+	
+		# Check for XML config
+    	if omv_config_exists "//services/greyhole"; then
+		xmlstarlet ed -P -L -d "//services/greyhole" \
+			${OMV_CONFIG_FILE}
+		fi
+					
+	fi
+fi
+
+exit 0

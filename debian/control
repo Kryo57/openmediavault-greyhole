@@ -1,0 +1,8 @@
+Package: openmediavault-greyhole
+Version: 0.0.1
+Section: base
+Priority: optional
+Architecture: all
+Depends: greyhole, openmediavault-mysql
+Maintainer: Stéphane Bocquet <stephane_bocquet@hotmail.com>
+Description: OpenMediaVault Greyhole (Storage pool server) plugin
