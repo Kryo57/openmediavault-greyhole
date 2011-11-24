@@ -1,5 +1,2 @@
-greyhole/greyhole.inc		var/www/openmediavault/module
-greyhole/greyhole.png		var/www/openmediavault/images
-greyhole/rpc/greyhole.inc	var/www/openmediavault/rpc
-greyhole/js/greyhole.js		var/www/openmediavault/js/omv/module/admin
-greyhole/scripts/*			usr/share/openmediavault/scripts
+usr/share/openmediavault/scripts/* usr/share/openmediavault/scripts
+var/www/openmediavault/* var/www/openmediavault
