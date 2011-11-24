@@ -38,34 +38,9 @@ fi
 #  -i "string-length(name-servers) > 0" \
 #  	-v "concat('option domain-name-servers ', name-servers, ';')" -n -b \
 #  -v "concat('option routers ', gateway, ';')" -n \
-#  -v "concat('default-lease-time ', default-lease-time, ';')" -n \
-#  -v "concat('max-lease-time ', default-lease-time, ';')" -n \
-#  -v "concat('subnet ', subnet, ' netmask ', netmask, ' {')" -n \
-#  -v "concat('    range ', first-ip, ' ', last-ip, ';')" -n \
-#  -i "string-length(wins-servers) > 0" \
-# 	-v "concat('    option netbios-name-servers ', wins-servers, ';')" -n -b \
 #  -i "string-length(bootfile) > 0" \
 #     -v "concat('    filename &quot;', bootfile, '&quot;;')" -n -b \
 # ${OMV_CONFIG_FILE} | xmlstarlet unesc > ${GREYHOLE_CONFIG}
-
-# Reservations
-# index=$(omv_config_get_count "//services/greyhole/reservations/reservation")
-# while [ ${index} -gt 0 ]
-# do
-# 
-# 	xmlstarlet sel -t -m "//services/greyhole/reservations/reservation[position()=${index}]" \
-# 		-o "" -n \
-# 		-v "concat('    host ', name, ' {')" -n \
-# 		-v "concat('        hardware ethernet ', mac, ';')" -n \
-# 		-i "string-length(ip) > 0" -v "concat('        fixed-address ', ip, ';')" -n -b \
-#       	-i "bootconfig = '..specify'" -v "concat('        filename &quot;', bootfile, '&quot;;')" -n -b \
-#       	-i "bootconfig = '..none'" -o "        deny booting;" -n -b \
-# 		-o "    }" -n ${OMV_CONFIG_FILE} | xmlstarlet unesc >> ${GREYHOLE_CONFIG}
-# 
-# 	index=$(( ${index} - 1 ))
-# 
-# done
-# echo '}' >>${GREYHOLE_CONFIG}
 
 /etc/init.d/${GREYHOLE_INIT} restart
 update-rc.d ${GREYHOLE_INIT} enable

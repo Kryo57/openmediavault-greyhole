@@ -39,7 +39,6 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 	 * Get the module status.
 	 */
 	public function getStatus() {
-
 		global $xmlConfig;
 
 		// Get the configuration object
@@ -63,7 +62,6 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 	 * Update the service.
 	 */
 	public function updateService() {
-
 		global $xmlConfig;
 
 		// Get the configuration object
@@ -86,11 +84,11 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 	 * Bind listeners.
 	 */
 	function bindListeners(OMVNotifyDispatcher $dispatcher) {
-		
+
 		/* Update service if configuration has been modified */
 		$dispatcher->addListener(OMV_NOTIFY_MODIFY,
 			"org.openmediavault.services.greyhole",
-			array($this, "updateService"), 1);
+		array($this, "updateService"), 1);
 	}
 
 }

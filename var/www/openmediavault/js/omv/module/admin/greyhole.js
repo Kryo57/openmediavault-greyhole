@@ -1,33 +1,32 @@
 /**
  * vim: tabstop=4
  * 
- * @license		http://www.gnu.org/licenses/gpl.html GPL Version 3
- * @author		Stephane Bocquet <stephane_bocquet@hotmail.com>
- * @copyright	Copyright (c) 2011 Ian Moore
- * @version		$Id: greyhole.js 12 2011-11-07 18:52:10Z stephane_bocquet@hotmail.com $
- *
- * This file is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This file is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this file. If not, see <http://www.gnu.org/licenses/>.
+ * @license http://www.gnu.org/licenses/gpl.html GPL Version 3
+ * @author Stephane Bocquet <stephane_bocquet@hotmail.com>
+ * @copyright Copyright (c) 2011 Ian Moore
+ * @version $Id: greyhole.js 12 2011-11-07 18:52:10Z
+ *          stephane_bocquet@hotmail.com $
+ * 
+ * This file is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
+ * 
+ * This file is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this file. If not, see <http://www.gnu.org/licenses/>.
  */
-//require("js/omv/NavigationPanel.js")
-//require("js/omv/data/DataProxy.js")
-//require("js/omv/FormPanelExt.js")
-//require("js/omv/form/SharedFolderComboBox.js")
-//require("js/omv/form/plugins/FieldInfo.js")
+// require("js/omv/NavigationPanel.js")
+// require("js/omv/data/DataProxy.js")
+// require("js/omv/FormPanelExt.js")
+// require("js/omv/form/SharedFolderComboBox.js")
+// require("js/omv/form/plugins/FieldInfo.js")
 
 Ext.ns("OMV.Module.Services");
 
-//Register the menu.
+// Register the menu.
 OMV.NavigationPanelMgr.registerMenu("services", "greyhole", {
 	text: "Greyhole",
 	icon: "images/greyhole.png"
@@ -117,20 +116,12 @@ OMV.NavigationPanelMgr.registerPanel("services", "greyhole", {
 
 
 /**
- * Storage Pool list panel - Second tab
- * TODO :
- * 		Storage Pool grid with columns
- *			- Disk
- *			- Min Free size
- *			- Other things ?
+ * Storage Pool list panel - Second tab TODO : Storage Pool grid with columns -
+ * Disk - Min Free size - Other things ?
  */
 
 /**
- * Share list panel - Third tab
- * TODO :
- * 		Share Pool grid with columns
- *			- Share name
- *			- number of copies
- * 			- other things
+ * Share list panel - Third tab TODO : Share Pool grid with columns - Share name -
+ * number of copies - other things
  */
  
