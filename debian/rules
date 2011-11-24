@@ -1,39 +1,42 @@
 #!/usr/bin/make -f
-# Uncomment this to turn on verbose mode.
+
 #export DH_VERBOSE=1
 
-REVISION := $(shell head -1 debian/changelog | sed 's/.*(//;s/).*//;s/.*-//')
+clean:
+        dh_testdir
+        dh_testroot
+        rm -f build-stamp configure-stamp
+        dh_clean
 
-build: build-stamp
-build-stamp:
-	dh_testdir
-	touch build-stamp
+install:
+        dh_testdir
+        dh_testroot
+        dh_clean -k
+        dh_installdirs
 
-clean: 
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp
-	dh_clean 
+binary-indep: install
+        dh_testdir
+        dh_testroot
+        dh_install
 
-install: build
-	dh_testdir
-	dh_testroot
-	dh_prep
-	dh_installdirs
-	dh_install
+        # Remove '.git' directories
+        find $(CURDIR)/debian/openmediavault-greyhole -name .git -type d -print0 -prune | xargs -0 rm -rf
 
-# Build architecture-independent files here.
-binary-indep: build install
-	dh_testdir
-	dh_testroot
-	dh_link
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
+        chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole
 
+        dh_installchangelogs
+        dh_installdebconf
+        dh_lintian
+        dh_link
+        dh_compress
+        dh_fixperms
+        dh_installdeb
+        dh_gencontrol
+        dh_md5sums
+        dh_builddeb
 
-binary: binary-indep
-.PHONY: build clean binary-indep install
+binary-arch: install
+# We have nothing to do by default.
+
+binary: binary-indep binary-arch
+.PHONY: clean binary-indep binary-arch binary install
