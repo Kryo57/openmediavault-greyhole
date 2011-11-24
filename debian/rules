@@ -3,37 +3,37 @@
 #export DH_VERBOSE=1
 
 clean:
-        dh_testdir
-        dh_testroot
-        rm -f build-stamp configure-stamp
-        dh_clean
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+	dh_clean
 
 install:
-        dh_testdir
-        dh_testroot
-        dh_clean -k
-        dh_installdirs
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
 
 binary-indep: install
-        dh_testdir
-        dh_testroot
-        dh_install
+	dh_testdir
+	dh_testroot
+	dh_install
 
-        # Remove '.git' directories
-        find $(CURDIR)/debian/openmediavault-greyhole -name .git -type d -print0 -prune | xargs -0 rm -rf
+	# Remove '.git' directories
+	find $(CURDIR)/debian/openmediavault-greyhole -name .git -type d -print0 -prune | xargs -0 rm -rf
 
-        chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole
+	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole
 
-        dh_installchangelogs
-        dh_installdebconf
-        dh_lintian
-        dh_link
-        dh_compress
-        dh_fixperms
-        dh_installdeb
-        dh_gencontrol
-        dh_md5sums
-        dh_builddeb
+	dh_installchangelogs
+	dh_installdebconf
+	dh_lintian
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
 
 binary-arch: install
 # We have nothing to do by default.
