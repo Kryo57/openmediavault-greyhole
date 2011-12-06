@@ -1,20 +1,20 @@
 /**
  * vim: tabstop=4
- * 
+ *
  * @license http://www.gnu.org/licenses/gpl.html GPL Version 3
  * @author Stephane Bocquet <stephane_bocquet@hotmail.com>
  * @copyright Copyright (c) 2011 Ian Moore
  * @version $Id: greyhole.js 12 2011-11-07 18:52:10Z
  *          stephane_bocquet@hotmail.com $
- * 
+ *
  * This file is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or any later version.
- * 
+ *
  * This file is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this file. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -64,7 +64,7 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					name: "enable",
 					fieldLabel: "Enable",
 					checked: false,
-					inputValue: 1,
+					inputValue: 1
 				},{
 					xtype: "textfield",
 					name: "email",
@@ -93,7 +93,6 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					editable: false,
 					triggerAction: "all",
 					value: 1
-				}
 			}]
 		}];
 	},
@@ -107,7 +106,7 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 		var checked = field.checked;
 	}
 });
- 
+
 OMV.NavigationPanelMgr.registerPanel("services", "greyhole", {
 	cls: OMV.Module.Services.Greyhole.SettingsPanel,
 	position : 10,
@@ -124,4 +123,3 @@ OMV.NavigationPanelMgr.registerPanel("services", "greyhole", {
  * Share list panel - Third tab TODO : Share Pool grid with columns - Share name -
  * number of copies - other things
  */
- 

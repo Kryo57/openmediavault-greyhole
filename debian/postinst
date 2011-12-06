@@ -1,9 +1,25 @@
 #!/bin/sh
-# postinst script for openmediavault-greyhole
 #
-# $Id: postinst 5 2011-11-03 11:57:25Z stephane_bocquet@hotmail.com $
+# This file is part of OpenMediaVault-greyhole.
 #
-# see: dh_installdeb(1)
+# @license   http://www.gnu.org/licenses/gpl.html GPL Version 3
+# @author    Marcel Beck <marcel.beck@mbeck.org>
+# @author    Stéphane Bocquet <stephane_bocquet@hotmail.com>
+# @copyright Copyright (c) 2011 Marcel Beck
+# @copyright Copyright (c) 2011 Stéphane Bocquet
+#
+# OpenMediaVault is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# OpenMediaVault is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with OpenMediaVault. If not, see <http://www.gnu.org/licenses/>.
 
 set -e
 
@@ -24,24 +40,32 @@ set -e
 
 
 case "$1" in
-    configure)
-		# Check for XML config
-		if ! omv_config_exists "//services/greyhole"; then
-			omv_config_add_element "//services" "greyhole" ""
-			omv_config_add_element "//services/greyhole" "enable" "0"
-		fi
+	configure)
+	if [ -z "$2" ]; then
+		echo "Updating init script links and actions"
+		invoke-rc.d --force greyhole stop
+		update-rc.d greyhole disable &>/dev/null
+	fi
 
-		# Fix permissions
-		omv_install_fixperms
-    ;;
+	echo "Updating permissions"
+	omv_install_fixperms
+	# Check for XML config
+	if ! omv_config_exists "//services/greyhole"; then
+		echo "Updating configuration"
+		object="<enable>0</enable>"
+		omv_config_add_element "//services" "transmissionbt" "${object}" true
+	fi
+	
 
-    abort-upgrade|abort-remove|abort-deconfigure)
-    ;;
+	;;
 
-    *)
-        echo "postinst called with unknown argument \`$1'" >&2
-        exit 1
-    ;;
+	abort-upgrade|abort-remove|abort-deconfigure)
+	;;
+
+	*)
+		echo "postinst called with unknown argument \`$1'" >&2
+		exit 1
+	;;
 esac
 
 # dh_installdeb will replace this with shell code automatically

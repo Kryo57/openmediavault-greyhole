@@ -1,7 +1,7 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Contact: Volker Theile <volker.theile@openmediavault.org>
-Source: http://www.openmediavault.org
+Upstream-Contact: Marcel Beck <marcel.beck@mbeck.org>
+Source: https://github.com/OMV-Plugins/openmediavault-greyhole
 
-Copyright: 2009-2011 Volker Theile <volker.theile@openmediavault.org>
- 2011 Stéphane Bocquet <stephane_bocquet@hotmail.com>
+Copyright: 2011 StÃ©phane Bocquet <stephane_bocquet@hotmail.com>
+ 2011 Marcel Beck <marcel.beck@mbeck.org>
 License: GPL-3
