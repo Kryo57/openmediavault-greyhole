@@ -43,7 +43,7 @@ case "$1" in
 	configure)
 	if [ -z "$2" ]; then
 		echo "Updating init script links and actions"
-		invoke-rc.d --force greyhole stop
+		invoke-rc.d --force greyhole stop &>/dev/null
 		update-rc.d greyhole disable &>/dev/null
 	fi
 
