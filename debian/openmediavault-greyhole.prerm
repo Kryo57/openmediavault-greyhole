@@ -23,18 +23,17 @@
 
 set -e
 
-# Stop service
-invoke-rc.d --quiet greyhole stop
-
 case "$1" in
-	purge)
+	purge|remove|failed-upgrade|abort-install|abort-upgrade|disappear)
+		# Stop service
+		invoke-rc.d --quiet greyhole stop
 	;;
 
-	remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+	upgrade)
 	;;
 
 	*)
-		echo "prerm called with unknown argument '$1'" >&2
+		echo "postrm called with unknown argument '$1'" >&2
 		exit 1
 	;;
 esac
