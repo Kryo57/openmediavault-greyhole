@@ -53,8 +53,9 @@ case "$1" in
 	if ! omv_config_exists "//services/greyhole"; then
 		echo "Updating configuration"
 		object="<enable>0</enable>"
-		object="${object}<email_enabled>0</email_enabled>"
-		object="${object}<log_level>0</log_level>"
+		object="${object}<email_enable>0</email_enable>"
+		object="${object}<email>0</email>"
+		object="${object}<loglevel>0</loglevel>"
 		omv_config_add_element "//services" "greyhole" "${object}" true
 	fi
 

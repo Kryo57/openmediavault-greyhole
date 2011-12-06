@@ -65,6 +65,13 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					checked: false,
 					inputValue: 1
 				},{
+					xtype: "checkbox",
+					name: "email_enable",
+					fieldLabel: "Email",
+					checked: false,
+					inputValue: 1,
+					infoText: "Enable Email notification."
+				},{
 					xtype: "textfield",
 					name: "email",
 					fieldLabel: "Email",
