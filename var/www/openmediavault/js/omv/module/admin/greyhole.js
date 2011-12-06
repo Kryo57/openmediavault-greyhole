@@ -37,7 +37,10 @@ OMV.NavigationPanelMgr.registerMenu("services", "greyhole", {
  */
 OMV.Module.Services.Greyhole.SettingsPanel = function(config) {
 	var initialConfig = {
-		rpcService: "Greyhole"
+		title: "Settings",
+		rpcService: "Greyhole",
+		rpcGetMethod: "getSettings",
+		rpcSetMethod: "setSettings"
 	};
 	Ext.apply(initialConfig, config);
 	OMV.Module.Services.Greyhole.SettingsPanel.superclass.constructor.call(this, initialConfig);
@@ -46,10 +49,6 @@ OMV.Module.Services.Greyhole.SettingsPanel = function(config) {
 Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 	initComponent : function() {
 		OMV.Module.Services.Greyhole.SettingsPanel.superclass.initComponent.apply(this, arguments);
-		this.on("load", this._updateFormFields, this);
-		this.on("load", function(){
-			var checked = this.findFormField("enable").checked;
-		}, this);
 	},
 
 	getFormItems : function() {
@@ -95,15 +94,6 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					value: 1
 			}]
 		}];
-	},
-
-	/**
-	 * Private function to update the states of various form fields.
-	 */
-	_updateFormFields : function() {
-		// Enabled/Disabled fields
-		var field = this.findFormField("enable");
-		var checked = field.checked;
 	}
 });
 

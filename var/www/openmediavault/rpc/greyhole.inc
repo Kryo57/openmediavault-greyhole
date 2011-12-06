@@ -29,7 +29,6 @@ require_once("openmediavault/rpc.inc");
 require_once("openmediavault/notify.inc");
 
 class GreyholeRpc extends OMVRpc {
-	const xpathRoot = '//services/greyhole';
 
 	public function __construct() {
 		$this->methodSchemata = array(
@@ -38,61 +37,10 @@ class GreyholeRpc extends OMVRpc {
 				"properties":{
 					"enable":{"type":"boolean"},
 					"email":{"type":"string"},
-                    "loglevel":{"type":"integer","enum":[1,2,3,10]}
+          "loglevel":{"type":"integer","enum":[1,2,3,10]}
 				}
 			}')
 		);
-	}
-
-	/**
-	 * Safe config getting amd setting
-	 */
-	public function __call($name, $args) {
-		if(substr($name,0,6) == 'config') {
-
-			// Correct method name
-			$name = substr($name,6);
-			$name[0] = strtolower($name[0]);
-
-			global $xmlConfig;
-			$object = call_user_func_array(array($xmlConfig,$name),$args);
-			switch($name) {
-				case 'delete':
-					if($object === false)
-					throw new OMVException(OMVErrorMsg::E_CONFIG_OBJECT_NOT_FOUND, $args[0]);
-					break;
-				case 'save':
-					if($object === false)
-					throw new OMVException(OMVErrorMsg::E_CONFIG_SAVE_FAILED, $xmlConfig->getError());
-					break;
-				case 'set':
-				case 'replace':
-					if($object === false)
-					throw new OMVException(OMVErrorMsg::E_CONFIG_SET_OBJECT_FAILED);
-					break;
-				default:
-					if(is_null($object))
-				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $args[0]);
-			}
-			return $object;
-		}
-		throw new Exception("Method ".__CLASS__."::".$name." does not exist.");
-	}
-
-	/**
-	 * Verify that the current user is an admin, and validate method args
-	 */
-	function _validate($mname='',$args=array()) {
-		// Check permissions
-		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR)) {
-			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
-		}
-		$this->commitSession();
-			
-		// Check incoming data
-		if($mname)
-		$this->validateParams($mname, $args);
 	}
 
 	/**
@@ -100,10 +48,20 @@ class GreyholeRpc extends OMVRpc {
 	 * @return array configuration data
 	 */
 	function getSettings() {
-		$this->_validate();
-
+		global $xmlConfig;
+		// Check permissions
+		$this->validateSession();
+		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR)) {
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
 		// Get configuration object
-		$object = $this->configGet(self::xpathRoot);
+		$xpath = "//services/greyhole";
+		$object = $xmlConfig->get($xpath);
+		if (is_null($object)) {
+			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+				$xpath);
+		}
 
 		// Modify result data
 		$object['enable'] = boolval($object['enable']);
@@ -118,12 +76,29 @@ class GreyholeRpc extends OMVRpc {
 	 * @param $object array configuration data
 	 */
 	function setSettings($object) {
-		$this->_validate(__METHOD__,func_get_args());
+		global $xmlConfig;
+		// Check permissions
+		$this->validateSession();
+		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR)) {
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
+		// Validate method parameters
+		$this->validateParams(__METHOD__, func_get_args());
+		// Get existing configuration object
+		$xpath = "//services/greyhole";
+		$oldObject = $xmlConfig->get($xpath);
+		if (is_null($oldObject)) {
+			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+				$xpath);
+		}
 
 		// Prepare configuration data
-		$object["enable"] = array_boolval($object, 'enable');
-		$object["email"] = $object['email'];
-		$object["loglevel"] = $object['loglevel'];
+		$object = array(
+			'enable' => array_boolval($object, 'enable'),
+			'email' => $object['email'],
+			'loglevel' => $object['loglevel'],
+		);
 
 		// Set configuration object
 		if (FALSE === $xmlConfig->replace($xpath, $object)) {
