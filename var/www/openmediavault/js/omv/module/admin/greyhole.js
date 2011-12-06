@@ -24,7 +24,7 @@
 // require("js/omv/form/SharedFolderComboBox.js")
 // require("js/omv/form/plugins/FieldInfo.js")
 
-Ext.ns("OMV.Module.Services");
+Ext.ns("OMV.Module.Services.Greyhole");
 
 // Register the menu.
 OMV.NavigationPanelMgr.registerMenu("services", "greyhole", {
