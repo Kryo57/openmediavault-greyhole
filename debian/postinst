@@ -53,9 +53,9 @@ case "$1" in
 	if ! omv_config_exists "//services/greyhole"; then
 		echo "Updating configuration"
 		object="<enable>0</enable>"
-		omv_config_add_element "//services" "transmissionbt" "${object}" true
+		omv_config_add_element "//services" "greyhole" "${object}" true
 	fi
-	
+
 
 	;;
 
