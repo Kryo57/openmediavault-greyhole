@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# @license   http://www.gnu.org/licenses/gpl.html GPL Version 3
+# @author    Stéphane Bocquet <stephane_bocquet@hotmail.com>
+# @copyright Copyright (c) 2011 Stéphane Bocquet
+#
+# This file is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This file is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this file. If not, see <http://www.gnu.org/licenses/>.
+
+set -e
+
+. /etc/default/openmediavault
+. /usr/share/openmediavault/scripts/helper-functions
+
+# Only if enabled
+if [ "$(omv_config_get "//services/greyhole/enable")" != "1" ]; then
+	exit 0
+fi
+
+OMV_SAMBA_CONFIG=${OMV_SAMBA_CONFIG:-"/etc/samba/smb.conf"}
+
+cat <<EOF >> ${OMV_SAMBA_CONFIG}
+
+index=$(omv_config_get_count "//services/smb/shares/share")
+while [ ${index} -gt 0 ]
+do
+	# ToDo : Get the greyhole shared folder reference and add those lines on each folder :
+	# dfree command = /usr/bin/greyhole-dfree
+	# vfs objects = greyhole
+done
