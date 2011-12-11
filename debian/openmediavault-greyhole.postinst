@@ -130,8 +130,8 @@ EOF
 		mysql --user=root --password=${MYSQLROOTPW} < ${TMPFILE}
 	fi
 
-	if ! omv_config_exists "//services/greyhole/pools"; then
-		omv_config_add_element "//services/greyhole" "pools" "" true
+	if ! omv_config_exists "//services/greyhole/pool_disks"; then
+		omv_config_add_element "//services/greyhole" "pool_disks" "" true
 	fi
 
 	;;

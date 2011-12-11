@@ -28,6 +28,8 @@
 
 // require("js/omv/module/greyhole/NavigationPanel.js")
 
+// require("js/omv/module/greyhole/admin/dialog/PoolDisk.js")
+
 Ext.ns("OMV.Module.Services.Greyhole.Admin");
 
 /**
@@ -37,10 +39,7 @@ Ext.ns("OMV.Module.Services.Greyhole.Admin");
  */
 OMV.Module.Services.Greyhole.Admin.PoolsPanel = function(config) {
 	var initialConfig = {
-		hideAdd: true,
-		hideEdit: true,
 		hidePagingToolbar: false,
-		disableLoadMaskOnLoad: true,
 		autoReload: true,
 		stateId: "85f1cbf2-23d3-4960-a803-b7fc34d42235",
 		colModel: new Ext.grid.ColumnModel({
@@ -122,24 +121,8 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 		return tbar;
 	},
 
-	cbSelectionChangeHdl : function(model) {
-		OMV.Module.Privileges.SharedFolderGridPanel.superclass.
-			cbSelectionChangeHdl.apply(this, arguments);
-		// Process additional buttons
-		var records = model.getSelections();
-		var tbarPrivilegesCtrl = this.getTopToolbar().findById(
-			this.getId() + "-privileges");
-		if (records.length <= 0) {
-			tbarPrivilegesCtrl.disable();
-		} else if (records.length == 1) {
-			tbarPrivilegesCtrl.enable();
-		} else {
-			tbarPrivilegesCtrl.disable();
-		}
-	},
-
 	cbAddBtnHdl : function() {
-		var wnd = new OMV.Module.Privileges.SharedFolderPropertyDialog({
+		var wnd = new OMV.Module.Services.Greyhole.Admin.PoolDiskPanel({
 			uuid: OMV.UUID_UNDEFINED,
 			listeners: {
 				submit: function() {
@@ -154,7 +137,7 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 	cbEditBtnHdl : function() {
 		var selModel = this.getSelectionModel();
 		var record = selModel.getSelected();
-		var wnd = new OMV.Module.Privileges.SharedFolderPropertyDialog({
+		var wnd = new OMV.Module.Services.Greyhole.Admin.PoolDiskPanel({
 			uuid: record.get("uuid"),
 			listeners: {
 				submit: function() {
@@ -170,10 +153,10 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 		if(records.length <= 0)
 			return;
 		OMV.MessageBox.show({
-			title: "Delete content",
-			msg: "Do you want to remove the content of the shared " +
-				"folder recursively? Note, the data will be permanently " +
-				"deleted then. Select 'No' to delete the shared folder only " +
+			title: "Delete Pool Disk",
+			msg: "Do you want to remove the content of the pool disk directory " +
+				"recursively? Note, the data will be permanently " +
+				"deleted then. Select 'No' to delete the pool disk directory only " +
 				"or 'Cancel' to abort.",
 			buttons: Ext.Msg.YESNOCANCEL,
 			fn: function(answer) {
@@ -182,15 +165,13 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 				case "yes":
 					OMV.MessageBox.show({
 						title: "Confirmation",
-						msg: "Do you really want to remove the shared " +
-							"folder content?",
+						msg: "Do you really want to remove the pool disk " +
+							"directory content?",
 						buttons: OMV.Msg.YESCANCEL,
 						fn: function(answer) {
 							if(answer === "yes") {
 								this.deleteRecursive = true;
-								OMV.Module.Privileges.SharedFolderGridPanel.
-									superclass.startDeletion.call(this, model,
-									records);
+								OMV.Module.Services.Greyhole.Admin.PoolsPanel.superclass.startDeletion.call(this, model, records);
 							}
 						},
 						scope: this,
@@ -198,8 +179,7 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 					});
 					break;
 				case "no":
-					OMV.Module.Privileges.SharedFolderGridPanel.superclass.
-						startDeletion.call(this, model, records);
+					OMV.Module.Services.Greyhole.Admin.PoolsPanel.superclass.startDeletion.call(this, model, records);
 					break;
 				case "cancel":
 					break;
@@ -211,13 +191,11 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 	},
 
 	doDeletion : function(record) {
-		OMV.Ajax.request(this.cbDeletionHdl, this, "ShareMgmt",
-			"delete", [ record.get("uuid"), this.deleteRecursive ]);
+		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "delete", [ record.get("uuid"), this.deleteRecursive ]);
 	},
 
 	afterDeletion : function() {
-		OMV.Module.Privileges.SharedFolderGridPanel.superclass.
-			afterDeletion.apply(this, arguments);
+		OMV.Module.Services.Greyhole.Admin.PoolsPanel.superclass.afterDeletion.apply(this, arguments);
 		delete this.deleteRecursive;
 	},
 
