@@ -101,7 +101,7 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 			},{
 					xtype: "checkbox",
 					name: "balance_modified_files",
-					fieldLabel: "Balance Modified",
+					fieldLabel: "Balance modified",
 					checked: false,
 					inputValue: 1
 			},{
