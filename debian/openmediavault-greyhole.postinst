@@ -52,7 +52,7 @@ case "$1" in
 
 	# Check for XML config
 	if ! omv_config_exists "//services/greyhole"; then
-		echo "Updating configuration"
+		echo "Creating Initial Configuration"
 		object="<enable>0</enable>"
 		object="${object}<email_to>root</email_to>"
 		object="${object}<log_level>INFO</log_level>"
@@ -73,7 +73,7 @@ case "$1" in
 	if ! omv_config_exists "//services/greyhole/db"; then
 		PASSWORD=$(</dev/urandom tr -dc A-Za-z0-9 | head -c8)
 
-		echo "Updating configuration"
+		echo "Adding DB Section"
 		object="<db_engine>mysql</db_engine>"
 		object="${object}<db_host>localhost</db_host>"
 		object="${object}<db_user>greyhole</db_user>"
