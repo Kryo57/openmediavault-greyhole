@@ -65,13 +65,6 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					checked: false,
 					inputValue: 1
 				},{
-					xtype: "checkbox",
-					name: "email_enable",
-					fieldLabel: "Email",
-					checked: false,
-					inputValue: 1,
-					infoText: "Enable Email notification."
-				},{
 					xtype: "textfield",
 					name: "email",
 					fieldLabel: "Email",
@@ -87,10 +80,10 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					store: new Ext.data.SimpleStore({
 							fields: [ "value","text" ],
 							data: [
-									[ 1,"Minimum" ],
-									[ 2,"Normal" ],
-									[ 3,"Full" ],
-									[ 10,"Debug" ]
+									[ "ERROR","Error" ],
+									[ "WARN","Warn" ],
+									[ "INFO","Info" ],
+									[ "DEBUG","Debug" ]
 							]
 					}),
 					displayField: "text",
@@ -99,6 +92,18 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					editable: false,
 					triggerAction: "all",
 					value: 1
+				},{
+					xtype: "checkbox",
+					name: "delete_moves_to_trash",
+					fieldLabel: "delete_moves_to_trash",
+					checked: true,
+					inputValue: 1
+			},{
+					xtype: "checkbox",
+					name: "balance_modified_files",
+					fieldLabel: "balance_modified_files",
+					checked: false,
+					inputValue: 1
 			}]
 		}];
 	}

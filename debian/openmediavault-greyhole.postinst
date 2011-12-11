@@ -51,14 +51,73 @@ case "$1" in
 	omv_install_fixperms
 	# Check for XML config
 	if ! omv_config_exists "//services/greyhole"; then
+
 		echo "Updating configuration"
 		object="<enable>0</enable>"
-		object="${object}<email_enable>0</email_enable>"
-		object="${object}<email>0</email>"
-		object="${object}<loglevel>0</loglevel>"
+		object="${object}<email>root</email>"
+		object="${object}<loglevel>INFO</loglevel>"
+
+		object="${object}<delete_moves_to_trash>1</delete_moves_to_trash>"
+		object="${object}<balance_modified_files>0</balance_modified_files>"
+
 		omv_config_add_element "//services" "greyhole" "${object}" true
 	fi
 
+	if ! omv_config_exists "//services/greyhole/db"; then
+		PASSWORD=$(</dev/urandom tr -dc A-Za-z0-9 | head -c8)
+
+		echo "Updating configuration"
+		object="<db_engine>mysql</db_engine>"
+		object="${object}<db_host>localhost</db_host>"
+		object="${object}<db_user>greyhole</db_user>"
+
+		object="${object}<db_pass>${PASSWORD}</db_pass>"
+		object="${object}<db_name>greyhole</db_name>"
+
+		omv_config_add_element "//services/greyhole" "db" "${object}" true
+
+		#MYSQLROOTPW=$(omv_config_get "//services/mysql/password" | sed -e "s/'/\\\'/g")
+
+		# Create Database/Table
+		mysql --user=root --password=${MYSQLROOTPW} -e "
+			CREATE DATABASE IF NOT EXISTS `greyhole`;
+
+			GRANT USAGE ON * . * TO  'greyhole'@'localhost' IDENTIFIED BY  '${PASSWORD}' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;
+
+			GRANT ALL PRIVILEGES ON  `greyhole` . * TO  'greyhole'@'localhost';
+
+			CREATE TABLE IF NOT EXISTS  `greyhole`.`settings` (
+			`name` TINYTEXT NOT NULL,
+			`value` TEXT NOT NULL,
+			PRIMARY KEY ( `name`(255) )
+			) ENGINE = MYISAM;
+
+			INSERT IGNORE INTO `greyhole`.`settings` (`name`, `value`) VALUES ('last_read_log_smbd_line', '0');
+			INSERT IGNORE INTO `greyhole`.`settings` (`name`, `value`) VALUES ('last_OOS_notification', '0');
+
+			CREATE TABLE IF NOT EXISTS `greyhole`.`tasks` (
+				`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+				`action` varchar(10) NOT NULL,
+				`share` tinytext NOT NULL,
+				`full_path` tinytext,
+				`additional_info` tinytext,
+				`complete` enum('yes','no','frozen','thawed','idle') NOT NULL,
+				`event_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY (`id`),
+				KEY `find_next_task` (`complete`,`share`(64),`id`)
+			) ENGINE=MyISAM;
+
+			CREATE TABLE IF NOT EXISTS `greyhole`.`tasks_completed` (
+			`id` BIGINT UNSIGNED NOT NULL,
+			`action` VARCHAR( 10 ) NOT NULL,
+			`share` TINYTEXT NOT NULL,
+			`full_path` TINYTEXT NULL,
+			`additional_info` TINYTEXT NULL,
+			`complete` ENUM( 'yes',  'no' ) NOT NULL,
+			`event_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+			) ENGINE = MYISAM;"
+
+	fi
 
 	;;
 
