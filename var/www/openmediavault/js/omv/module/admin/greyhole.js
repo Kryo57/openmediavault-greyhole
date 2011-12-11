@@ -66,15 +66,15 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					inputValue: 1
 				},{
 					xtype: "textfield",
-					name: "email",
+					name: "email_to",
 					fieldLabel: "Email",
 					allowBlank: false,
 					vtype: "email",
 					infoText: "Will receive email reports for daily fsck, or when all drives are out of available space."
 				},{
 					xtype: "combo",
-					name: "loglevel",
-					hiddenName: "loglevel",
+					name: "log_level",
+					hiddenName: "log_level",
 					fieldLabel: "Log level",
 					mode: "local",
 					store: new Ext.data.SimpleStore({

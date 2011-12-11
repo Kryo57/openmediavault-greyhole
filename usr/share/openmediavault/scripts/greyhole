@@ -23,7 +23,7 @@ set -e
 . /usr/share/openmediavault/scripts/helper-functions
 
 
-GREYHOLE_CONFIG="/etc/greyhole/greyhole.conf"
+GREYHOLE_CONFIG="/etc/greyhole.conf"
 GREYHOLE_INIT="greyhole"
 
 # Enable/disable service
@@ -41,6 +41,19 @@ fi
 #  -i "string-length(bootfile) > 0" \
 #     -v "concat('    filename &quot;', bootfile, '&quot;;')" -n -b \
 # ${OMV_CONFIG_FILE} | xmlstarlet unesc > ${GREYHOLE_CONFIG}
+
+
+xmlstarlet sel -t -m "//services/greyhole" \
+	-v "concat('email_to = ',email_to)" -n \
+	-v "concat('log_level = ',log_level)" -n \
+	-v "concat('delete_moves_to_trash = ',delete_moves_to_trash)" -n \
+	-v "concat('balance_modified_files = ',balance_modified_files)" -n \
+	-v "concat('db_engine = ',db_engine)" -n \
+	-v "concat('db_host = ',db_host)" -n \
+	-v "concat('db_user = ',db_user)" -n \
+	-v "concat('db_pass = ',db_pass)" -n \
+	-v "concat('db_name = ',db_name)" -n \
+	${OMV_CONFIG_FILE} | xmlstarlet unesc > ${GREYHOLE_CONFIG}
 
 /etc/init.d/${GREYHOLE_INIT} restart
 update-rc.d ${GREYHOLE_INIT} enable

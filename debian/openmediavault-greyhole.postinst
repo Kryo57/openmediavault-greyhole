@@ -54,8 +54,8 @@ case "$1" in
 
 		echo "Updating configuration"
 		object="<enable>0</enable>"
-		object="${object}<email>root</email>"
-		object="${object}<loglevel>INFO</loglevel>"
+		object="${object}<email_to>root</email_to>"
+		object="${object}<log_level>INFO</log_level>"
 
 		object="${object}<delete_moves_to_trash>1</delete_moves_to_trash>"
 		object="${object}<balance_modified_files>0</balance_modified_files>"
@@ -74,7 +74,7 @@ case "$1" in
 		object="${object}<db_pass>${PASSWORD}</db_pass>"
 		object="${object}<db_name>greyhole</db_name>"
 
-		#omv_config_add_element "//services/greyhole" "db" "${object}" true
+		omv_config_add_element "//services/greyhole" "db" "${object}" true
 
 		MYSQLROOTPW=$(omv_config_get "//services/mysql/password" | sed -e "s/'/\\\'/g")
 

@@ -36,9 +36,8 @@ class GreyholeRpc extends OMVRpc {
 				"type":"object",
 				"properties":{
 					"enable":{"type":"boolean"},
-					"email_enable":{"type":"boolean"},
-					"email":{"type":"string"},
-          "loglevel":{"type":"integer","enum":[1,2,3,10]}
+					"email_to":{"type":"string"},
+          "log_level":{"type":"integer","enum":[1,2,3,10]}
 				}
 			}')
 		);
@@ -66,9 +65,8 @@ class GreyholeRpc extends OMVRpc {
 
 		// Modify result data
 		$object['enable'] = boolval($object['enable']);
-		$object['email_enable'] = boolval($object['email_enable']);
-		$object['email'] = $object['email'];
-		$object['loglevel'] = $object['loglevel'];
+		$object['email_to'] = $object['email_to'];
+		$object['log_level'] = $object['log_level'];
 
 		return $object;
 	}
@@ -98,9 +96,8 @@ class GreyholeRpc extends OMVRpc {
 		// Prepare configuration data
 		$object = array(
 			'enable' => array_boolval($object, 'enable'),
-			'email_enable' => array_boolval($object, 'email_enable'),
-			'email' => $object['email'],
-			'loglevel' => $object['loglevel'],
+			'email_to' => $object['email_to'],
+			'log_level' => $object['log_level'],
 		);
 
 		// Set configuration object
