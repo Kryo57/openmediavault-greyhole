@@ -37,7 +37,7 @@ class GreyholeRpc extends OMVRpc {
 				"properties":{
 					"enable":{"type":"boolean"},
 					"email_to":{"type":"string"},
-          "log_level":{"type":"integer","enum":[1,2,3,10]},
+          "log_level":{"type":"string","enum":["ERROR","WARN","INFO","DEBUG"]},
           "delete_moves_to_trash":{"type":"boolean"},
           "balance_modified_files":{"type":"boolean"}
 				}

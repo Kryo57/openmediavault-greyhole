@@ -28,20 +28,10 @@ GREYHOLE_INIT="greyhole"
 
 # Enable/disable service
 if [ "$(omv_config_get "//services/greyhole/enable")" != "1" ]; then
-	/etc/init.d/${GREYHOLE_INIT} stop
+	invoke-rc.d ${GREYHOLE_INIT} stop 1>/dev/null 2>&1 || true
 	update-rc.d ${GREYHOLE_INIT} disable
 	exit 0
 fi
-
-# xmlstarlet sel -t -m "//services/greyhole" \
-#  -v "concat('option domain-name &quot;', domain-name, '&quot;;')" -n \
-#  -i "string-length(name-servers) > 0" \
-#  	-v "concat('option domain-name-servers ', name-servers, ';')" -n -b \
-#  -v "concat('option routers ', gateway, ';')" -n \
-#  -i "string-length(bootfile) > 0" \
-#     -v "concat('    filename &quot;', bootfile, '&quot;;')" -n -b \
-# ${OMV_CONFIG_FILE} | xmlstarlet unesc > ${GREYHOLE_CONFIG}
-
 
 xmlstarlet sel -t -m "//services/greyhole" \
 	-v "concat('email_to = ',email_to)" -n \
@@ -54,7 +44,3 @@ xmlstarlet sel -t -m "//services/greyhole" \
 	-v "concat('db_pass = ',db_pass)" -n \
 	-v "concat('db_name = ',db_name)" -n \
 	${OMV_CONFIG_FILE} | xmlstarlet unesc > ${GREYHOLE_CONFIG}
-
-/etc/init.d/${GREYHOLE_INIT} restart
-update-rc.d ${GREYHOLE_INIT} enable
-update-rc.d ${GREYHOLE_INIT} defaults
