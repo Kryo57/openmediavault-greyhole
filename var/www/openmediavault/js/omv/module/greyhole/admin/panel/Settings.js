@@ -24,6 +24,8 @@
 // require("js/omv/form/SharedFolderComboBox.js")
 // require("js/omv/form/plugins/FieldInfo.js")
 
+// require("js/omv/module/greyhole/NavigationPanel.js")
+
 Ext.ns("OMV.Module.Services.Greyhole.Admin");
 
 /**
@@ -121,18 +123,7 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 });
 
 OMV.NavigationPanelMgr.registerPanel("services", "greyhole", {
-	cls: OMV.Module.Services.Admin.Greyhole.SettingsPanel,
+	cls: OMV.Module.Services.Greyhole.Admin.SettingsPanel,
 	position : 10,
 	title : "Settings"
 });
-
-
-/**
- * Storage Pool list panel - Second tab TODO : Storage Pool grid with columns -
- * Disk - Min Free size - Other things ?
- */
-
-/**
- * Share list panel - Third tab TODO : Share Pool grid with columns - Share name -
- * number of copies - other things
- */
