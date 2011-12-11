@@ -94,13 +94,13 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					value: 1
 				},{
 					xtype: "checkbox",
-					name: "delete_moves_to_trash",
+					name: "Trash deletes",
 					fieldLabel: "delete_moves_to_trash",
 					checked: true,
 					inputValue: 1
 			},{
 					xtype: "checkbox",
-					name: "balance_modified_files",
+					name: "Balance Modified",
 					fieldLabel: "balance_modified_files",
 					checked: false,
 					inputValue: 1

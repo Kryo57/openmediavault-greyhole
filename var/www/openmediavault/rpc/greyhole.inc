@@ -37,7 +37,9 @@ class GreyholeRpc extends OMVRpc {
 				"properties":{
 					"enable":{"type":"boolean"},
 					"email_to":{"type":"string"},
-          "log_level":{"type":"integer","enum":[1,2,3,10]}
+          "log_level":{"type":"integer","enum":[1,2,3,10]},
+          "delete_moves_to_trash":{"type":"boolean"},
+          "balance_modified_files":{"type":"boolean"}
 				}
 			}')
 		);
@@ -67,6 +69,9 @@ class GreyholeRpc extends OMVRpc {
 		$object['enable'] = boolval($object['enable']);
 		$object['email_to'] = $object['email_to'];
 		$object['log_level'] = $object['log_level'];
+
+		$object['delete_moves_to_trash'] = boolval($object['delete_moves_to_trash']);
+		$object['balance_modified_files'] = boolval($object['balance_modified_files']);
 
 		return $object;
 	}
@@ -98,6 +103,9 @@ class GreyholeRpc extends OMVRpc {
 			'enable' => array_boolval($object, 'enable'),
 			'email_to' => $object['email_to'],
 			'log_level' => $object['log_level'],
+
+			'delete_moves_to_trash' => array_boolval($object, 'delete_moves_to_trash'),
+			'balance_modified_files' => array_boolval($object, 'balance_modified_files'),
 		);
 
 		// Set configuration object
