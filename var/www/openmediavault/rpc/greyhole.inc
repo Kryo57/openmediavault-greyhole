@@ -171,7 +171,7 @@ class GreyholeRpc extends OMVRpc {
 		// Validate method parameters
 		$this->validateParams(__METHOD__, func_get_args());
 		// Get configuration object
-		$xpath = "//services/greyhole/pool_disks";
+		$xpath = "//services/greyhole/pool_disks/disk";
 		$objects = $xmlConfig->getList($xpath);
 		if (is_null($objects)) {
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
@@ -183,16 +183,14 @@ class GreyholeRpc extends OMVRpc {
 			// Get the mount point configuration object to append additional
 			// informations, e.g. the devicefile or a modified long
 			// description, to the returned objects.
-			$xpath = sprintf("//system/fstab/mntent[uuid='%s']",
-				$objectv['mntentref']);
+			$xpath = sprintf("//system/fstab/mntent[uuid='%s']", $objectv['mntentref']);
 			$meobject = $xmlConfig->get($xpath);
 			if (!is_null($meobject) && !empty($meobject)) {
 				$fs = new OMVFilesystem($meobject['fsname']);
 				if (TRUE === $fs->exists()) {
 					$objectv['volume'] = $fs->getDeviceFile();
-					$objectv['longdescription'] = sprintf(
-						gettext("%s [on %s]"), $objectv['longdescription'],
-						$fs->getDeviceFile());
+					$objectv['label'] = $fs->getLabel();
+					$objectv['type'] = $fs->getType();
 				}
 			}
 		}
@@ -264,7 +262,7 @@ class GreyholeRpc extends OMVRpc {
 			// Validate method parameters
 			$this->validateParams(__METHOD__, func_get_args());
 			// Get configuration object
-			$xpath = "//service/greyhole/pool_disks/disk[uuid='{$uuid}']";
+			$xpath = "//services/greyhole/pool_disks/disk[uuid='{$uuid}']";
 			$object = $xmlConfig->get($xpath);
 			if (is_null($object)) {
 				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
@@ -307,16 +305,16 @@ class GreyholeRpc extends OMVRpc {
 
 			if ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) {
 				// Check uniqueness
-				if (TRUE === $xmlConfig->exists("//service/greyhole/pool_disks/disk[" .
+				if (TRUE === $xmlConfig->exists("//services/greyhole/pool_disks/disk[" .
 					"uuid='{$object['uuid']}']")) {
 					throw new OMVException(OMVErrorMsg::E_CONFIG_OBJECT_UNIQUENESS);
 				}
 
 				// Append object to configuration
-				$success = $xmlConfig->set("//service/greyhole/pool_disks", array("disk" => $object));
+				$success = $xmlConfig->set("//services/greyhole/pool_disks", array("disk" => $object));
 			} else {
 				// Get existing configuration object
-				$xpath = "//service/greyhole/pool_disks/disk[uuid='{$data['uuid']}']";
+				$xpath = "//services/greyhole/pool_disks/disk[uuid='{$data['uuid']}']";
 				$oldObject = $xmlConfig->get($xpath);
 				if (is_null($oldObject)) {
 					throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
@@ -359,7 +357,7 @@ class GreyholeRpc extends OMVRpc {
 			$this->validateParams(__METHOD__, func_get_args());
 
 			// Get the configuration object
-			$xpath = "//service/greyhole/pool_disks/disk[uuid='{$uuid}']";
+			$xpath = "//services/greyhole/pool_disks/disk[uuid='{$uuid}']";
 			$object = $xmlConfig->get($xpath);
 			if (is_null($object)) {
 				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,

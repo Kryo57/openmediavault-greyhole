@@ -49,6 +49,16 @@ OMV.Module.Services.Greyhole.Admin.PoolsPanel = function(config) {
 				dataIndex: "volume",
 				id: "volume"
 			},{
+				header: "Label",
+				sortable: true,
+				dataIndex: "label",
+				id: "label"
+			},{
+				header: "FS Type",
+				sortable: true,
+				dataIndex: "type",
+				id: "type"
+			},{
 				header: "Min Free",
 				sortable: true,
 				dataIndex: "min_free",
@@ -79,6 +89,8 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 				fields: [
 					{ name: "uuid" },
 					{ name: "volume" },
+					{ name: "label" },
+					{ name: "type" },
 					{ name: "min_free" },
 					{ name: "type" }
     			]
@@ -191,7 +203,7 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 	},
 
 	doDeletion : function(record) {
-		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "delete", [ record.get("uuid"), this.deleteRecursive ]);
+		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "deletePoolDisk", [ record.get("uuid"), this.deleteRecursive ]);
 	},
 
 	afterDeletion : function() {
