@@ -32,6 +32,12 @@ class GreyholeRpc extends OMVRpc {
 
 	public function __construct() {
 		$this->methodSchemata = array(
+			"getPoolList" => array(
+				'{"type":"integer"}', // start
+				'{"type":"integer"}', // count
+				'{'.$GLOBALS['OMV_JSONSCHEMA_SORTFIELD'].'}', // sortField
+				'{'.$GLOBALS['OMV_JSONSCHEMA_SORTDIR'].'}' // sortDir
+			),
 			"setSettings" => array('{
 				"type":"object",
 				"properties":{
@@ -133,5 +139,50 @@ class GreyholeRpc extends OMVRpc {
 		$dispatcher = &OMVNotifyDispatcher::getInstance();
 		$dispatcher->notify(OMV_NOTIFY_MODIFY, "org.openmediavault.services.greyhole", $object);
 	}
+
+	/**
+		 * Get list of shared folder configuration objects.
+		 */
+		function getPoolList($start, $count, $sortField, $sortDir) {
+	//		$this->debug(var_export(func_get_args(), TRUE));
+			global $xmlConfig;
+			// Check permissions
+			$this->validateSession();
+			if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR)) {
+				throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+			}
+			$this->commitSession();
+			// Validate method parameters
+			$this->validateParams(__METHOD__, func_get_args());
+			// Get configuration object
+			$xpath = "//services/greyhole/pools";
+			$objects = $xmlConfig->getList($xpath);
+			if (is_null($objects)) {
+				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+				  $xpath);
+			}
+			// Add additional informations.
+			foreach ($objects as $objectk => &$objectv) {
+				$objectv['volume'] = gettext("n/a");
+				// Get the mount point configuration object to append additional
+				// informations, e.g. the devicefile or a modified long
+				// description, to the returned objects.
+				$xpath = sprintf("//system/fstab/mntent[uuid='%s']",
+				  $objectv['mntentref']);
+				$meobject = $xmlConfig->get($xpath);
+				if (!is_null($meobject) && !empty($meobject)) {
+					$fs = new OMVFilesystem($meobject['fsname']);
+					if (TRUE === $fs->exists()) {
+						$objectv['volume'] = $fs->getDeviceFile();
+						$objectv['longdescription'] = sprintf(
+						  gettext("%s [on %s]"), $objectv['longdescription'],
+						  $fs->getDeviceFile());
+					}
+				}
+			}
+			// Filter result
+			return $this->applyFilter($objects, $start, $count, $sortField,
+			  $sortDir);
+		}
 
 }

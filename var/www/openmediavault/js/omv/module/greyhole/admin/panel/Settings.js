@@ -3,7 +3,9 @@
  *
  * @license http://www.gnu.org/licenses/gpl.html GPL Version 3
  * @author Stephane Bocquet <stephane_bocquet@hotmail.com>
- * @copyright Copyright (c) 2011 Ian Moore
+ * @author Marcel Beck <marcel.beck@mbeck.org>
+ * @copyright Copyright (c) 2011 Stephane Bocquet
+ * @copyright Copyright (c) 2011 Marcel Beck
  * @version $Id: greyhole.js 12 2011-11-07 18:52:10Z
  *          stephane_bocquet@hotmail.com $
  *
