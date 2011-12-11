@@ -57,8 +57,15 @@ case "$1" in
 		object="${object}<email_to>root</email_to>"
 		object="${object}<log_level>INFO</log_level>"
 
+		object="${object}<greyhole_log_file>/var/log/greyhole.log</greyhole_log_file>"
+
 		object="${object}<delete_moves_to_trash>1</delete_moves_to_trash>"
 		object="${object}<balance_modified_files>0</balance_modified_files>"
+
+		object="${object}<df_cache_time>15</df_cache_time>"
+
+		object="${object}<log_memory_usage>0</log_memory_usage>"
+		object="${object}<check_for_open_files>1</check_for_open_files>"
 
 		omv_config_add_element "//services" "greyhole" "${object}" true
 	fi

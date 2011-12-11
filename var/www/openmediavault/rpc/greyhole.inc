@@ -39,7 +39,10 @@ class GreyholeRpc extends OMVRpc {
 					"email_to":{"type":"string"},
           "log_level":{"type":"string","enum":["ERROR","WARN","INFO","DEBUG"]},
           "delete_moves_to_trash":{"type":"boolean"},
-          "balance_modified_files":{"type":"boolean"}
+          "balance_modified_files":{"type":"boolean"},
+          "df_cache_time":{"type":"integer"},
+          "log_memory_usage":{"type":"boolean"},
+          "check_for_open_files":{"type":"boolean"}
 				}
 			}')
 		);
@@ -72,6 +75,10 @@ class GreyholeRpc extends OMVRpc {
 
 		$object['delete_moves_to_trash'] = boolval($object['delete_moves_to_trash']);
 		$object['balance_modified_files'] = boolval($object['balance_modified_files']);
+
+		$object['df_cache_time'] = $object['df_cache_time'];
+		$object['log_memory_usage'] = boolval($object['log_memory_usage']);
+		$object['check_for_open_files'] = boolval($object['check_for_open_files']);
 
 		return $object;
 	}
@@ -106,6 +113,10 @@ class GreyholeRpc extends OMVRpc {
 
 			'delete_moves_to_trash' => array_boolval($object, 'delete_moves_to_trash'),
 			'balance_modified_files' => array_boolval($object, 'balance_modified_files'),
+
+			'df_cache_time' => $object['df_cache_time'],
+			'log_memory_usage' => array_boolval($object, 'log_memory_usage'),
+			'check_for_open_files' => array_boolval($object, 'check_for_open_files'),
 		);
 
 		// Set configuration object

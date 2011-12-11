@@ -34,13 +34,17 @@ if [ "$(omv_config_get "//services/greyhole/enable")" != "1" ]; then
 fi
 
 xmlstarlet sel -t -m "//services/greyhole" \
-	-v "concat('email_to = ',email_to)" -n \
-	-v "concat('log_level = ',log_level)" -n \
-	-v "concat('delete_moves_to_trash = ',delete_moves_to_trash)" -n \
-	-v "concat('balance_modified_files = ',balance_modified_files)" -n \
 	-v "concat('db_engine = ',db_engine)" -n \
 	-v "concat('db_host = ',db_host)" -n \
 	-v "concat('db_user = ',db_user)" -n \
 	-v "concat('db_pass = ',db_pass)" -n \
 	-v "concat('db_name = ',db_name)" -n \
+	-v "concat('email_to = ',email_to)" -n \
+	-v "concat('log_level = ',log_level)" -n \
+	-v "concat('greyhole_log_file = ',greyhole_log_file)" -n \
+	-v "concat('delete_moves_to_trash = ',delete_moves_to_trash)" -n \
+	-v "concat('balance_modified_files = ',balance_modified_files)" -n \
+	-v "concat('df_cache_time = ',df_cache_time)" -n \
+	-v "concat('log_memory_usage = ',log_memory_usage)" -n \
+	-v "concat('check_for_open_files = ',check_for_open_files)" -n \
 	${OMV_CONFIG_FILE} | xmlstarlet unesc > ${GREYHOLE_CONFIG}

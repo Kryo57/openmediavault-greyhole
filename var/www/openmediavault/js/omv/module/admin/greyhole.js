@@ -104,6 +104,23 @@ Ext.extend(OMV.Module.Services.Greyhole.SettingsPanel, OMV.FormPanelExt, {
 					fieldLabel: "Balance Modified",
 					checked: false,
 					inputValue: 1
+			},{
+					xtype: "numberfield",
+					name: "df_cache_time",
+					fieldLabel: "DF Cache Time",
+					inputValue: 15
+			},{
+					xtype: "checkbox",
+					name: "log_memory_usage",
+					fieldLabel: "Log Memory Usage",
+					checked: false,
+					inputValue: 1
+			},{
+					xtype: "checkbox",
+					name: "check_for_open_files",
+					fieldLabel: "Check for open Files",
+					checked: false,
+					inputValue: 1
 			}]
 		}];
 	}
