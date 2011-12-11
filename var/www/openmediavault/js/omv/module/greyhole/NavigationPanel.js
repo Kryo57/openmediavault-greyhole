@@ -8,7 +8,8 @@
 
 // require("js/omv/NavigationPanel.js")
 
-OMV.NavigationPanelMgr.registerMenu("services", "greyhole", {
+OMV.NavigationPanelMgr.registerMenu("storage", "greyhole", {
 	text: "Greyhole",
-	icon: "images/greyhole.png"
+	icon: "images/greyhole.png",
+	position: 50
 });

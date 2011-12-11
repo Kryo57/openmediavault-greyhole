@@ -42,7 +42,7 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		global $xmlConfig;
 
 		// Get the configuration object
-		$xpath = "//services/greyhole";
+		$xpath = "//system/storage/greyhole";
 		$object = $xmlConfig->get($xpath);
 		if (is_null($object)) {
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
@@ -65,7 +65,7 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		global $xmlConfig;
 
 		// Get the configuration object
-		$xpath = "//services/greyhole";
+		$xpath = "//system/storage/greyhole";
 		$object = $xmlConfig->get($xpath);
 
 		if (is_null($object)) {

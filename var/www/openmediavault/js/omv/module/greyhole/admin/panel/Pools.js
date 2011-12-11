@@ -30,14 +30,14 @@
 
 // require("js/omv/module/greyhole/admin/dialog/PoolDisk.js")
 
-Ext.ns("OMV.Module.Services.Greyhole.Admin");
+Ext.ns("OMV.Module.Storage.Greyhole.Admin");
 
 /**
- * @class OMV.Module.Services.Greyhole.Admin.PoolsPanel
+ * @class OMV.Module.Storage.Greyhole.Admin.PoolsPanel
  * @derived OMV.grid.TBarGridPanel
  * Display list of configured filesystems.
  */
-OMV.Module.Services.Greyhole.Admin.PoolsPanel = function(config) {
+OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function(config) {
 	var initialConfig = {
 		hidePagingToolbar: false,
 		autoReload: true,
@@ -74,9 +74,9 @@ OMV.Module.Services.Greyhole.Admin.PoolsPanel = function(config) {
 		})
 	};
 	Ext.apply(initialConfig, config);
-	OMV.Module.Services.Greyhole.Admin.PoolsPanel.superclass.constructor.call(this, initialConfig);
+	OMV.Module.Storage.Greyhole.Admin.PoolsPanel.superclass.constructor.call(this, initialConfig);
 };
-Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel, {
+Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel, {
 	initComponent : function() {
 		this.store = new OMV.data.Store({
 			autoLoad: true,
@@ -96,7 +96,7 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
     			]
 			})
 		});
-		OMV.Module.Services.Greyhole.Admin.PoolsPanel.superclass.initComponent.apply(this, arguments);
+		OMV.Module.Storage.Greyhole.Admin.PoolsPanel.superclass.initComponent.apply(this, arguments);
 		// Register event handler
 		// Reselect previous selected rows after the store has been
 		// reloaded, e.g. to make sure toolbar is updated depending on
@@ -129,12 +129,12 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 	},
 
 	initToolbar : function() {
-		var tbar = OMV.Module.Services.Greyhole.Admin.PoolsPanel.superclass.initToolbar.apply(this);
+		var tbar = OMV.Module.Storage.Greyhole.Admin.PoolsPanel.superclass.initToolbar.apply(this);
 		return tbar;
 	},
 
 	cbAddBtnHdl : function() {
-		var wnd = new OMV.Module.Services.Greyhole.Admin.PoolDiskPanel({
+		var wnd = new OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel({
 			uuid: OMV.UUID_UNDEFINED,
 			listeners: {
 				submit: function() {
@@ -149,7 +149,7 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 	cbEditBtnHdl : function() {
 		var selModel = this.getSelectionModel();
 		var record = selModel.getSelected();
-		var wnd = new OMV.Module.Services.Greyhole.Admin.PoolDiskPanel({
+		var wnd = new OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel({
 			uuid: record.get("uuid"),
 			listeners: {
 				submit: function() {
@@ -183,7 +183,7 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 						fn: function(answer) {
 							if(answer === "yes") {
 								this.deleteRecursive = true;
-								OMV.Module.Services.Greyhole.Admin.PoolsPanel.superclass.startDeletion.call(this, model, records);
+								OMV.Module.Storage.Greyhole.Admin.PoolsPanel.superclass.startDeletion.call(this, model, records);
 							}
 						},
 						scope: this,
@@ -191,7 +191,7 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 					});
 					break;
 				case "no":
-					OMV.Module.Services.Greyhole.Admin.PoolsPanel.superclass.startDeletion.call(this, model, records);
+					OMV.Module.Storage.Greyhole.Admin.PoolsPanel.superclass.startDeletion.call(this, model, records);
 					break;
 				case "cancel":
 					break;
@@ -207,7 +207,7 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 	},
 
 	afterDeletion : function() {
-		OMV.Module.Services.Greyhole.Admin.PoolsPanel.superclass.afterDeletion.apply(this, arguments);
+		OMV.Module.Storage.Greyhole.Admin.PoolsPanel.superclass.afterDeletion.apply(this, arguments);
 		delete this.deleteRecursive;
 	},
 
@@ -226,8 +226,8 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel
 		return val;
 	}
 });
-OMV.NavigationPanelMgr.registerPanel("services", "greyhole", {
-	cls: OMV.Module.Services.Greyhole.Admin.PoolsPanel,
+OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
+	cls: OMV.Module.Storage.Greyhole.Admin.PoolsPanel,
 	position : 20,
 	title : "Pools"
 });

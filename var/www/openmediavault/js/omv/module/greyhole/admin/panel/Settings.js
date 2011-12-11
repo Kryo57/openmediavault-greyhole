@@ -28,12 +28,12 @@
 
 // require("js/omv/module/greyhole/NavigationPanel.js")
 
-Ext.ns("OMV.Module.Services.Greyhole.Admin");
+Ext.ns("OMV.Module.Storage.Greyhole.Admin");
 
 /**
  * General settings - First tab
  */
-OMV.Module.Services.Greyhole.Admin.SettingsPanel = function(config) {
+OMV.Module.Storage.Greyhole.Admin.SettingsPanel = function(config) {
 	var initialConfig = {
 		title: "Settings",
 		rpcService: "Greyhole",
@@ -41,12 +41,12 @@ OMV.Module.Services.Greyhole.Admin.SettingsPanel = function(config) {
 		rpcSetMethod: "setSettings"
 	};
 	Ext.apply(initialConfig, config);
-	OMV.Module.Services.Greyhole.Admin.SettingsPanel.superclass.constructor.call(this, initialConfig);
+	OMV.Module.Storage.Greyhole.Admin.SettingsPanel.superclass.constructor.call(this, initialConfig);
 };
 
-Ext.extend(OMV.Module.Services.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
+Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 	initComponent : function() {
-		OMV.Module.Services.Greyhole.Admin.SettingsPanel.superclass.initComponent.apply(this, arguments);
+		OMV.Module.Storage.Greyhole.Admin.SettingsPanel.superclass.initComponent.apply(this, arguments);
 	},
 
 	getFormItems : function() {
@@ -124,8 +124,8 @@ Ext.extend(OMV.Module.Services.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 	}
 });
 
-OMV.NavigationPanelMgr.registerPanel("services", "greyhole", {
-	cls: OMV.Module.Services.Greyhole.Admin.SettingsPanel,
+OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
+	cls: OMV.Module.Storage.Greyhole.Admin.SettingsPanel,
 	position : 10,
 	title : "Settings"
 });

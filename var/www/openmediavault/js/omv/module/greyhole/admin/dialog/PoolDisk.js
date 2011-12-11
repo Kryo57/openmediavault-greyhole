@@ -12,13 +12,13 @@
 // require("js/omv/form/plugins/FieldInfo.js")
 // require("js/omv/util/Format.js")
 
-Ext.ns("OMV.Module.Services.Greyhole.Admin");
+Ext.ns("OMV.Module.Storage.Greyhole.Admin");
 
 /**
- * @class OMV.Module.Services.Greyhole.Admin.PoolDiskPanel
+ * @class OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel
  * @derived OMV.CfgObjectDialog
  */
-OMV.Module.Services.Greyhole.Admin.PoolDiskPanel = function(config) {
+OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel = function(config) {
 	var initialConfig = {
 		rpcService: "Greyhole",
 		rpcGetMethod: "getPoolDisk",
@@ -28,12 +28,12 @@ OMV.Module.Services.Greyhole.Admin.PoolDiskPanel = function(config) {
 		autoHeight: true
 	};
 	Ext.apply(initialConfig, config);
-	OMV.Module.Services.Greyhole.Admin.PoolDiskPanel.superclass.constructor.call(this, initialConfig);
+	OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel.superclass.constructor.call(this, initialConfig);
 };
-Ext.extend(OMV.Module.Services.Greyhole.Admin.PoolDiskPanel,
+Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel,
   OMV.CfgObjectDialog, {
 	initComponent : function() {
-		OMV.Module.Services.Greyhole.Admin.PoolDiskPanel.superclass.initComponent.apply(this, arguments);
+		OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel.superclass.initComponent.apply(this, arguments);
 		// Register event handler
 		this.on("load", this._updateFormFields, this);
 	},

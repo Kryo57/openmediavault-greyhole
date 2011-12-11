@@ -51,7 +51,7 @@ case "$1" in
 	omv_install_fixperms
 
 	# Check for XML config
-	if ! omv_config_exists "//services/greyhole"; then
+	if ! omv_config_exists "//system/storage/greyhole"; then
 		echo "Creating Initial Configuration"
 		object="<enable>0</enable>"
 		object="${object}<email_to>root</email_to>"
@@ -67,10 +67,10 @@ case "$1" in
 		object="${object}<log_memory_usage>0</log_memory_usage>"
 		object="${object}<check_for_open_files>1</check_for_open_files>"
 
-		omv_config_add_element "//services" "greyhole" "${object}" true
+		omv_config_add_element "//system/storage" "greyhole" "${object}" true
 	fi
 
-	if ! omv_config_exists "//services/greyhole/db"; then
+	if ! omv_config_exists "//system/storage/greyhole/db"; then
 		PASSWORD=$(</dev/urandom tr -dc A-Za-z0-9 | head -c8)
 
 		echo "Adding DB Section"
@@ -81,7 +81,7 @@ case "$1" in
 		object="${object}<db_pass>${PASSWORD}</db_pass>"
 		object="${object}<db_name>greyhole</db_name>"
 
-		omv_config_add_element "//services/greyhole" "db" "${object}" true
+		omv_config_add_element "//system/storage/greyhole" "db" "${object}" true
 
 		MYSQLROOTPW=$(omv_config_get "//services/mysql/password" | sed -e "s/'/\\\'/g")
 
@@ -130,8 +130,8 @@ EOF
 		mysql --user=root --password=${MYSQLROOTPW} < ${TMPFILE}
 	fi
 
-	if ! omv_config_exists "//services/greyhole/pool_disks"; then
-		omv_config_add_element "//services/greyhole" "pool_disks" "" true
+	if ! omv_config_exists "//system/storage/greyhole/pool_disks"; then
+		omv_config_add_element "//system/storage/greyhole" "pool_disks" "" true
 	fi
 
 	;;
