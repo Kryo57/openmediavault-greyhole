@@ -228,6 +228,10 @@ class GreyholeRpc extends OMVRpc {
 			// Skip the filesystems that are not mounted at the moment.
 			if (FALSE === $fs->isMounted())
 				continue;
+
+			if (NULL !== ($xmlConfig->get("//system/storage/greyhole/pool_disks/disk[mntentref='{$objectv['uuid']}']"))) {
+				continue;
+			}
 			// Get the filesystem details.
 			$object = array(
 				"uuid" => $objectv['uuid'],
