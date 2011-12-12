@@ -68,6 +68,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 					fieldLabel: "Email",
 					allowBlank: false,
 					vtype: "email",
+					plugins: [ OMV.form.plugins.FieldInfo ],
 					infoText: "Will receive email reports for daily fsck, or when all drives are out of available space."
 				},{
 					xtype: "combo",
