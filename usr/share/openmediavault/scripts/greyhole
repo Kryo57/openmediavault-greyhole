@@ -27,13 +27,13 @@ GREYHOLE_CONFIG="/etc/greyhole.conf"
 GREYHOLE_INIT="greyhole"
 
 # Enable/disable service
-if [ "$(omv_config_get "//services/greyhole/enable")" != "1" ]; then
+if [ "$(omv_config_get "//system/storage/greyhole/enable")" != "1" ]; then
 	invoke-rc.d ${GREYHOLE_INIT} stop 1>/dev/null 2>&1 || true
 	update-rc.d ${GREYHOLE_INIT} disable
 	exit 0
 fi
 
-xmlstarlet sel -t -m "//services/greyhole" \
+xmlstarlet sel -t -m "//system/storage/greyhole" \
 	-v "concat('db_engine = ',db_engine)" -n \
 	-v "concat('db_host = ',db_host)" -n \
 	-v "concat('db_user = ',db_user)" -n \

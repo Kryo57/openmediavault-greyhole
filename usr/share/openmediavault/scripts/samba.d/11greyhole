@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # @license   http://www.gnu.org/licenses/gpl.html GPL Version 3
-# @author    Stéphane Bocquet <stephane_bocquet@hotmail.com>
-# @copyright Copyright (c) 2011 Stéphane Bocquet
+# @author    Stï¿½phane Bocquet <stephane_bocquet@hotmail.com>
+# @copyright Copyright (c) 2011 Stï¿½phane Bocquet
 #
 # This file is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ set -e
 . /usr/share/openmediavault/scripts/helper-functions
 
 # Only if enabled
-if [ "$(omv_config_get "//services/greyhole/enable")" != "1" ]; then
+if [ "$(omv_config_get "//system/storage/greyhole/enable")" != "1" ]; then
     exit 0
 fi
 
