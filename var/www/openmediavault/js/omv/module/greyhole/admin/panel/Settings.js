@@ -96,30 +96,40 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 					name: "delete_moves_to_trash",
 					fieldLabel: "Trash deletes",
 					checked: true,
-					inputValue: 1
+					inputValue: 1,
+					plugins: [ OMV.form.plugins.FieldInfo ],
+					infoText: "Move deleted files to trash instead of deleting them (This is a global setting that can be overided by local option on each Greyhole share)"
 			},{
 					xtype: "checkbox",
 					name: "balance_modified_files",
 					fieldLabel: "Balance modified",
 					checked: false,
-					inputValue: 1
+					inputValue: 1,
+					plugins: [ OMV.form.plugins.FieldInfo ],
+					infoText: "Enable this to use modified files copies to help balance the available space in your storage pool drives."
 			},{
 					xtype: "numberfield",
 					name: "df_cache_time",
 					fieldLabel: "DF Cache Time",
-					inputValue: 15
+					inputValue: 10,
+					plugins: [ OMV.form.plugins.FieldInfo ],
+					infoText: "How long should free disk space calculations be cached (in seconds). Use 0 to disable caching."
 			},{
 					xtype: "checkbox",
 					name: "log_memory_usage",
 					fieldLabel: "Log Memory Usage",
 					checked: false,
-					inputValue: 1
+					inputValue: 1,
+					plugins: [ OMV.form.plugins.FieldInfo ],
+					infoText: "Log Greyhole memory usage on each log line."
 			},{
 					xtype: "checkbox",
 					name: "check_for_open_files",
 					fieldLabel: "Check for open Files",
 					checked: false,
-					inputValue: 1
+					inputValue: 1,
+					plugins: [ OMV.form.plugins.FieldInfo ],
+					infoText: "Disable to get more speed, but this might break some files, if any application change your files while Greyhole tries to work on them."
 			}]
 		}];
 	}
