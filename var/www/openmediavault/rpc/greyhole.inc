@@ -153,7 +153,7 @@ class GreyholeRpc extends OMVRpc {
 
 		// Notify general configuration changes
 		$dispatcher = &OMVNotifyDispatcher::getInstance();
-		$dispatcher->notify(OMV_NOTIFY_MODIFY, "org.openmediavault.services.greyhole", $object);
+		$dispatcher->notify(OMV_NOTIFY_MODIFY, "org.openmediavault.system.storage.greyhole", $object);
 	}
 
 	/**
@@ -340,7 +340,7 @@ class GreyholeRpc extends OMVRpc {
 			$dispatcher = &OMVNotifyDispatcher::getInstance();
 			$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ?
 			  OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY,
-			  "org.openmediavault.service.greyhole.pool_disks.disk", $object);
+			  "org.openmediavault.system.storage.greyhole", $object);
 		}
 
 		/**
@@ -384,7 +384,7 @@ class GreyholeRpc extends OMVRpc {
 			}
 			// Notify configuration changes
 			$dispatcher->notify(OMV_NOTIFY_DELETE,
-			  "org.openmediavault.service.greyhole.pool_disks.disk", $object,
+			  "org.openmediavault.system.storage.greyhole", $object,
 			  $recursive);
 		}
 

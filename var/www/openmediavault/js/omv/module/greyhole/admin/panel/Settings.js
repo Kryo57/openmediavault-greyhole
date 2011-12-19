@@ -26,7 +26,7 @@
 // require("js/omv/form/SharedFolderComboBox.js")
 // require("js/omv/form/plugins/FieldInfo.js")
 
-// require("js/omv/module/greyhole/NavigationPanel.js")
+// require("js/omv/module/greyhole/panel/navigation.js")
 
 Ext.ns("OMV.Module.Storage.Greyhole.Admin");
 

@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-// require("js/omv/module/greyhole/NavigationPanel.js")
+// require("js/omv/module/greyhole/panel/navigation.js")
 
 // require("js/omv/module/greyhole/admin/panel/Settings.js")
-// require("js/omv/module/greyhole/admin/panel/Pools.js")
+// require("js/omv/module/greyhole/admin/panel/pools.js")
