@@ -8,5 +8,5 @@
 
 // require("js/omv/module/greyhole/panel/navigation.js")
 
-// require("js/omv/module/greyhole/admin/panel/Settings.js")
+// require("js/omv/module/greyhole/admin/panel/settings.js")
 // require("js/omv/module/greyhole/admin/panel/pools.js")
