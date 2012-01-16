@@ -42,10 +42,10 @@ while [ ${index} -gt 0 ]
 do
 	# Get the shared folder reference and path
 	greyhole_pool_disk_ref=$(omv_config_get "//system/storage/greyhole/pool_disks/disk[position()=${index}]/mntentref")
-	greyhole_pool_disk_path=$(omv_get_greyhole_pooldisk_path "${sfref}")
+	greyhole_pool_disk_path=$(omv_get_greyhole_pooldisk_path "${greyhole_pool_disk_ref}")
 
 	xmlstarlet sel -t -m "//system/storage/greyhole/pool_disks/disk[position()=${index}]" \
-	  -o "storage_pool_drive = ${sfpath}, min_free: 10gb" -n \
+	  -o "storage_pool_drive = ${greyhole_pool_disk_path}, min_free: 10gb" -n \
 	  ${OMV_CONFIG_FILE} | xmlstarlet unesc >> ${GREYHOLE_CONFIG}
 
 	index=$(( ${index} - 1 ))
