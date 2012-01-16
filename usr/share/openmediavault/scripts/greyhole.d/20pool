@@ -1,0 +1,7 @@
+index=$(omv_config_get_count "//system/storage/smb/shares/share")
+while [ ${index} -gt 0 ]
+do
+	# ToDo : Get the greyhole shared folder reference and add those lines on each folder :
+	# dfree command = /usr/bin/greyhole-dfree
+	# vfs objects = greyhole
+done

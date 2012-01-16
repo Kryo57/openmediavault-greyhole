@@ -1,9 +1,7 @@
 #!/bin/sh
 #
 # @license   http://www.gnu.org/licenses/gpl.html GPL Version 3
-# @author    Stephane Bocquet <stephane_bocquet@hotmail.com>
 # @author    Marcel Beck <marcel.beck@mbeck.org>
-# @copyright Copyright (c) 2011 Stephane Bocquet
 # @copyright Copyright (c) 2012 Marcel Beck
 #
 # This file is free software: you can redistribute it and/or modify
@@ -24,16 +22,20 @@ set -e
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
 
-GREYHOLE_EXTENSIONSDIR=${GREYHOLE_EXTENSIONSDIR:-"${OMV_SCRIPTS_DIR}/greyhole.d"}
 GREYHOLE_CONFIG="/etc/greyhole.conf"
-GREYHOLE_INIT="greyhole"
 
-# Enable/disable service
-if [ "$(omv_config_get "//system/storage/greyhole/enable")" != "1" ]; then
-	invoke-rc.d ${GREYHOLE_INIT} stop 1>/dev/null 2>&1 || true
-	update-rc.d ${GREYHOLE_INIT} disable
-	exit 0
-fi
-
-cat /dev/null > ${GREYHOLE_CONFIG}
-run-parts ${GREYHOLE_EXTENSIONSDIR}
+xmlstarlet sel -t -m "//system/storage/greyhole" \
+	-v "concat('db_engine = ',db_engine)" -n \
+	-v "concat('db_host = ',db_host)" -n \
+	-v "concat('db_user = ',db_user)" -n \
+	-v "concat('db_pass = ',db_pass)" -n \
+	-v "concat('db_name = ',db_name)" -n \
+	-v "concat('email_to = ',email_to)" -n \
+	-v "concat('log_level = ',log_level)" -n \
+	-v "concat('greyhole_log_file = ',greyhole_log_file)" -n \
+	-v "concat('delete_moves_to_trash = ',delete_moves_to_trash)" -n \
+	-v "concat('balance_modified_files = ',balance_modified_files)" -n \
+	-v "concat('df_cache_time = ',df_cache_time)" -n \
+	-v "concat('log_memory_usage = ',log_memory_usage)" -n \
+	-v "concat('check_for_open_files = ',check_for_open_files)" -n \
+	${OMV_CONFIG_FILE} | xmlstarlet unesc >> ${GREYHOLE_CONFIG}
