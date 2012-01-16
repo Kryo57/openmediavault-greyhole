@@ -24,6 +24,12 @@ binary-indep: install
 
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole
 
+	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole.d/10main
+	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole.d/20pool
+
+	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/samba.d/11greyhole
+	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/samba.d/21greyhole
+
 	dh_installchangelogs
 	dh_installdebconf
 	dh_lintian
