@@ -25,11 +25,11 @@ set -e
 GREYHOLE_CONFIG="/etc/greyhole.conf"
 
 xmlstarlet sel -t -m "//system/storage/greyhole" \
-	-v "concat('db/db_engine = ',db_engine)" -n \
-	-v "concat('db/db_host = ',db_host)" -n \
-	-v "concat('db/db_user = ',db_user)" -n \
-	-v "concat('db/db_pass = ',db_pass)" -n \
-	-v "concat('db/db_name = ',db_name)" -n \
+	-v "concat('db_engine = ',db/db_engine)" -n \
+	-v "concat('db_host = ',db/db_host)" -n \
+	-v "concat('db_user = ',db/db_user)" -n \
+	-v "concat('db_pass = ',db/db_pass)" -n \
+	-v "concat('db_name = ',db/db_name)" -n \
 	-v "concat('email_to = ',email_to)" -n \
 	-v "concat('log_level = ',log_level)" -n \
 	-v "concat('greyhole_log_file = ',greyhole_log_file)" -n \
