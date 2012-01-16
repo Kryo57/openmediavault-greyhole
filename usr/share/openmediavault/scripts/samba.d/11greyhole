@@ -36,7 +36,6 @@ cat <<EOF >> ${OMV_SAMBA_CONFIG}
 #======================= Greyhole Settings =======================
 [global]
 unix extensions = no
-follow symlinks = yes
 wide links = yes
 
 EOF
