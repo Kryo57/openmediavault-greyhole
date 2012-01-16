@@ -2,7 +2,10 @@
 
 # @license   http://www.gnu.org/licenses/gpl.html GPL Version 3
 # @author    Stephane Bocquet <stephane_bocquet@hotmail.com>
+# @author    Stephane Bocquet <stephane_bocquet@hotmail.com>
+# @author    Marcel Beck <marcel.beck@mbeck.org>
 # @copyright Copyright (c) 2011 Stephane Bocquet
+# @copyright Copyright (c) 2012 Marcel Beck
 #
 # This file is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,12 +32,20 @@ fi
 
 OMV_SAMBA_CONFIG=${OMV_SAMBA_CONFIG:-"/etc/samba/smb.conf"}
 
-cat <<EOF >> ${OMV_SAMBA_CONFIG}
+echo "#======================= Greyhole Shares =======================" >> ${OMV_SAMBA_CONFIG}
 
-index=$(omv_config_get_count "//system/storage/smb/shares/share")
+index=$(omv_config_get_count "//services/smb/shares/share")
 while [ ${index} -gt 0 ]
 do
-	# ToDo : Get the greyhole shared folder reference and add those lines on each folder :
-	# dfree command = /usr/bin/greyhole-dfree
-	# vfs objects = greyhole
+	# Get the shared folder reference and path
+	sfref=$(omv_config_get "//services/smb/shares/share[position()=${index}]/sharedfolderref")
+	sfpath=$(omv_get_sharedfolder_path "${sfref}")
+
+	xmlstarlet sel -t -m "//services/smb/shares/share[position()=${index}]" \
+	  -v "concat('[',name,']')" -n \
+	  -o "dfree command = /usr/bin/greyhole-dfree" -n \
+	  -o "vfs objects = greyhole" -n \
+	  ${OMV_CONFIG_FILE} | xmlstarlet unesc >> ${OMV_SAMBA_CONFIG}
+
+	index=$(( ${index} - 1 ))
 done

@@ -2,7 +2,9 @@
 
 # @license   http://www.gnu.org/licenses/gpl.html GPL Version 3
 # @author    Stephane Bocquet <stephane_bocquet@hotmail.com>
-# @copyright Copyright (c) 2011 Sephane Bocquet
+# @author    Marcel Beck <marcel.beck@mbeck.org>
+# @copyright Copyright (c) 2011 Stephane Bocquet
+# @copyright Copyright (c) 2012 Marcel Beck
 #
 # This file is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +33,7 @@ OMV_SAMBA_CONFIG=${OMV_SAMBA_CONFIG:-"/etc/samba/smb.conf"}
 
 cat <<EOF >> ${OMV_SAMBA_CONFIG}
 
-#======================= Printer Settings =======================
+#======================= Greyhole Settings =======================
 [global]
 unix extensions = no
 follow symlinks = yes
