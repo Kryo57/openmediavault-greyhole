@@ -134,6 +134,10 @@ EOF
 		omv_config_add_element "//system/storage/greyhole" "pool_disks" "" true
 	fi
 
+	if ! omv_config_exists "//system/storage/greyhole/smb_shares"; then
+  		omv_config_add_element "//system/storage/greyhole" "smb_shares" "" true
+  	fi
+
 	;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)

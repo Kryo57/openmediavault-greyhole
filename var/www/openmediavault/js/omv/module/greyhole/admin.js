@@ -10,3 +10,4 @@
 
 // require("js/omv/module/greyhole/admin/panel/settings.js")
 // require("js/omv/module/greyhole/admin/panel/pools.js")
+// require("js/omv/module/greyhole/admin/panel/smb.js")

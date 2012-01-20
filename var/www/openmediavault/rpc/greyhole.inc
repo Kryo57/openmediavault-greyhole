@@ -388,4 +388,38 @@ class GreyholeRpc extends OMVRpc {
 			  $recursive);
 		}
 
+
+	public function getSMBShareCandidates() {
+	//		$this->debug(var_export(func_get_args(), TRUE));
+			global $xmlConfig;
+			// Check permissions
+			$this->validateSession();
+			if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR)) {
+				throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+			}
+			$this->commitSession();
+			// Get list of mount points, except bind mounts.
+			$xpath = "//services/smb/shares/share";
+			$objects = $xmlConfig->getList($xpath);
+			if (is_null($objects)) {
+				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+					$xpath);
+			}
+			// Get the filesystem details for each mount point.
+			$result = array();
+			foreach ($objects as $objectk => $objectv) {
+
+				if (NULL !== ($xmlConfig->get("//system/storage/greyhole/smb_shares/share[smbref='{$objectv['uuid']}']"))) {
+					continue;
+				}
+				// Get the filesystem details.
+				$object = array(
+					"uuid" => $objectv['uuid'],
+					"name" => $objectv['name'],
+				);
+				$result[] = $object;
+			}
+			return $result;
+		}
+
 }
