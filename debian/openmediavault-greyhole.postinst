@@ -135,8 +135,10 @@ EOF
 	fi
 
 	if ! omv_config_exists "//system/storage/greyhole/smb_shares"; then
-  		omv_config_add_element "//system/storage/greyhole" "smb_shares" "" true
-  	fi
+		omv_config_add_element "//system/storage/greyhole" "smb_shares" "" true
+	fi
+
+	omv-mkconf greyhole 1>/dev/null 2>&1
 
 	;;
 
