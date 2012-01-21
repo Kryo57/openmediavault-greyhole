@@ -52,5 +52,5 @@ fi
 cat /dev/null > ${GREYHOLE_CONFIG}
 run-parts ${GREYHOLE_EXTENSIONSDIR}
 
-update-rc.d ${GREYHOLE_INIT} enable
+update-rc.d ${GREYHOLE_INIT} enable 1>/dev/null 2>&1 || true
 invoke-rc.d ${GREYHOLE_INIT} start 1>/dev/null 2>&1 || true
