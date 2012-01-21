@@ -44,8 +44,10 @@ do
 	greyhole_pool_disk_ref=$(omv_config_get "//system/storage/greyhole/pool_disks/disk[position()=${index}]/uuid")
 	greyhole_pool_disk_path=$(omv_get_greyhole_pooldisk_path "${greyhole_pool_disk_ref}")
 
+	mkdir -p ${greyhole_pool_disk_path}
+
 	xmlstarlet sel -t -m "//system/storage/greyhole/pool_disks/disk[position()=${index}]" \
-	  -o "storage_pool_drive = ${greyhole_pool_disk_path}, min_free: 10gb" -n \
+	  -o "storage_pool_drive = ${greyhole_pool_disk_path}, min_free: ${min_free}gb" -n \
 	  ${OMV_CONFIG_FILE} | xmlstarlet unesc >> ${GREYHOLE_CONFIG}
 
 	index=$(( ${index} - 1 ))

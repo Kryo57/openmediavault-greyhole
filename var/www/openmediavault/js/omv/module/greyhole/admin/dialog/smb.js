@@ -21,9 +21,9 @@ Ext.ns("OMV.Module.Storage.Greyhole.Admin");
 OMV.Module.Storage.Greyhole.Admin.SMBDialog = function(config) {
 	var initialConfig = {
 		rpcService: "Greyhole",
-		rpcGetMethod: "getSBMShares",
-		rpcSetMethod: "setSMBShares",
-		title: ((config.uuid == OMV.UUID_UNDEFINED) ? "Add" : "Edit") + " smb share",
+		rpcGetMethod: "getSBMShare",
+		rpcSetMethod: "setSMBShare",
+		title: ((config.uuid == OMV.UUID_UNDEFINED) ? "Add" : "Edit") + " SMB share",
 		width: 550,
 		autoHeight: true
 	};
@@ -55,7 +55,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 			allowNone: false,
 			editable: false,
 			triggerAction: "all",
-			displayField: "description",
+			displayField: "name",
 			valueField: "uuid",
 			store: new OMV.data.Store({
 				remoteSort: false,
@@ -64,10 +64,15 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 					idProperty: "uuid",
 					fields: [
 						{ name: "uuid" },
-						{ name: "description" }
+						{ name: "name" }
 					]
 				})
 			})
+		},{
+			xtype: "numberfield",
+			name: "num_copies",
+			fieldLabel: "Num Copies",
+			allowBlank: false
 		}];
 	},
 

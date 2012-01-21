@@ -28,7 +28,7 @@
 
 // require("js/omv/module/greyhole/panel/navigation.js")
 
-// require("js/omv/module/greyhole/admin/dialog/pooldisk.js")
+// require("js/omv/module/greyhole/admin/dialog/smb.js")
 
 Ext.ns("OMV.Module.Storage.Greyhole.Admin");
 
@@ -46,8 +46,8 @@ OMV.Module.Storage.Greyhole.Admin.SMBPanel = function(config) {
 			columns: [{
 				header: "Shared folder",
 				sortable: true,
-				dataIndex: "shared_folder",
-				id: "shared_folder"
+				dataIndex: "name",
+				id: "name"
 			},{
 				header: "Copies",
 				sortable: true,
@@ -71,7 +71,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 				root: "data",
 				fields: [
 					{ name: "uuid" },
-					{ name: "shared_folder" },
+					{ name: "name" },
 					{ name: "num_copies" }
     			]
 			})
@@ -114,7 +114,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 	},
 
 	cbAddBtnHdl : function() {
-		var wnd = new OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel({
+		var wnd = new OMV.Module.Storage.Greyhole.Admin.SMBDialog({
 			uuid: OMV.UUID_UNDEFINED,
 			listeners: {
 				submit: function() {
@@ -129,7 +129,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 	cbEditBtnHdl : function() {
 		var selModel = this.getSelectionModel();
 		var record = selModel.getSelected();
-		var wnd = new OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel({
+		var wnd = new OMV.Module.Storage.Greyhole.Admin.SMBDialog({
 			uuid: record.get("uuid"),
 			listeners: {
 				submit: function() {

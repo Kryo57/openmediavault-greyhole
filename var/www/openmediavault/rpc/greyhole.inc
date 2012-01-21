@@ -45,7 +45,8 @@ class GreyholeRpc extends OMVRpc {
 				"type":"object",
 				"properties":{
 					"uuid":{'.$GLOBALS['OMV_JSONSCHEMA_UUID_UNDEFINED'].'},
-					"mntentref":{'.$GLOBALS['OMV_JSONSCHEMA_UUID'].'}
+					"mntentref":{'.$GLOBALS['OMV_JSONSCHEMA_UUID'].'},
+					"min_free":{"type":"integer"}
 				}
 			}'),
 			"deletePoolDisk" => array(
@@ -64,7 +65,24 @@ class GreyholeRpc extends OMVRpc {
           "log_memory_usage":{"type":"boolean"},
           "check_for_open_files":{"type":"boolean"}
 				}
-			}')
+			}'),
+			"getSMBList" => array(
+				'{"type":"integer"}', // start
+				'{"type":"integer"}', // count
+				'{'.$GLOBALS['OMV_JSONSCHEMA_SORTFIELD'].'}', // sortField
+				'{'.$GLOBALS['OMV_JSONSCHEMA_SORTDIR'].'}' // sortDir
+			),
+			"getSBMShare" => array(
+				'{'.$GLOBALS['OMV_JSONSCHEMA_UUID'].'}'
+			),
+			"setSMBShare" => array('{
+				"type":"object",
+				"properties":{
+					"uuid":{'.$GLOBALS['OMV_JSONSCHEMA_UUID_UNDEFINED'].'},
+					"smbref":{'.$GLOBALS['OMV_JSONSCHEMA_UUID'].'},
+					"num_copies":{"type":"integer"}
+				}
+			}'),
 		);
 	}
 
@@ -303,6 +321,7 @@ class GreyholeRpc extends OMVRpc {
 			$object = array(
 				"uuid" => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
 				"mntentref" => $data['mntentref'],
+				"min_free" => (int) $data['min_free'],
 			);
 			// Set configuration data
 			$success = FALSE;
@@ -338,9 +357,7 @@ class GreyholeRpc extends OMVRpc {
 			}
 			// Notify configuration changes
 			$dispatcher = &OMVNotifyDispatcher::getInstance();
-			$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ?
-			  OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY,
-			  "org.openmediavault.system.storage.greyhole", $object);
+			$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY,"org.openmediavault.system.storage.greyhole", $object);
 		}
 
 		/**
@@ -421,5 +438,126 @@ class GreyholeRpc extends OMVRpc {
 			}
 			return $result;
 		}
+
+
+	/**
+		 * Get list of shared folder configuration objects.
+		 */
+		function getSMBList($start, $count, $sortField, $sortDir) {
+	//		$this->debug(var_export(func_get_args(), TRUE));
+			global $xmlConfig;
+			// Check permissions
+			$this->validateSession();
+			if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR)) {
+				throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+			}
+			$this->commitSession();
+			// Validate method parameters
+			$this->validateParams(__METHOD__, func_get_args());
+			// Get configuration object
+			$xpath = "//system/storage/greyhole/smb_shares/share";
+			$objects = $xmlConfig->getList($xpath);
+			if (is_null($objects)) {
+				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+					$xpath);
+			}
+			// Add additional informations.
+			foreach ($objects as $objectk => &$objectv) {
+				$xpath = sprintf("//services/smb/shares/share[uuid='%s']", $objectv['smbref']);
+				$meobject = $xmlConfig->get($xpath);
+				if (!is_null($meobject) && !empty($meobject)) {
+					$objectv['name'] = $meobject['name'];
+				}
+			}
+			// Filter result
+			return $this->applyFilter($objects, $start, $count, $sortField,
+				$sortDir);
+		}
+
+
+	/**
+			 * Get a shared folder config object.
+			 */
+			function getSBMShare($uuid) {
+		//		$this->debug(var_export(func_get_args(), TRUE));
+				global $xmlConfig;
+				// Check permissions
+				$this->validateSession();
+
+				if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR)) {
+					throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+				}
+				$this->commitSession();
+				// Validate method parameters
+				$this->validateParams(__METHOD__, func_get_args());
+				// Get configuration object
+				$xpath = "//system/storage/greyhole/smb_shares/share[uuid='{$uuid}']";
+				$object = $xmlConfig->get($xpath);
+				if (is_null($object)) {
+					throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+					  $xpath);
+				}
+				return $object;
+			}
+
+			/**
+			 * Set (add/update) a shared folder config object.
+			 */
+			function setSMBShare($data) {
+		//		$this->debug(var_export(func_get_args(), TRUE));
+				global $xmlConfig;
+				// Check permissions
+				$this->validateSession();
+				if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR)) {
+					throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+				}
+				$this->commitSession();
+				// Validate method parameters
+				$this->validateParams(__METHOD__, func_get_args());
+				// Prepare configuration data. Use the name of the shared folder
+				// as the relative directory name of the share.
+				$object = array(
+					"uuid" => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
+					"smbref" => $data['smbref'],
+					"num_copies" => (int) $data['num_copies'],
+				);
+				// Set configuration data
+				$success = FALSE;
+
+				if ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) {
+					// Check uniqueness
+					if (TRUE === $xmlConfig->exists("//system/storage/greyhole/smb_shares/share[" .
+						"uuid='{$object['uuid']}']")) {
+						throw new OMVException(OMVErrorMsg::E_CONFIG_OBJECT_UNIQUENESS);
+					}
+
+					// Append object to configuration
+					$success = $xmlConfig->set("//system/storage/greyhole/smb_shares", array("share" => $object));
+				} else {
+					// Get existing configuration object
+					$xpath = "//system/storage/greyhole/smb_shares/share[uuid='{$data['uuid']}']";
+					$oldObject = $xmlConfig->get($xpath);
+					if (is_null($oldObject)) {
+						throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+							$xpath);
+					}
+					// Update existing configuration object
+					$success = $xmlConfig->replace($xpath, $object);
+				}
+
+				if (FALSE === $success) {
+					throw new OMVException(OMVErrorMsg::E_CONFIG_SET_OBJECT_FAILED);
+				}
+				// Save configuration
+				if (FALSE === $xmlConfig->save()) {
+					throw new OMVException(OMVErrorMsg::E_CONFIG_SAVE_FAILED,
+					  $xmlConfig->getError());
+				}
+				// Notify configuration changes
+				$dispatcher = &OMVNotifyDispatcher::getInstance();
+				$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ?
+				  OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY,
+				  "org.openmediavault.system.storage.greyhole", $object);
+			}
 
 }

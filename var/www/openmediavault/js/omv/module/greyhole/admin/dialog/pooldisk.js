@@ -68,6 +68,11 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel,
 					]
 				})
 			})
+		},{
+			xtype: "numberfield",
+			name: "min_free",
+			fieldLabel: "Min Free (GB)",
+			allowBlank: false
 		}];
 	},
 
