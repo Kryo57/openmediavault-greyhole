@@ -72,7 +72,9 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 			xtype: "numberfield",
 			name: "num_copies",
 			fieldLabel: "Num Copies",
-			allowBlank: false
+			allowBlank: false,
+			plugins: [ OMV.form.plugins.FieldInfo ],
+			infoText: "This is the number of copies of each file you want Greyhole to keep per Share. This is not the number of duplicates! 2 copies = 1 duplicate."
 		}];
 	},
 

@@ -72,7 +72,9 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel,
 			xtype: "numberfield",
 			name: "min_free",
 			fieldLabel: "Min Free (GB)",
-			allowBlank: false
+			allowBlank: false,
+			plugins: [ OMV.form.plugins.FieldInfo ],
+			infoText: "This is how much free space you want to reserve on each drive. This is a soft limit that will be ignored if the necessary hard drives are below their minimum."
 		}];
 	},
 
