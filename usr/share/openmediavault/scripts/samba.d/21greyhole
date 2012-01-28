@@ -37,11 +37,11 @@ index=$(omv_config_get_count "//system/storage/greyhole/smb_shares/share")
 while [ ${index} -gt 0 ]
 do
 	# Get the shared folder reference and path
-	sfref=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/sharedfolderref")
-	sfpath=$(omv_get_sharedfolder_path "${sfref}")
+	smb_share_ref=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/smbref")
+	smb_share_name=$(omv_config_get "//services/smb/shares/share[uuid='${smb_share_ref}']/name")
 
 	xmlstarlet sel -t -m "//system/storage/greyhole/smb_shares/share[position()=${index}]" \
-	  -v "concat('[',name,']')" -n \
+	  -o "[${smb_share_name}]" -n \
 	  -o "dfree command = /usr/bin/greyhole-dfree" -n \
 	  -o "vfs objects = greyhole" -n \
 	  ${OMV_CONFIG_FILE} | xmlstarlet unesc >> ${OMV_SAMBA_CONFIG}
