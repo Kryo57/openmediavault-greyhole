@@ -131,13 +131,16 @@ EOF
 	fi
 
 	if ! omv_config_exists "//system/storage/greyhole/pool_disks"; then
+		echo "Adding Pool Disks Section"
 		omv_config_add_element "//system/storage/greyhole" "pool_disks" "" true
 	fi
 
 	if ! omv_config_exists "//system/storage/greyhole/smb_shares"; then
+		echo "Adding SMB Shares Section"
 		omv_config_add_element "//system/storage/greyhole" "smb_shares" "" true
 	fi
 
+	echo "Creating Config Files"
 	omv-mkconf greyhole 1>/dev/null 2>&1
 
 	;;
