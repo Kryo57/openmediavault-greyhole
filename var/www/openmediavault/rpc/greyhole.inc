@@ -157,6 +157,8 @@ class GreyholeRpc extends OMVRpc {
 			'check_for_open_files' => array_boolval($object, 'check_for_open_files'),
 
 			"pool_disks" => isset($oldObject['pool_disks']) ? $oldObject['pool_disks'] : array(),
+			"smb_shares" => isset($oldObject['smb_shares']) ? $oldObject['smb_shares'] : array(),
+			"db" => isset($oldObject['db']) ? $oldObject['db'] : array(),
 		);
 
 		// Set configuration object
