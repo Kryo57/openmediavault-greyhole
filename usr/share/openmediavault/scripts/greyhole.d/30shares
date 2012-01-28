@@ -31,7 +31,7 @@ fi
 
 GREYHOLE_CONFIG="/etc/greyhole.conf"
 
-echo "#======================= Greyhole Shares =======================" >> ${OMV_SAMBA_CONFIG}
+echo "#======================= Greyhole Shares =======================" >> ${GREYHOLE_CONFIG}
 
 index=$(omv_config_get_count "//system/storage/greyhole/smb_shares/share")
 while [ ${index} -gt 0 ]
