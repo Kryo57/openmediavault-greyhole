@@ -357,7 +357,7 @@ class GreyholeRpc extends OMVRpc {
 			}
 			// Notify configuration changes
 			$dispatcher = &OMVNotifyDispatcher::getInstance();
-			$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY,"org.openmediavault.system.storage.greyhole", $object);
+			$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY,"org.openmediavault.system.storage.greyhole.pool_disks.disk", $object);
 		}
 
 		/**
@@ -384,11 +384,6 @@ class GreyholeRpc extends OMVRpc {
 				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
 				  $xpath);
 			}
-			// Notify configuration changes
-			$dispatcher = &OMVNotifyDispatcher::getInstance();
-			$dispatcher->notify(OMV_NOTIFY_PREDELETE,
-			  "org.openmediavault.service.greyhole.pool_disks.disk", $object,
-			  $recursive);
 			// Delete configuration object
 			if (FALSE === ($object = $xmlConfig->delete($xpath))) {
 				throw new OMVException(OMVErrorMsg::E_CONFIG_OBJECT_NOT_FOUND,
@@ -400,9 +395,8 @@ class GreyholeRpc extends OMVRpc {
 				  $xmlConfig->getError());
 			}
 			// Notify configuration changes
-			$dispatcher->notify(OMV_NOTIFY_DELETE,
-			  "org.openmediavault.system.storage.greyhole", $object,
-			  $recursive);
+			$dispatcher = &OMVNotifyDispatcher::getInstance();
+			$dispatcher->notify(OMV_NOTIFY_DELETE, "org.openmediavault.service.greyhole.pool_disks.disk", $object, $recursive);
 		}
 
 
@@ -555,9 +549,7 @@ class GreyholeRpc extends OMVRpc {
 				}
 				// Notify configuration changes
 				$dispatcher = &OMVNotifyDispatcher::getInstance();
-				$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ?
-				  OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY,
-				  "org.openmediavault.system.storage.greyhole", $object);
+				$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY, "org.openmediavault.system.storage.greyhole.smb_shares.share", $object);
 			}
 
 }

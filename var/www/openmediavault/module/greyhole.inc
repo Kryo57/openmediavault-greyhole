@@ -14,7 +14,7 @@
  *
  * This file is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -31,20 +31,23 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 	/**
 	 * Get the module name.
 	 */
-	public static function getName() {
+	public static function getName()
+	{
 		return "greyhole";
 	}
 
 	/**
 	 * Get the module status.
 	 */
-	public function getStatus() {
+	public function getStatus()
+	{
 		global $xmlConfig;
 
 		// Get the configuration object
 		$xpath = "//system/storage/greyhole";
 		$object = $xmlConfig->get($xpath);
-		if (is_null($object)) {
+		if (is_null($object))
+		{
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
 		}
 
@@ -54,28 +57,31 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 			"name" => $this->getName(),
 			"title" => gettext("Greyhole"),
 			"enabled" => boolval($object['enable']),
-			"running" => (strpos($output[0], 'Greyhole is running.') > -1)
+			"running" => (strpos($output[0], 'Greyhole is running.') > - 1)
 		);
 	}
 
 	/**
 	 * Update the service.
 	 */
-	public function updateService() {
+	public function updateService()
+	{
 		global $xmlConfig;
 
 		// Get the configuration object
 		$xpath = "//system/storage/greyhole";
 		$object = $xmlConfig->get($xpath);
 
-		if (is_null($object)) {
+		if (is_null($object))
+		{
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
 		}
 
 		// Create greyhole.conf file
 		$cmd = "sudo omv-mkconf greyhole 2>&1";
 		OMVUtil::exec($cmd, $output, $result);
-		if ($result !== 0) {
+		if ($result !== 0)
+		{
 			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
 		}
 	}
@@ -83,12 +89,19 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 	/**
 	 * Bind listeners.
 	 */
-	function bindListeners(OMVNotifyDispatcher $dispatcher) {
+	function bindListeners(OMVNotifyDispatcher $dispatcher)
+	{
 
 		/* Update service if configuration has been modified */
-		$dispatcher->addListener(OMV_NOTIFY_MODIFY,
-			"org.openmediavault.system.storage.greyhole",
-		array($this, "updateService"), 1);
+		$dispatcher->addListener(OMV_NOTIFY_MODIFY, "org.openmediavault.system.storage.greyhole", array($this, "updateService"), 1);
+
+		$dispatcher->addListener(OMV_NOTIFY_CREATE | OMV_NOTIFY_MODIFY | OMV_NOTIFY_DELETE,
+			"org.openmediavault.system.storage.greyhole.pool_disks.disk",
+			array($this, "updateService"), 1);
+
+		$dispatcher->addListener(OMV_NOTIFY_CREATE | OMV_NOTIFY_MODIFY | OMV_NOTIFY_DELETE,
+			"org.openmediavault.system.storage.greyhole.smb_shares.share",
+			array($this, "updateService"), 1);
 	}
 
 }
