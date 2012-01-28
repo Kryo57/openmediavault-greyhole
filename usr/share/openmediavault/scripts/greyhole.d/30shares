@@ -36,8 +36,13 @@ echo "#======================= Greyhole Shares =======================" >> ${GRE
 index=$(omv_config_get_count "//system/storage/greyhole/smb_shares/share")
 while [ ${index} -gt 0 ]
 do
+	# Get the shared folder reference and path
+	smb_share_ref=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/smbref")
+	smb_share_num_copies=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/smbref")
+	smb_share_name=$(omv_config_get "//services/smb/shares/share[uuid='${smb_share_ref}']/name")
+
 	xmlstarlet sel -t -m "//system/storage/greyhole/smb_shares/share[position()=${index}]" \
-	  -v "concat('num_copies[',num_copies,']')" -n \
+	  -o "num_copies[${smb_share_name}] = ${smb_share_num_copies}" -n \
 	  ${OMV_CONFIG_FILE} | xmlstarlet unesc >> ${GREYHOLE_CONFIG}
 
 	index=$(( ${index} - 1 ))
