@@ -38,7 +38,7 @@ while [ ${index} -gt 0 ]
 do
 	# Get the shared folder reference and path
 	smb_share_ref=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/smbref")
-	smb_share_num_copies=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/smbref")
+	smb_share_num_copies=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/num_copies")
 	smb_share_name=$(omv_config_get "//services/smb/shares/share[uuid='${smb_share_ref}']/name")
 
 	xmlstarlet sel -t -m "//system/storage/greyhole/smb_shares/share[position()=${index}]" \
