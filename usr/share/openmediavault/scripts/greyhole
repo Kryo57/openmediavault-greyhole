@@ -53,13 +53,13 @@ fi
 # fi
 
 echo "# Stop Greyhole"
-/etc/init.d/${GREYHOLE_INIT} stop
+service ${GREYHOLE_INIT} stop
 
 cat /dev/null > ${GREYHOLE_CONFIG}
 run-parts ${GREYHOLE_EXTENSIONSDIR}
 
+omv-mkconf samba
+
 echo "# Start/Enable Greyhole"
 update-rc.d ${GREYHOLE_INIT} enable
-/etc/init.d/${GREYHOLE_INIT} start
-
-omv-mkconf samba
+service ${GREYHOLE_INIT} start
