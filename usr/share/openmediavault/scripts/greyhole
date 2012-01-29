@@ -52,11 +52,14 @@ fi
 # 	exit 0
 # fi
 
+echo "# Stop Greyhole"
+/etc/init.d/${GREYHOLE_INIT} stop
+
 cat /dev/null > ${GREYHOLE_CONFIG}
 run-parts ${GREYHOLE_EXTENSIONSDIR}
 
 echo "# Start/Enable Greyhole"
 update-rc.d ${GREYHOLE_INIT} enable
-/etc/init.d/${GREYHOLE_INIT} restart
+/etc/init.d/${GREYHOLE_INIT} start
 
 omv-mkconf samba
