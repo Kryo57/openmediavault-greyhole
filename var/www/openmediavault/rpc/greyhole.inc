@@ -402,6 +402,35 @@ class GreyholeRpc extends OMVRpc {
 		}
 
 
+	public function getPoolDiskCount() {
+	//		$this->debug(var_export(func_get_args(), TRUE));
+		global $xmlConfig;
+		// Check permissions
+		$this->validateSession();
+		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR)) {
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
+		// Get list of mount points, except bind mounts.
+		$xpath = "//system/storage/greyhole/pool_disks/disk";
+		$count = $xmlConfig->count($xpath);
+		if (is_null($count)) {
+			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+				$xpath);
+		}
+		$result = array();
+		for ($i = 1;$i <= $count;$i++)
+		{
+			$result[] = array(
+				'number' => $i,
+				'name' => $i,
+			);
+		}
+
+			return $result;
+		}
+
+
 	public function getSMBShareCandidates() {
 	//		$this->debug(var_export(func_get_args(), TRUE));
 			global $xmlConfig;

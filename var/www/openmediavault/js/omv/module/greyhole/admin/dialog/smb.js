@@ -69,10 +69,28 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 				})
 			})
 		},{
-			xtype: "numberfield",
+			xtype: "combo",
 			name: "num_copies",
+			hiddenName: "num_copies",
 			fieldLabel: "Num Copies",
+			emptyText: "Select Number of Copies ...",
 			allowBlank: false,
+			allowNone: false,
+			editable: false,
+			triggerAction: "all",
+			displayField: "name",
+			valueField: "number",
+			store: new OMV.data.Store({
+				remoteSort: false,
+				proxy: new OMV.data.DataProxy("Greyhole", "getPoolDiskCount"),
+				reader: new Ext.data.JsonReader({
+					idProperty: "number",
+					fields: [
+						{ name: "number" },
+						{ name: "name" }
+					]
+				})
+			}),
 			plugins: [ OMV.form.plugins.FieldInfo ],
 			infoText: "This is the number of copies of each file you want Greyhole to keep per Share. This is not the number of duplicates! 2 copies = 1 duplicate."
 		}];
