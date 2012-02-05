@@ -38,4 +38,5 @@ xmlstarlet sel -t -m "//system/storage/greyhole" \
 	-v "concat('df_cache_time = ',df_cache_time)" -n \
 	-v "concat('log_memory_usage = ',log_memory_usage)" -n \
 	-v "concat('check_for_open_files = ',check_for_open_files)" -n \
+	-i "string-length(extraoptions) > 0" -v extraoptions -n \
 	${OMV_CONFIG_FILE} | xmlstarlet unesc >> ${GREYHOLE_CONFIG}

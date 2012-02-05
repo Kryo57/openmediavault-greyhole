@@ -130,6 +130,17 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 					inputValue: 1,
 					plugins: [ OMV.form.plugins.FieldInfo ],
 					infoText: "Disable to get more speed, but this might break some files, if any application change your files while Greyhole tries to work on them."
+			},{
+				xtype: "textfield",
+				name: "extraoptions",
+				fieldLabel: "Extra options",
+				allowBlank: true,
+				autoCreate: {
+					tag: "textarea",
+					autocomplete: "off",
+					rows: "3",
+					cols: "65"
+				}
 			}]
 		}];
 	}

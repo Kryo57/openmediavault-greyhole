@@ -63,7 +63,8 @@ class GreyholeRpc extends OMVRpc {
           "balance_modified_files":{"type":"boolean"},
           "df_cache_time":{"type":"integer"},
           "log_memory_usage":{"type":"boolean"},
-          "check_for_open_files":{"type":"boolean"}
+          "check_for_open_files":{"type":"boolean"},
+          "extraoptions":{"type":"string"}
 				}
 			}'),
 			"getSMBList" => array(
@@ -123,9 +124,9 @@ class GreyholeRpc extends OMVRpc {
 
 	/**
 	 * Set configuration data for service.
-	 * @param $object array configuration data
+	 * @param $data array configuration data
 	 */
-	function setSettings($object) {
+	function setSettings($data) {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
@@ -145,16 +146,17 @@ class GreyholeRpc extends OMVRpc {
 
 		// Prepare configuration data
 		$object = array(
-			'enable' => array_boolval($object, 'enable'),
-			'email_to' => $object['email_to'],
-			'log_level' => $object['log_level'],
+			'enable' => array_boolval($data, 'enable'),
+			'email_to' => $data['email_to'],
+			'log_level' => $data['log_level'],
 
-			'delete_moves_to_trash' => array_boolval($object, 'delete_moves_to_trash'),
-			'balance_modified_files' => array_boolval($object, 'balance_modified_files'),
+			'delete_moves_to_trash' => array_boolval($data, 'delete_moves_to_trash'),
+			'balance_modified_files' => array_boolval($data, 'balance_modified_files'),
 
-			'df_cache_time' => $object['df_cache_time'],
-			'log_memory_usage' => array_boolval($object, 'log_memory_usage'),
-			'check_for_open_files' => array_boolval($object, 'check_for_open_files'),
+			'df_cache_time' => $data['df_cache_time'],
+			'log_memory_usage' => array_boolval($data, 'log_memory_usage'),
+			'check_for_open_files' => array_boolval($data, 'check_for_open_files'),
+			"extraoptions" => $data['extraoptions'],
 
 			"pool_disks" => isset($oldObject['pool_disks']) ? $oldObject['pool_disks'] : array(),
 			"smb_shares" => isset($oldObject['smb_shares']) ? $oldObject['smb_shares'] : array(),
@@ -173,7 +175,7 @@ class GreyholeRpc extends OMVRpc {
 
 		// Notify general configuration changes
 		$dispatcher = &OMVNotifyDispatcher::getInstance();
-		$dispatcher->notify(OMV_NOTIFY_MODIFY, "org.openmediavault.system.storage.greyhole", $object);
+		$dispatcher->notify(OMV_NOTIFY_MODIFY, "org.openmediavault.system.storage.greyhole", $data);
 	}
 
 	/**
