@@ -3,7 +3,7 @@
  * vim: tabstop=4
  *
  * @license		http://www.gnu.org/licenses/gpl.html GPL Version 3
- * @author		Stephane Bocquet <stephane_bocquet@hotmail.com>
+ * @author     Stephane Bocquet <stephane_bocquet@hotmail.com>
  * @copyright	Copyright (c) 2011 Ian Moore
  * @version		$Id: greyhole.inc 8 2011-11-07 02:22:11Z stephane_bocquet@hotmail.com $
  *
@@ -44,7 +44,7 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		global $xmlConfig;
 
 		// Get the configuration object
-		$xpath = "//system/storage/greyhole";
+		$xpath  = "//system/storage/greyhole";
 		$object = $xmlConfig->get($xpath);
 		if (is_null($object))
 		{
@@ -54,8 +54,8 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		$cmd = sprintf("sudo /etc/init.d/greyhole status");
 		OMVUtil::exec($cmd, $output, $result);
 		return array(
-			"name" => $this->getName(),
-			"title" => gettext("Greyhole"),
+			"name"    => $this->getName(),
+			"title"   => gettext("Greyhole"),
 			"enabled" => boolval($object['enable']),
 			"running" => (strpos($output[0], 'Greyhole is running.') > - 1)
 		);
@@ -69,7 +69,7 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		global $xmlConfig;
 
 		// Get the configuration object
-		$xpath = "//system/storage/greyhole";
+		$xpath  = "//system/storage/greyhole";
 		$object = $xmlConfig->get($xpath);
 
 		if (is_null($object))
@@ -91,7 +91,7 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		global $xmlConfig;
 
 		// Get the configuration object
-		$xpath = "//system/storage/greyhole";
+		$xpath  = "//system/storage/greyhole";
 		$object = $xmlConfig->get($xpath);
 
 		if (is_null($object))
@@ -126,7 +126,7 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		}
 
 		$xpath_smb_share = "//services/smb/shares/share[uuid='{$object['smbref']}']";
-		$smb_share = $xmlConfig->get($xpath_smb_share);
+		$smb_share       = $xmlConfig->get($xpath_smb_share);
 
 		if (is_null($smb_share))
 		{
@@ -134,7 +134,7 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		}
 
 		$xpath_shared_folder = "//system/shares/sharedfolder[uuid='{$smb_share['sharedfolderref']}']";
-		$shared_folder = $xmlConfig->get($xpath_shared_folder);
+		$shared_folder       = $xmlConfig->get($xpath_shared_folder);
 
 		if (is_null($shared_folder))
 		{
@@ -142,7 +142,7 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		}
 
 		$xpath_mntent = "//system/fstab/mntent[uuid='{$shared_folder['mntentref']}']";
-		$mntent = $xmlConfig->get($xpath_mntent);
+		$mntent       = $xmlConfig->get($xpath_mntent);
 
 		if (is_null($mntent))
 		{
@@ -164,7 +164,7 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		global $xmlConfig;
 
 		// Get the configuration object
-		$xpath = "//system/storage/greyhole";
+		$xpath  = "//system/storage/greyhole";
 		$object = $xmlConfig->get($xpath);
 
 		if (is_null($object))
@@ -191,8 +191,8 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		$dispatcher->addListener(OMV_NOTIFY_MODIFY, "org.openmediavault.system.storage.greyhole", array($this, "updateService"), 1);
 
 		$dispatcher->addListener(OMV_NOTIFY_CREATE | OMV_NOTIFY_MODIFY | OMV_NOTIFY_DELETE,
-			"org.openmediavault.system.storage.greyhole.pool_disks.disk",
-			array($this, "updateService"), 1);
+														 "org.openmediavault.system.storage.greyhole.pool_disks.disk",
+														 array($this, "updateService"), 1);
 
 		$dispatcher->addListener(OMV_NOTIFY_CREATE, "org.openmediavault.system.storage.greyhole.smb_shares.share", array($this, "create_smb_share"), 1);
 		$dispatcher->addListener(OMV_NOTIFY_MODIFY, "org.openmediavault.system.storage.greyhole.smb_shares.share", array($this, "modify_smb_share"), 1);

@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2011 Stephane Bocquet
  * @copyright Copyright (c) 2011 Marcel Beck
  * @version $Id: greyhole.js 12 2011-11-07 18:52:10Z
- *          stephane_bocquet@hotmail.com $
+ *					stephane_bocquet@hotmail.com $
  *
  * This file is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -37,43 +37,46 @@ Ext.ns("OMV.Module.Storage.Greyhole.Admin");
  * @derived OMV.grid.TBarGridPanel
  * Display list of configured filesystems.
  */
-OMV.Module.Storage.Greyhole.Admin.SMBPanel = function(config) {
+OMV.Module.Storage.Greyhole.Admin.SMBPanel = function (config) {
 	var initialConfig = {
-		hidePagingToolbar: false,
-		autoReload: true,
-		stateId: "85f1cbf2-23d3-4960-a803-b7fc34d42235",
-		colModel: new Ext.grid.ColumnModel({
-			columns: [{
-				header: "Shared folder",
-				sortable: true,
-				dataIndex: "name",
-				id: "name"
-			},{
-				header: "Copies",
-				sortable: true,
-				dataIndex: "num_copies",
-				id: "num_copies"
-			}]
+		hidePagingToolbar:false,
+		autoReload       :true,
+		stateId          :"85f1cbf2-23d3-4960-a803-b7fc34d42235",
+		colModel         :new Ext.grid.ColumnModel({
+			columns:[
+				{
+					header   :"Shared folder",
+					sortable :true,
+					dataIndex:"name",
+					id       :"name"
+				},
+				{
+					header   :"Copies",
+					sortable :true,
+					dataIndex:"num_copies",
+					id       :"num_copies"
+				}
+			]
 		})
 	};
 	Ext.apply(initialConfig, config);
 	OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.constructor.call(this, initialConfig);
 };
 Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
-	initComponent : function() {
+	initComponent:function () {
 		this.store = new OMV.data.Store({
-			autoLoad: true,
-			remoteSort: false,
-			proxy: new OMV.data.DataProxy("Greyhole", "getSMBList"),
-			reader: new Ext.data.JsonReader({
-				idProperty: "uuid",
-				totalProperty: "total",
-				root: "data",
-				fields: [
-					{ name: "uuid" },
-					{ name: "name" },
-					{ name: "num_copies" }
-    			]
+			autoLoad  :true,
+			remoteSort:false,
+			proxy     :new OMV.data.DataProxy("Greyhole", "getSMBList"),
+			reader    :new Ext.data.JsonReader({
+				idProperty   :"uuid",
+				totalProperty:"total",
+				root         :"data",
+				fields       :[
+					{ name:"uuid" },
+					{ name:"name" },
+					{ name:"num_copies" }
+				]
 			})
 		});
 		OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.initComponent.apply(this, arguments);
@@ -82,67 +85,67 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		// reloaded, e.g. to make sure toolbar is updated depending on
 		// the latest row record values.
 		this.getSelectionModel().previousSelections = [];
-		this.store.on("beforeload", function(store, options) {
-			  var sm = this.getSelectionModel();
-			  var records = sm.getSelections();
-			  sm.previousSelections = [];
-			  Ext.each(records, function(record, index) {
-				  sm.previousSelections.push(record.get("uuid"));
-			  }, this);
-		  }, this);
-		this.store.on("load", function(store, records, options) {
-			  var sm = this.getSelectionModel();
-			  var rows = [];
-			  if (Ext.isDefined(sm.previousSelections)) {
-				  for (var i = 0; i < sm.previousSelections.length; i++) {
-					  var index = store.findExact("uuid",
-						sm.previousSelections[i]);
-					  if (index !== -1) {
-						  rows.push(index);
-					  }
-				  }
-			  }
-			  if (rows.length > 0) {
-				  sm.selectRows(rows);
-			  }
-		  }, this);
+		this.store.on("beforeload", function (store, options) {
+			var sm = this.getSelectionModel();
+			var records = sm.getSelections();
+			sm.previousSelections = [];
+			Ext.each(records, function (record, index) {
+				sm.previousSelections.push(record.get("uuid"));
+			}, this);
+		}, this);
+		this.store.on("load", function (store, records, options) {
+			var sm = this.getSelectionModel();
+			var rows = [];
+			if (Ext.isDefined(sm.previousSelections)) {
+				for (var i = 0; i < sm.previousSelections.length; i++) {
+					var index = store.findExact("uuid",
+									sm.previousSelections[i]);
+					if (index !== -1) {
+						rows.push(index);
+					}
+				}
+			}
+			if (rows.length > 0) {
+				sm.selectRows(rows);
+			}
+		}, this);
 	},
 
-	initToolbar : function() {
+	initToolbar:function () {
 		var tbar = OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.initToolbar.apply(this);
 		return tbar;
 	},
 
-	cbAddBtnHdl : function() {
+	cbAddBtnHdl:function () {
 		var wnd = new OMV.Module.Storage.Greyhole.Admin.SMBDialog({
-			uuid: OMV.UUID_UNDEFINED,
-			listeners: {
-				submit: function() {
+			uuid     :OMV.UUID_UNDEFINED,
+			listeners:{
+				submit:function () {
 					this.doReload();
 				},
-				scope: this
+				scope :this
 			}
 		});
 		wnd.show();
 	},
 
-	cbEditBtnHdl : function() {
+	cbEditBtnHdl:function () {
 		var selModel = this.getSelectionModel();
 		var record = selModel.getSelected();
 		var wnd = new OMV.Module.Storage.Greyhole.Admin.SMBDialog({
-			uuid: record.get("uuid"),
-			listeners: {
-				submit: function() {
+			uuid     :record.get("uuid"),
+			listeners:{
+				submit:function () {
 					this.doReload();
 				},
-				scope: this
+				scope :this
 			}
 		});
 		wnd.show();
 	}
 });
 OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
-	cls: OMV.Module.Storage.Greyhole.Admin.SMBPanel,
-	position : 30,
-	title : "SMB Shares"
+	cls     :OMV.Module.Storage.Greyhole.Admin.SMBPanel,
+	position:30,
+	title   :"SMB Shares"
 });

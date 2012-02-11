@@ -15,81 +15,84 @@
 Ext.ns("OMV.Module.Storage.Greyhole.Admin");
 
 /**
- * @class OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel
+ * @class OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog
  * @derived OMV.CfgObjectDialog
  */
-OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel = function(config) {
+OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog = function (config) {
 	var initialConfig = {
-		rpcService: "Greyhole",
-		rpcGetMethod: "getPoolDisk",
-		rpcSetMethod: "setPoolDisk",
-		title: ((config.uuid == OMV.UUID_UNDEFINED) ? "Add" : "Edit") + " pool disk",
-		width: 550,
-		autoHeight: true
+		rpcService  :"Greyhole",
+		rpcGetMethod:"getPoolDisk",
+		rpcSetMethod:"setPoolDisk",
+		title       :((config.uuid == OMV.UUID_UNDEFINED) ? "Add" : "Edit") + " pool disk",
+		width       :550,
+		autoHeight  :true
 	};
 	Ext.apply(initialConfig, config);
-	OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel.superclass.constructor.call(this, initialConfig);
+	OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog.superclass.constructor.call(this, initialConfig);
 };
-Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel,
-  OMV.CfgObjectDialog, {
-	initComponent : function() {
-		OMV.Module.Storage.Greyhole.Admin.PoolDiskPanel.superclass.initComponent.apply(this, arguments);
-		// Register event handler
-		this.on("load", this._updateFormFields, this);
-	},
+Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog,
+				OMV.CfgObjectDialog, {
+					initComponent:function () {
+						OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog.superclass.initComponent.apply(this, arguments);
+						// Register event handler
+						this.on("load", this._updateFormFields, this);
+					},
 
-	getFormConfig : function() {
-		return {
-			autoHeight: true
-		};
-	},
+					getFormConfig:function () {
+						return {
+							autoHeight:true
+						};
+					},
 
-	getFormItems : function() {
-		return [{
-			xtype: "combo",
-			name: "mntentref",
-			hiddenName: "mntentref",
-			fieldLabel: "Volume",
-			emptyText: "Select a volume ...",
-			allowBlank: false,
-			allowNone: false,
-			editable: false,
-			triggerAction: "all",
-			displayField: "description",
-			valueField: "uuid",
-			store: new OMV.data.Store({
-				remoteSort: false,
-				proxy: new OMV.data.DataProxy("Greyhole", "getPoolDiskCandidates"),
-				reader: new Ext.data.JsonReader({
-					idProperty: "uuid",
-					fields: [
-						{ name: "uuid" },
-						{ name: "description" }
-					]
-				})
-			})
-		},{
-			xtype: "numberfield",
-			name: "min_free",
-			fieldLabel: "Min Free (GB)",
-			allowBlank: false,
-			plugins: [ OMV.form.plugins.FieldInfo ],
-			infoText: "This is how much free space you want to reserve on each drive. This is a soft limit that will be ignored if the necessary hard drives are below their minimum."
-		}];
-	},
+					getFormItems:function () {
+						return [
+							{
+								xtype        :"combo",
+								name         :"mntentref",
+								hiddenName   :"mntentref",
+								fieldLabel   :"Volume",
+								emptyText    :"Select a volume ...",
+								allowBlank   :false,
+								allowNone    :false,
+								editable     :false,
+								triggerAction:"all",
+								displayField :"description",
+								valueField   :"uuid",
+								store        :new OMV.data.Store({
+									remoteSort:false,
+									proxy     :new OMV.data.DataProxy("Greyhole", "getPoolDiskCandidates"),
+									reader    :new Ext.data.JsonReader({
+										idProperty:"uuid",
+										fields    :[
+											{ name:"uuid" },
+											{ name:"description" }
+										]
+									})
+								})
+							},
+							{
+								xtype     :"numberfield",
+								name      :"min_free",
+								fieldLabel:"Min Free (GB)",
+								allowBlank:false,
+								plugins   :[ OMV.form.plugins.FieldInfo ],
+								infoText  :"This is how much free space you want to reserve on each drive. This is a soft limit that will be ignored if the necessary hard drives are below their minimum."
+							}
+						];
+					},
 
-	/**
-	 * Private function to update the states of various form fields.
-	 */
-	_updateFormFields : function() {
-		if (this.uuid == OMV.UUID_UNDEFINED)
-			return;
-		var fields = [ "name", "mntentref" ];
-		for (var i = 0; i < fields.length; i++) {
-			var field = this.findFormField(fields[i]);
-			if (!Ext.isEmpty(field)) {
-				field.setReadOnly(true);
-			}
-		}
-	}
-});
+					/**
+					 * Private function to update the states of various form fields.
+					 */
+					_updateFormFields:function () {
+						if (this.uuid == OMV.UUID_UNDEFINED)
+							return;
+						var fields = [ "name", "mntentref" ];
+						for (var i = 0; i < fields.length; i++) {
+							var field = this.findFormField(fields[i]);
+							if (!Ext.isEmpty(field)) {
+								field.setReadOnly(true);
+							}
+						}
+					}
+				});
