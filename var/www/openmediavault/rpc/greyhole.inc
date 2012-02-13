@@ -879,4 +879,24 @@ class GreyholeRpc extends OMVRpc {
 		return 'success';
 	}
 
+	public function emptytrash()
+	{
+		// Check permissions
+		$this->validateSession();
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		{
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
+	
+		$cmd = 'sudo greyhole --empty-trash 2 >&1';
+		OMVUtil::exec($cmd, $output, $result);
+		if ($result !== 0)
+		{
+			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
+		}
+	
+		return 'success';
+	}
+	
 }

@@ -188,6 +188,15 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			scope  :this
 		});
 
+		tbar.insert(6, {
+			id     :this.getId() + "-emptytrash",
+			xtype  :"button",
+			text   :"Empty trash",
+			icon   :"images/greyhole-emptytrash.png",
+			handler:this.cbemptytrashBtnHdl,
+			scope  :this
+		});
+		
 		return tbar;
 	},
 
@@ -290,6 +299,24 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 	},
 	/** /CANCEL FSCK HANDLER */
 
+	/** EMPTY TRASH HANDLER */
+	cbemptytrashBtnHdl:function () {
+		this.doemptytrash();
+	},
+	doemptytrash      :function () {
+		OMV.Ajax.request(this.cbemptytrashLHdl, this, "Greyhole", "emptytrash", []);
+	},
+	cbemptytrashLHdl  :function (id, response, error) {
+		if (error !== null) {
+			// Display error message
+			OMV.MessageBox.error(null, error);
+		} else {
+			OMV.MessageBox.hide();
+			this.doReload();
+		}
+	},
+	/** /EMPTY TRASH HANDLER */
+	
 	startDeletion :function (model, records) {
 		if (records.length <= 0)
 			return;
