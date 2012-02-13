@@ -48,10 +48,6 @@ class GreyholeRpc extends OMVRpc {
 				"properties":{
 					"uuid":{' . $GLOBALS['OMV_JSONSCHEMA_UUID_UNDEFINED'] . '},
 					"mntentref":{' . $GLOBALS['OMV_JSONSCHEMA_UUID'] . '},
-					"used":{"type":"integer"},
-					"possible":{"type":"integer"},
-					"available":{"type":"integer"},
-					"trash":{"type":"integer"},
 					"min_free":{"type":"integer"}
 				}
 			}'
@@ -230,36 +226,46 @@ class GreyholeRpc extends OMVRpc {
 		// Validate method parameters
 		$this->validateParams(__METHOD__, func_get_args());
 		// Get configuration object
-		$xpath   = "//system/storage/greyhole/pool_disks/disk";
-		$objects = $xmlConfig->getList($xpath);
-		if (is_null($objects))
+		$xpath               = "//system/storage/greyhole/pool_disks/disk";
+		$greyhole_pool_disks = $xmlConfig->getList($xpath);
+		if (is_null($greyhole_pool_disks))
 		{
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
 				$xpath);
 		}
 		// Add additional informations.
-		foreach ($objects as $objectk => &$objectv)
+		foreach ($greyhole_pool_disks as $objectk => &$objectv)
 		{
 			$objectv['volume'] = gettext("n/a");
 			// Get the mount point configuration object to append additional
 			// informations, e.g. the devicefile or a modified long
 			// description, to the returned objects.
-			$xpath    = sprintf("//system/fstab/mntent[uuid='%s']", $objectv['mntentref']);
-			$meobject = $xmlConfig->get($xpath);
-			if (! is_null($meobject) && ! empty($meobject))
+			$xpath        = sprintf("//system/fstab/mntent[uuid='%s']", $objectv['mntentref']);
+			$fstab_object = $xmlConfig->get($xpath);
+			if (! is_null($fstab_object) && ! empty($fstab_object))
 			{
-				$fs = new OMVFilesystem($meobject['fsname']);
+				$fs = new OMVFilesystem($fstab_object['fsname']);
 				if (TRUE === $fs->exists())
 				{
 					$objectv['volume'] = $fs->getDeviceFile();
 					$objectv['label']  = $fs->getLabel();
 					$objectv['type']   = $fs->getType();
 				}
+				$objectv['path'] = $fstab_object['dir'] . '/.greyhole';
 			}
+
+			//			$cmd = sprintf("sudo /etc/init.d/greyhole status");
+			//			OMVUtil::exec($cmd, $output, $result);
+			//			return array(
+			//				"name"		=> $this->getName(),
+			//				"title"	 => gettext("Greyhole"),
+			//				"enabled" => boolval($object['enable']),
+			//				"running" => (strpos($output[0], 'Greyhole is running.') > - 1)
+			//			);
+
 		}
 		// Filter result
-		return $this->applyFilter($objects, $start, $count, $sortField,
-															$sortDir);
+		return $this->applyFilter($greyhole_pool_disks, $start, $count, $sortField, $sortDir);
 	}
 
 	public function getPoolDiskCandidates()
@@ -576,7 +582,7 @@ class GreyholeRpc extends OMVRpc {
 			$meobject = $xmlConfig->get($xpath);
 			if (! is_null($meobject) && ! empty($meobject))
 			{
-				$objectv['name'] = $meobject['name'];
+				$objectv['name']    = $meobject['name'];
 				$objectv['comment'] = $meobject['comment'];
 			}
 		}
@@ -737,13 +743,13 @@ class GreyholeRpc extends OMVRpc {
 
 		// Get Pool Disks
 		$xpath               = "//system/storage/greyhole/pool_disks/disk";
-		$greyhole_smb_shares = $xmlConfig->getList($xpath);
-		if (is_null($greyhole_smb_shares))
+		$greyhole_pool_disks = $xmlConfig->getList($xpath);
+		if (is_null($greyhole_pool_disks))
 		{
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
 		}
 		// Add additional informations.
-		foreach ($greyhole_smb_shares as $objectk => &$objectv)
+		foreach ($greyhole_pool_disks as $objectk => &$objectv)
 		{
 			$xpath        = sprintf("//system/fstab/mntent[uuid='%s']", $objectv['mntentref']);
 			$fstab_object = $xmlConfig->get($xpath);
@@ -764,7 +770,7 @@ class GreyholeRpc extends OMVRpc {
 
 			$object   = array(
 				'show' => 'Pool Disk: ' . $objectv['label'] . ' (' . $objectv['volume'] . ')',
-				'path' => $fstab_object['dir'] . '/' . $shared_object['reldirpath'],
+				'path' => $fstab_object['dir'] . '/.greyhole',
 			);
 			$result[] = $object;
 		}
