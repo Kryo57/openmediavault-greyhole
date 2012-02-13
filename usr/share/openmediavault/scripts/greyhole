@@ -53,7 +53,7 @@ fi
 # fi
 
 echo "# Stop Greyhole"
-service ${GREYHOLE_INIT} stop
+invoke-rc.d ${GREYHOLE_INIT} stop 1>/dev/null 2>&1 || true
 
 cat /dev/null > ${GREYHOLE_CONFIG}
 run-parts ${GREYHOLE_EXTENSIONSDIR}
