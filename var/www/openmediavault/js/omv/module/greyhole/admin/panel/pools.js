@@ -50,7 +50,7 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					sortable :true,
 					dataIndex:"volume",
 					id       :"volume",
-					width    : 50
+					width    :50
 				},
 				{
 					header   :"Label",
@@ -63,15 +63,15 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					sortable :true,
 					dataIndex:"type",
 					id       :"type",
-					width    : 50
+					width    :50
 				},
 				{
 					header   :"Used",
 					sortable :true,
 					dataIndex:"used",
 					id       :"used",
-					renderer : this.usedRenderer,
-					scope    : this
+					renderer :this.usedRenderer,
+					scope    :this
 				},
 				{
 					header   :"Possible",
@@ -169,7 +169,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			handler:this.cbbalanceBtnHdl,
 			scope  :this
 		});
-		
+
 		tbar.insert(4, {
 			id     :this.getId() + "-fsck",
 			xtype  :"button",
@@ -187,7 +187,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			handler:this.cbunfsckBtnHdl,
 			scope  :this
 		});
-		
+
 		return tbar;
 	},
 
@@ -220,13 +220,13 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 	},
 
 	/** BALANCE HANDLER */
-	cbbalanceBtnHdl :function () {
+	cbbalanceBtnHdl:function () {
 		this.dobalance();
 	},
-	dobalance       :function () {
+	dobalance      :function () {
 		OMV.Ajax.request(this.cbbalanceLHdl, this, "Greyhole", "balance", []);
 	},
-	cbbalanceLHdl   :function (id, response, error) {
+	cbbalanceLHdl  :function (id, response, error) {
 		if (error !== null) {
 			// Display error message
 			OMV.MessageBox.error(null, error);
@@ -235,10 +235,10 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			this.doReload();
 		}
 	},
-	/** BALANCE HANDLER */
-	
+	/** /BALANCE HANDLER */
+
 	/** FSCK HANDLER */
-	cbfsckBtnHdl :function () {
+	cbfsckBtnHdl:function () {
 		var wnd = new OMV.Module.Storage.Greyhole.Admin.FSCKDialog({
 			listeners:{
 				success:function (wnd, path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata) {
@@ -249,7 +249,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		});
 		wnd.show();
 	},
-	dofsck       :function (path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata) {
+	dofsck      :function (path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata) {
 		OMV.Ajax.request(this.cbfsckLHdl, this, "Greyhole", "fsck", [
 			{
 				path                    :String(path),
@@ -261,7 +261,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			}
 		]);
 	},
-	cbfsckLHdl   :function (id, response, error) {
+	cbfsckLHdl  :function (id, response, error) {
 		if (error !== null) {
 			// Display error message
 			OMV.MessageBox.error(null, error);
@@ -270,16 +270,16 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			this.doReload();
 		}
 	},
-	/** FSCK HANDLER */
+	/** /FSCK HANDLER */
 
 	/** CANCEL FSCK HANDLER */
-	cbunfsckBtnHdl :function () {
+	cbunfsckBtnHdl:function () {
 		this.dounfsck();
 	},
-	dounfsck       :function () {
-		OMV.Ajax.request(this.cbbalanceLHdl, this, "Greyhole", "unfsck", []);
+	dounfsck      :function () {
+		OMV.Ajax.request(this.cbunfsckLHdl, this, "Greyhole", "unfsck", []);
 	},
-	cbunfsckLHdl   :function (id, response, error) {
+	cbunfsckLHdl  :function (id, response, error) {
 		if (error !== null) {
 			// Display error message
 			OMV.MessageBox.error(null, error);
@@ -288,9 +288,9 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			this.doReload();
 		}
 	},
-	/** CANCEL FSCK HANDLER */
-	
-	startDeletion:function (model, records) {
+	/** /CANCEL FSCK HANDLER */
+
+	startDeletion :function (model, records) {
 		if (records.length <= 0)
 			return;
 		OMV.MessageBox.show({
@@ -340,21 +340,21 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		delete this.deleteRecursive;
 	},
 
-    usedRenderer : function(val, cell, record, row, col, store) {
-        var percentage = parseInt(record.get("percentage"));
-        if (-1 == percentage) {
-                return val;
-        }
-        var id = Ext.id();
-        (function(){
-                new Ext.ProgressBar({
-                        renderTo: id,
-                        value: percentage / 100,
-                        text: val
-                });
-        }).defer(25)
-        return '<div id="' + id + '"></div>';
-    }
+	usedRenderer:function (val, cell, record, row, col, store) {
+		var percentage = parseInt(record.get("percentage"));
+		if (-1 == percentage) {
+			return val;
+		}
+		var id = Ext.id();
+		(function () {
+			new Ext.ProgressBar({
+				renderTo:id,
+				value   :percentage / 100,
+				text    :val
+			});
+		}).defer(25)
+		return '<div id="' + id + '"></div>';
+	}
 });
 
 OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
