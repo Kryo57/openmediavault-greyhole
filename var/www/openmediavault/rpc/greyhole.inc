@@ -577,6 +577,7 @@ class GreyholeRpc extends OMVRpc {
 			if (! is_null($meobject) && ! empty($meobject))
 			{
 				$objectv['name'] = $meobject['name'];
+				$objectv['comment'] = $meobject['comment'];
 			}
 		}
 		// Filter result
@@ -803,52 +804,52 @@ class GreyholeRpc extends OMVRpc {
 		// Validate method parameters
 		$this->validateParams(__METHOD__, func_get_args());
 		// Get configuration data
-	
+
 		//throw new Exception(print_r($data, true));
-	
+
 		array_boolval($data, 'delete_moves_to_trash');
-	
+
 		$path = $data['path'];
-	
+
 		$email_report         = array_boolval($data, 'email_report');
 		$greyhole_fsck_params = '';
-	
+
 		if ($email_report === true)
 		{
 			$greyhole_fsck_params .= ' --email-report';
 		}
-	
+
 		$dont_walk_metadata_store = array_boolval($data, 'dont_walk_metadata_store');
 		if ($dont_walk_metadata_store === true)
 		{
 			$greyhole_fsck_params .= ' --dont-walk-metadata-store';
 		}
-	
+
 		$find_orphaned_files = array_boolval($data, 'find_orphaned_files');
 		if ($find_orphaned_files === true)
 		{
 			$greyhole_fsck_params .= ' --find-orphaned-files';
 		}
-	
+
 		$checksums = array_boolval($data, 'checksums');
 		if ($checksums === true)
 		{
 			$greyhole_fsck_params .= ' --checksums';
 		}
-	
+
 		$delete_orphaned_metadata = array_boolval($data, 'delete_orphaned_metadata');
 		if ($delete_orphaned_metadata === true)
 		{
 			$greyhole_fsck_params .= ' --delete-orphaned-metadata';
 		}
-	
+
 		$cmd = 'sudo greyhole --fsck ' . $greyhole_fsck_params . ' --dir=' . $path . ' 2 >&1';
 		OMVUtil::exec($cmd, $output, $result);
 		if ($result !== 0)
 		{
 			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
 		}
-	
+
 		return 'success';
 	}
 
@@ -861,15 +862,15 @@ class GreyholeRpc extends OMVRpc {
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
 		$this->commitSession();
-	
+
 		$cmd = 'sudo greyhole --cancel-fsck 2 >&1';
 		OMVUtil::exec($cmd, $output, $result);
 		if ($result !== 0)
 		{
 			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
 		}
-	
+
 		return 'success';
 	}
-	
+
 }
