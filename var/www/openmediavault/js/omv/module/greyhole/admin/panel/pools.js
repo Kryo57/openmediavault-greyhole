@@ -139,6 +139,15 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		var tbar = OMV.Module.Storage.Greyhole.Admin.PoolsPanel.superclass.initToolbar.apply(this);
 
 		tbar.insert(3, {
+			id     :this.getId() + "-balance",
+			xtype  :"button",
+			text   :"Files balance",
+			icon   :"images/greyhole-balance.png",
+			handler:this.cbbalanceBtnHdl,
+			scope  :this
+		});
+		
+		tbar.insert(4, {
 			id     :this.getId() + "-fsck",
 			xtype  :"button",
 			text   :"Files check",
@@ -147,6 +156,15 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			scope  :this
 		});
 
+		tbar.insert(5, {
+			id     :this.getId() + "-unfsck",
+			xtype  :"button",
+			text   :"Cancel all checks",
+			icon   :"images/greyhole-unfsck.png",
+			handler:this.cbunfsckBtnHdl,
+			scope  :this
+		});
+		
 		return tbar;
 	},
 
@@ -178,6 +196,24 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		wnd.show();
 	},
 
+	/** BALANCE HANDLER */
+	cbbalanceBtnHdl :function () {
+		this.dobalance();
+	},
+	dobalance       :function () {
+		OMV.Ajax.request(this.cbbalanceLHdl, this, "Greyhole", "balance", []);
+	},
+	cbbalanceLHdl   :function (id, response, error) {
+		if (error !== null) {
+			// Display error message
+			OMV.MessageBox.error(null, error);
+		} else {
+			OMV.MessageBox.hide();
+			this.doReload();
+		}
+	},
+	/** BALANCE HANDLER */
+	
 	/** FSCK HANDLER */
 	cbfsckBtnHdl :function () {
 		var wnd = new OMV.Module.Storage.Greyhole.Admin.FSCKDialog({
@@ -213,8 +249,23 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 	},
 	/** FSCK HANDLER */
 
-	/** BALANCE HANDLER */
-	/** BALANCE HANDLER */
+	/** CANCEL FSCK HANDLER */
+	cbunfsckBtnHdl :function () {
+		this.dounfsck();
+	},
+	dounfsck       :function () {
+		OMV.Ajax.request(this.cbbalanceLHdl, this, "Greyhole", "unfsck", []);
+	},
+	cbunfsckLHdl   :function (id, response, error) {
+		if (error !== null) {
+			// Display error message
+			OMV.MessageBox.error(null, error);
+		} else {
+			OMV.MessageBox.hide();
+			this.doReload();
+		}
+	},
+	/** CANCEL FSCK HANDLER */
 	
 	startDeletion:function (model, records) {
 		if (records.length <= 0)

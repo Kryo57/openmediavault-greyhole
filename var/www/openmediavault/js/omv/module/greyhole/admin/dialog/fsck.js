@@ -93,7 +93,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.FSCKDialog, OMV.Window, {
 					xtype     :"checkbox",
 					name      :"email_report",
 					id        :"email_report",
-					fieldLabel:"Email Report",
+					fieldLabel:"Email report",
 					checked   :false,
 					inputValue:1,
 					plugins   :[ OMV.form.plugins.FieldInfo ],
@@ -101,9 +101,19 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.FSCKDialog, OMV.Window, {
 				},
 				{
 					xtype     :"checkbox",
+					name      :"checksums",
+					id        :"checksums",
+					fieldLabel:"Checksums",
+					checked   :false,
+					inputValue:1,
+					plugins   :[ OMV.form.plugins.FieldInfo ],
+					infoText  :"Read ALL files in your storage pool, and check that file copies are identical. This will identify any problem you might have with your file-systems. NOTE: this can take a LONG time to complete, since it will read everything from all your drives!"
+				},
+				{
+					xtype     :"checkbox",
 					name      :"dont_walk_metadata_store",
 					id        :"dont_walk_metadata_store",
-					fieldLabel:"Dont walk metadata store",
+					fieldLabel:"Don't walk metadata store",
 					checked   :false,
 					inputValue:1,
 					plugins   :[ OMV.form.plugins.FieldInfo ],
@@ -118,16 +128,6 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.FSCKDialog, OMV.Window, {
 					inputValue:1,
 					plugins   :[ OMV.form.plugins.FieldInfo ],
 					infoText  :"Scan for files with no metadata in the storage pool drives. This will allow you to include existing files on a drive in your storage pool without having to copy them manually."
-				},
-				{
-					xtype     :"checkbox",
-					name      :"checksums",
-					id        :"checksums",
-					fieldLabel:"Checksums",
-					checked   :false,
-					inputValue:1,
-					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"Read ALL files in your storage pool, and check that file copies are identical. This will identify any problem you might have with your file-systems. NOTE: this can take a LONG time to complete, since it will read everything from all your drives!"
 				},
 				{
 					xtype     :"checkbox",
