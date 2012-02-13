@@ -29,7 +29,7 @@ set -e
 case "$1" in
 	purge)
 		# Remove the configuration data
-		omv_config_delete "//services/greyhole"
+		omv_config_delete "//system/storage/greyhole"
 	;;
 
 	remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
