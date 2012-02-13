@@ -20,7 +20,7 @@ Ext.ns("OMV.Module.Storage.Greyhole.Admin");
  */
 OMV.Module.Storage.Greyhole.Admin.FSCKDialog = function (config) {
 	var initialConfig = {
-		title      :'fsck',
+		title      :'Files check',
 		waitMsg    :"Starting fsck ...",
 		width      :550,
 		autoHeight :true,

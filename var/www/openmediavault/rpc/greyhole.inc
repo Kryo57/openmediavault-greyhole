@@ -48,6 +48,10 @@ class GreyholeRpc extends OMVRpc {
 				"properties":{
 					"uuid":{' . $GLOBALS['OMV_JSONSCHEMA_UUID_UNDEFINED'] . '},
 					"mntentref":{' . $GLOBALS['OMV_JSONSCHEMA_UUID'] . '},
+					"used":{"type":"integer"},
+					"possible":{"type":"integer"},
+					"available":{"type":"integer"},
+					"trash":{"type":"integer"},
 					"min_free":{"type":"integer"}
 				}
 			}'
@@ -62,13 +66,13 @@ class GreyholeRpc extends OMVRpc {
 				"properties":{
 					"enable":{"type":"boolean"},
 					"email_to":{"type":"string"},
-          "log_level":{"type":"string","enum":["ERROR","WARN","INFO","DEBUG"]},
-          "delete_moves_to_trash":{"type":"boolean"},
-          "balance_modified_files":{"type":"boolean"},
-          "df_cache_time":{"type":"integer"},
-          "log_memory_usage":{"type":"boolean"},
-          "check_for_open_files":{"type":"boolean"},
-          "extraoptions":{"type":"string"}
+					"log_level":{"type":"string","enum":["ERROR","WARN","INFO","DEBUG"]},
+					"delete_moves_to_trash":{"type":"boolean"},
+					"balance_modified_files":{"type":"boolean"},
+					"df_cache_time":{"type":"integer"},
+					"log_memory_usage":{"type":"boolean"},
+					"check_for_open_files":{"type":"boolean"},
+					"extraoptions":{"type":"string"}
 				}
 			}'
 			),
@@ -87,6 +91,7 @@ class GreyholeRpc extends OMVRpc {
 					"properties":{
 						"uuid":{' . $GLOBALS['OMV_JSONSCHEMA_UUID_UNDEFINED'] . '},
 						"smbref":{' . $GLOBALS['OMV_JSONSCHEMA_UUID'] . '},
+						"comment":{"type":"string"},
 						"num_copies":{"type":"integer"}
 					}
 				}'

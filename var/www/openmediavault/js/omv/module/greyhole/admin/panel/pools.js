@@ -49,7 +49,8 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					header   :"Volume",
 					sortable :true,
 					dataIndex:"volume",
-					id       :"volume"
+					id       :"volume",
+					width    : 50
 				},
 				{
 					header   :"Label",
@@ -58,24 +59,43 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					id       :"label"
 				},
 				{
-					header   :"FS Type",
+					header   :"Filesystem",
 					sortable :true,
 					dataIndex:"type",
-					id       :"type"
+					id       :"type",
+					width    : 50
+				},
+				{
+					header   :"Used",
+					sortable :true,
+					dataIndex:"used",
+					id       :"used",
+					renderer : this.usedRenderer,
+					scope    : this
+				},
+				{
+					header   :"Possible",
+					sortable :true,
+					dataIndex:"possible",
+					id       :"possible"
+				},
+				{
+					header   :"Available",
+					sortable :true,
+					dataIndex:"available",
+					id       :"available"
+				},
+				{
+					header   :"Trash",
+					sortable :true,
+					dataIndex:"trash",
+					id       :"trash"
 				},
 				{
 					header   :"Min Free",
 					sortable :true,
 					dataIndex:"min_free",
-					id       :"type"
-				},
-				{
-					header   :"Status",
-					sortable :true,
-					dataIndex:"status",
-					id       :"status",
-					renderer :this.statusRenderer,
-					scope    :this
+					id       :"min_free"
 				}
 			]
 		})
@@ -98,8 +118,11 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 					{ name:"volume" },
 					{ name:"label" },
 					{ name:"type" },
-					{ name:"min_free" },
-					{ name:"type" }
+					{ name:"used" },
+					{ name:"possible" },
+					{ name:"available" },
+					{ name:"trash" },
+					{ name:"min_free" }
 				]
 			})
 		});
@@ -317,23 +340,25 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		delete this.deleteRecursive;
 	},
 
-	statusRenderer:function (val, cell, record, row, col, store) {
-		switch (val) {
-			case 1:
-				val = "Online";
-				break;
-			case 2:
-				val = "<img border='0' src='images/wait.gif'> Initializing";
-				break;
-			default:
-				val = "Missing";
-				break;
-		}
-		return val;
-	}
+    usedRenderer : function(val, cell, record, row, col, store) {
+        var percentage = parseInt(record.get("percentage"));
+        if (-1 == percentage) {
+                return val;
+        }
+        var id = Ext.id();
+        (function(){
+                new Ext.ProgressBar({
+                        renderTo: id,
+                        value: percentage / 100,
+                        text: val
+                });
+        }).defer(25)
+        return '<div id="' + id + '"></div>';
+    }
 });
+
 OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
 	cls     :OMV.Module.Storage.Greyhole.Admin.PoolsPanel,
 	position:20,
-	title   :"Pools"
+	title   :"Pool"
 });
