@@ -1,0 +1,7 @@
+Format: http://dep.debian.net/deps/dep5
+Upstream-Contact: Marcel Beck <marcel.beck@mbeck.org>
+Source: https://github.com/OMV-Plugins/openmediavault-greyhole
+
+Copyright: 2011 Stéphane Bocquet <stephane_bocquet@hotmail.com>
+ 2011 Marcel Beck <marcel.beck@mbeck.org>
+License: GPL-3
