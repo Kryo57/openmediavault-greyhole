@@ -86,7 +86,9 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					header   :"Trash",
 					sortable :true,
 					dataIndex:"trash_size",
-					id       :"trash_size"
+					id       :"trash_size",
+					renderer :this.trash_renderer,
+					scope    :this
 				},
 				{
 					header   :"Min Free",
@@ -364,6 +366,11 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 	min_free_renderer:function (val, cell, record, row, col, store) {
 		val = val + ' GiB';
 		return val;
+	},
+
+	trash_renderer:function (val, cell, record, row, col, store) {
+		var trash = parseInt(val) * 1024;
+		return OMV.Module.Storage.Greyhole.Util.Format.bytesToSize(trash);
 	}
 });
 
