@@ -141,8 +141,8 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		tbar.insert(3, {
 			id     :this.getId() + "-fsck",
 			xtype  :"button",
-			text   :"Fsck",
-			icon   :"images/fsck.png",
+			text   :"Files check",
+			icon   :"images/greyhole-fsck.png",
 			handler:this.cbfsckBtnHdl,
 			scope  :this
 		});
@@ -195,9 +195,9 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			{
 				path                    :String(path),
 				email_report            :Boolean(email_report),
+				checksums               :Boolean(checksums),
 				dont_walk_metadata_store:Boolean(dont_walk_metadata_store),
 				find_orphaned_files     :Boolean(find_orphaned_files),
-				checksums               :Boolean(checksums),
 				delete_orphaned_metadata:Boolean(delete_rphaned_metadata)
 			}
 		]);
@@ -211,8 +211,11 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			this.doReload();
 		}
 	},
-	/** /FSCK HANDLER */
+	/** FSCK HANDLER */
 
+	/** BALANCE HANDLER */
+	/** BALANCE HANDLER */
+	
 	startDeletion:function (model, records) {
 		if (records.length <= 0)
 			return;
