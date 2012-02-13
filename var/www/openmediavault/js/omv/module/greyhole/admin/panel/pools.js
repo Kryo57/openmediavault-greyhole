@@ -31,6 +31,8 @@
 // require("js/omv/module/greyhole/admin/dialog/pooldisk.js")
 // require("js/omv/module/greyhole/admin/dialog/fsck.js")
 
+// require("js/omv/module/greyhole/util/Format.js")
+
 Ext.ns("OMV.Module.Storage.Greyhole.Admin");
 
 /**
@@ -66,36 +68,33 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					width    :50
 				},
 				{
-					header   :"Used",
+					header   :"Path",
 					sortable :true,
-					dataIndex:"used",
-					id       :"used",
-					renderer :this.usedRenderer,
+					dataIndex:"path",
+					id       :"path",
+					width    :50
+				},
+				{
+					header   :"Space",
+					sortable :true,
+					dataIndex:"percent_space",
+					id       :"percent_space",
+					renderer :this.space_renderer,
 					scope    :this
-				},
-				{
-					header   :"Possible",
-					sortable :true,
-					dataIndex:"possible",
-					id       :"possible"
-				},
-				{
-					header   :"Available",
-					sortable :true,
-					dataIndex:"available",
-					id       :"available"
 				},
 				{
 					header   :"Trash",
 					sortable :true,
-					dataIndex:"trash",
-					id       :"trash"
+					dataIndex:"trash_size",
+					id       :"trash_size"
 				},
 				{
 					header   :"Min Free",
 					sortable :true,
 					dataIndex:"min_free",
-					id       :"min_free"
+					id       :"min_free",
+					renderer :this.min_free_renderer,
+					scope    :this
 				}
 			]
 		})
@@ -118,10 +117,12 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 					{ name:"volume" },
 					{ name:"label" },
 					{ name:"type" },
-					{ name:"used" },
-					{ name:"possible" },
-					{ name:"available" },
-					{ name:"trash" },
+					{ name:"path" },
+					{ name:"total_space" },
+					{ name:"used_space" },
+					{ name:"free_space" },
+					{ name:"trash_size" },
+					{ name:"potential_available_space" },
 					{ name:"min_free" }
 				]
 			})
@@ -340,20 +341,29 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		delete this.deleteRecursive;
 	},
 
-	usedRenderer:function (val, cell, record, row, col, store) {
-		var percentage = parseInt(record.get("percentage"));
-		if (-1 == percentage) {
+	space_renderer:function (val, cell, record, row, col, store) {
+		var total_space = parseInt(record.get("total_space")) * 1024;
+		var used_space = parseInt(record.get("used_space")) * 1024;
+		var free_space = parseInt(record.get("free_space")) * 1024;
+		var percentage = parseFloat(used_space / total_space);
+
+		if (-1 == total_space) {
 			return val;
 		}
 		var id = Ext.id();
 		(function () {
 			new Ext.ProgressBar({
 				renderTo:id,
-				value   :percentage / 100,
-				text    :val
+				value   :percentage,
+				text    :OMV.Module.Storage.Greyhole.Util.Format.bytesToSize(used_space) + '/' + OMV.Module.Storage.Greyhole.Util.Format.bytesToSize(total_space) + ' (' + parseInt(percentage * 100) + '%)'
 			});
-		}).defer(25)
+		}).defer(25);
 		return '<div id="' + id + '"></div>';
+	},
+
+	min_free_renderer:function (val, cell, record, row, col, store) {
+		val = val + ' GiB';
+		return val;
 	}
 });
 

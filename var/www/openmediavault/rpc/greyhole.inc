@@ -233,6 +233,10 @@ class GreyholeRpc extends OMVRpc {
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
 				$xpath);
 		}
+
+		$cmd = sprintf("sudo greyhole --stats --json");
+		OMVUtil::exec($cmd, $output, $result);
+		$greyhole_stats = json_decode($output[0]);
 		// Add additional informations.
 		foreach ($greyhole_pool_disks as $objectk => &$objectv)
 		{
@@ -254,15 +258,14 @@ class GreyholeRpc extends OMVRpc {
 				$objectv['path'] = $fstab_object['dir'] . '/.greyhole';
 			}
 
-			//			$cmd = sprintf("sudo /etc/init.d/greyhole status");
-			//			OMVUtil::exec($cmd, $output, $result);
-			//			return array(
-			//				"name"		=> $this->getName(),
-			//				"title"	 => gettext("Greyhole"),
-			//				"enabled" => boolval($object['enable']),
-			//				"running" => (strpos($output[0], 'Greyhole is running.') > - 1)
-			//			);
-
+			if (isset($greyhole_stats->$objectv['path']))
+			{
+				$objectv['total_space']               = $greyhole_stats->$objectv['path']->total_space;
+				$objectv['used_space']                = $greyhole_stats->$objectv['path']->used_space;
+				$objectv['free_space']                = $greyhole_stats->$objectv['path']->free_space;
+				$objectv['trash_size']                = $greyhole_stats->$objectv['path']->trash_size;
+				$objectv['potential_available_space'] = $greyhole_stats->$objectv['path']->potential_available_space;
+			}
 		}
 		// Filter result
 		return $this->applyFilter($greyhole_pool_disks, $start, $count, $sortField, $sortDir);
