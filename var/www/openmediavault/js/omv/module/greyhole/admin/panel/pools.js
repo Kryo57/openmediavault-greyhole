@@ -72,7 +72,7 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					sortable :true,
 					dataIndex:"path",
 					id       :"path",
-					width    :50
+					width    :200
 				},
 				{
 					header   :"Space",
@@ -88,7 +88,8 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					dataIndex:"trash_size",
 					id       :"trash_size",
 					renderer :this.trash_renderer,
-					scope    :this
+					scope    :this,
+					width    :50
 				},
 				{
 					header   :"Min Free",
@@ -96,7 +97,8 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					dataIndex:"min_free",
 					id       :"min_free",
 					renderer :this.min_free_renderer,
-					scope    :this
+					scope    :this,
+					width    :50
 				}
 			]
 		})
@@ -199,7 +201,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			handler:this.cbemptytrashBtnHdl,
 			scope  :this
 		});
-		
+
 		return tbar;
 	},
 
@@ -319,8 +321,8 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		}
 	},
 	/** /EMPTY TRASH HANDLER */
-	
-	startDeletion :function (model, records) {
+
+	startDeletion     :function (model, records) {
 		if (records.length <= 0)
 			return;
 		OMV.MessageBox.show({
