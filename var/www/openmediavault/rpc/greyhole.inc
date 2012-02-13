@@ -235,7 +235,14 @@ class GreyholeRpc extends OMVRpc {
 
 		$cmd = sprintf("sudo greyhole --stats --json");
 		OMVUtil::exec($cmd, $output, $result);
-		$greyhole_stats = json_decode($output[0]);
+		if (isset($output[0]))
+		{
+			$greyhole_stats = json_decode($output[0]);
+		}
+		else
+		{
+			$greyhole_stats = null;
+		}
 		// Add additional informations.
 		foreach ($greyhole_pool_disks as $objectk => &$objectv)
 		{
@@ -257,7 +264,7 @@ class GreyholeRpc extends OMVRpc {
 				$objectv['path'] = $fstab_object['dir'] . '/.greyhole';
 			}
 
-			if (isset($greyhole_stats->$objectv['path']))
+			if (($greyhole_stats !== null) and isset($greyhole_stats->$objectv['path']))
 			{
 				$objectv['total_space']               = $greyhole_stats->$objectv['path']->total_space;
 				$objectv['used_space']                = $greyhole_stats->$objectv['path']->used_space;
@@ -890,15 +897,15 @@ class GreyholeRpc extends OMVRpc {
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
 		$this->commitSession();
-	
+
 		$cmd = 'sudo greyhole --empty-trash 2 >&1';
 		OMVUtil::exec($cmd, $output, $result);
 		if ($result !== 0)
 		{
 			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
 		}
-	
+
 		return 'success';
 	}
-	
+
 }
