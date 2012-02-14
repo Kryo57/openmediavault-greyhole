@@ -29,6 +29,7 @@
 // require("js/omv/module/greyhole/panel/navigation.js")
 
 // require("js/omv/module/greyhole/admin/dialog/pooldisk.js")
+// require("js/omv/module/greyhole/admin/dialog/poolmngt.js")
 // require("js/omv/module/greyhole/admin/dialog/fsck.js")
 
 // require("js/omv/module/greyhole/util/Format.js")
@@ -174,7 +175,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			handler:this.cbpoolmngtBtnHdl,
 			scope  :this
 		});
-		
+
 		tbar.insert(4, {
 			id     :this.getId() + "-balance",
 			xtype  :"button",
@@ -272,7 +273,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		}
 	},
 	/** /POOL MANAGEMENT HANDLER */
-	
+
 	/** BALANCE HANDLER */
 	cbbalanceBtnHdl:function () {
 		this.dobalance();

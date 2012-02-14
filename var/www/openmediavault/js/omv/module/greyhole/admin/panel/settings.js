@@ -69,7 +69,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 						xtype     :"textfield",
 						name      :"email_to",
 						fieldLabel:"Email",
-						allowBlank:false,
+						allowBlank:true,
 						vtype     :"email",
 						plugins   :[ OMV.form.plugins.FieldInfo ],
 						infoText  :"Will receive email reports for daily fsck, or when all drives are out of available space."
@@ -151,6 +151,39 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 							rows        :"3",
 							cols        :"65"
 						}
+					},
+					{
+						xtype   :"fieldset",
+						title   :"DB Settings",
+						defaults:{
+							labelSeparator:""
+						},
+						items   :[
+							{
+								xtype     :"textfield",
+								name      :"db_host",
+								fieldLabel:"Hostname",
+								allowBlank:false
+							},
+							{
+								xtype     :"textfield",
+								name      :"db_user",
+								fieldLabel:"Username",
+								allowBlank:false
+							},
+							{
+								xtype     :"passwordfield",
+								name      :"db_pass",
+								fieldLabel:"Password",
+								allowBlank:false
+							},
+							{
+								xtype     :"textfield",
+								name      :"db_name",
+								fieldLabel:"DB Name",
+								allowBlank:false
+							}
+						]
 					}
 				]
 			}
