@@ -831,7 +831,8 @@ class GreyholeRpc extends OMVRpc {
 
 		$greyhole_poolmngt_params = '';
 
-		switch ($poolmngt) {
+		switch ($data['poolmngt'])
+		{
 			case 'wait_for':
 				$greyhole_poolmngt_params .= '--wait-for=';
 				break;
