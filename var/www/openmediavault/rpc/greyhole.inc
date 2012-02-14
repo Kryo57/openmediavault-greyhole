@@ -68,7 +68,11 @@ class GreyholeRpc extends OMVRpc {
 					"df_cache_time":{"type":"integer"},
 					"log_memory_usage":{"type":"boolean"},
 					"check_for_open_files":{"type":"boolean"},
-					"extraoptions":{"type":"string"}
+					"extraoptions":{"type":"string"},
+					"db_host":{"type":"string"},
+					"db_user":{"type":"string"},
+					"db_pass":{"type":"string"},
+					"db_name":{"type":"string"}
 				}
 			}'
 			),
@@ -143,6 +147,11 @@ class GreyholeRpc extends OMVRpc {
 		$object['log_memory_usage']     = boolval($object['log_memory_usage']);
 		$object['check_for_open_files'] = boolval($object['check_for_open_files']);
 
+		$object['db_host'] = $object['db']['db_host'];
+		$object['db_user'] = $object['db']['db_user'];
+		$object['db_pass'] = $object['db']['db_pass'];
+		$object['db_name'] = $object['db']['db_name'];
+
 		return $object;
 	}
 
@@ -188,7 +197,13 @@ class GreyholeRpc extends OMVRpc {
 
 			"pool_disks"						 => isset($oldObject['pool_disks']) ? $oldObject['pool_disks'] : array(),
 			"smb_shares"						 => isset($oldObject['smb_shares']) ? $oldObject['smb_shares'] : array(),
-			"db"										 => isset($oldObject['db']) ? $oldObject['db'] : array(),
+			"db"										 => array(
+				'db_engine' => 'mysql',
+				'db_host'   => $data['db_host'],
+				'db_user'   => $data['db_user'],
+				'db_pass'   => $data['db_pass'],
+				'db_name'   => $data['db_name'],
+			),
 		);
 
 		// Set configuration object
@@ -800,7 +815,7 @@ class GreyholeRpc extends OMVRpc {
 		$this->validateParams(__METHOD__, func_get_args());
 		// Get configuration data
 		$path = $data['path'];
-	
+
 		$greyhole_poolmngt_params = '';
 		if ($poolmngt == "wait_for")
 		{
@@ -813,10 +828,10 @@ class GreyholeRpc extends OMVRpc {
 		{
 			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
 		}
-	
+
 		return 'success';
 	}
-	
+
 	public function balance()
 	{
 		// Check permissions
