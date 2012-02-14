@@ -802,12 +802,22 @@ class GreyholeRpc extends OMVRpc {
 		$path = $data['path'];
 	
 		$greyhole_poolmngt_params = '';
-		if ($poolmngt == "wait_for")
-		{
-			$greyhole_poolmngt_params .= '--wait-for=' . $path;
-		}
 
-		$cmd = 'sudo greyhole ' . $greyhole_poolmngt_params . ' 2 >&1';
+		switch ($poolmngt) {
+			case 'wait_for':
+				$greyhole_poolmngt_params .= '--wait-for=';
+				break;
+			case 'going':
+				$greyhole_poolmngt_params .= '--going=';
+				break;
+			case 'gone':
+				$greyhole_poolmngt_params .= '--gone=';
+				break;
+			case 'replaced':
+				$greyhole_poolmngt_params .= '--replaced=';
+				break;
+		}
+		$cmd = 'sudo greyhole ' . $greyhole_poolmngt_params . $path . ' 2 >&1';
 		OMVUtil::exec($cmd, $output, $result);
 		if ($result !== 0)
 		{
