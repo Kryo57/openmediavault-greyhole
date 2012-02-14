@@ -212,10 +212,7 @@ OMVLogFile::registerType("greyhole", array(
 																					"filepath" => "/var/log/greyhole.log",
 																					"regex"		=> "/^(\S+\s+\d+\s+\S+)\s+\d+\s+(\S+)\: (.*)$/",
 																					"columns"	=> array(
-																						"date"      => array(
-																							"index" => 1,
-																							"func"  => create_function('$v', 'return strtotime($v);')
-																						),
+																						"date"      => 1,
 																						"component" => 2,
 																						"event"		 => 3
 																					)
