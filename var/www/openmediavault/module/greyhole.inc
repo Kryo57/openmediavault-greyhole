@@ -3,7 +3,7 @@
  * vim: tabstop=4
  *
  * @license		http://www.gnu.org/licenses/gpl.html GPL Version 3
- * @author     Stephane Bocquet <stephane_bocquet@hotmail.com>
+ * @author		 Stephane Bocquet <stephane_bocquet@hotmail.com>
  * @copyright	Copyright (c) 2011 Ian Moore
  * @version		$Id: greyhole.inc 8 2011-11-07 02:22:11Z stephane_bocquet@hotmail.com $
  *
@@ -25,6 +25,7 @@ require_once("openmediavault/config.inc");
 require_once("openmediavault/error.inc");
 require_once("openmediavault/util.inc");
 require_once("openmediavault/initscript.inc");
+require_once("openmediavault/log.inc");
 
 class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OMVIModuleStatus {
 
@@ -54,8 +55,8 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		$cmd = sprintf("sudo /etc/init.d/greyhole status");
 		OMVUtil::exec($cmd, $output, $result);
 		return array(
-			"name"    => $this->getName(),
-			"title"   => gettext("Greyhole"),
+			"name"		=> $this->getName(),
+			"title"	 => gettext("Greyhole"),
 			"enabled" => boolval($object['enable']),
 			"running" => (strpos($output[0], 'Greyhole is running.') > - 1)
 		);
@@ -207,17 +208,18 @@ $moduleMgr->registerModule(new GreyholeModule());
 
 // Register new logfile type
 OMVLogFile::registerType("greyhole", array(
-	"filename" => "greyhole.log",
-	"filepath" => "/var/log/greyhole.log",
-	"regex" => "/^(\S+\s+\d+\s+\S+)\s+(\S+)\: (.*)$/",
-	"columns" => array(
-		"date" => array(
-			"index" => 1,
-			"func" => create_function('$v', 'return strpdate($v,"Y/n/j G:i:s");')
-	),
-	"component" => 2,
-	"event" => 3
-	))
+																					"filename" => "greyhole.log",
+																					"filepath" => "/var/log/greyhole.log",
+																					"regex"		=> "/^(\S+\s+\d+\s+\S+)\s+\d+\s+(\S+)\: (.*)$/",
+																					"columns"	=> array(
+																						"date"      => array(
+																							"index" => 1,
+																							"func"  => create_function('$v', 'return strtotime($v);')
+																						),
+																						"component" => 2,
+																						"event"		 => 3
+																					)
+																		 )
 );
 
 
