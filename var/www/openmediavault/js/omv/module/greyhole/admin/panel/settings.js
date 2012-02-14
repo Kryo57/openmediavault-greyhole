@@ -163,3 +163,43 @@ OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
 	position:10,
 	title   :"Settings"
 });
+
+OMV.Module.Diagnostics.LogPlugin.Greyhole = function(config) {
+    var initialConfig = {
+        title: "Greyhole",
+        stateId: "c9d06952-00da-11e1-aa29-greyhole",
+        columns: [{
+            header: "Date & Time",
+            sortable: true,
+            dataIndex: "date",
+            id: "date",
+            width: 35,
+﻿  ﻿  ﻿  renderer: OMV.util.Format.localeTimeRenderer()
+﻿  ﻿  },{
+﻿  ﻿  ﻿  header: "Component",
+﻿  ﻿  ﻿  sortable: true,
+﻿  ﻿  ﻿  dataIndex: "component",
+﻿  ﻿  ﻿  width: 20
+        },{
+            header: "Event",
+            sortable: true,
+            dataIndex: "event",
+            id: "event"
+        }],
+        rpcArgs: "greyhole",
+        rpcFields: [
+            { name: "date" },
+            { name: "component" },
+            { name: "event" }
+        ]
+    };
+    Ext.apply(initialConfig, config);
+    OMV.Module.Diagnostics.LogPlugin.Greyhole.superclass.constructor.call(
+      this, initialConfig);
+};
+
+Ext.extend(OMV.Module.Diagnostics.LogPlugin.Greyhole,
+  OMV.Module.Diagnostics.LogPlugin, {
+});
+OMV.preg("log", "greyhole", OMV.Module.Diagnostics.LogPlugin.Greyhole);
+
