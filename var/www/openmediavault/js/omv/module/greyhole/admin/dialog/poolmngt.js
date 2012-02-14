@@ -92,7 +92,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog, OMV.Window, {
 				{
 					xtype     :"radio",
 					name      :"diskmngt",
-					id        :"diskmngt",
+					id        :"wait_for",
 					hideLabel :true,
 					boxLabel  :"Wait for",
 					checked   :true,
@@ -103,7 +103,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog, OMV.Window, {
 				{
 					xtype     :"radio",
 					name      :"diskmngt",
-					id        :"diskmngt",
+					id        :"going",
 					hideLabel :true,
 					boxLabel  :"Going",
 					inputValue:"going",
@@ -113,7 +113,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog, OMV.Window, {
 				{
 					xtype     :"radio",
 					name      :"diskmngt",
-					id        :"diskmngt",
+					id        :"gone",
 					hideLabel :true,
 					boxLabel  :"Gone",
 					inputValue:"gone",
@@ -123,7 +123,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog, OMV.Window, {
 				{
 					xtype     :"radio",
 					name      :"diskmngt",
-					id        :"diskmngt",
+					id        :"replaced",
 					hideLabel :true,
 					boxLabel  :"Replaced",
 					inputValue:"replaced",
@@ -145,6 +145,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog, OMV.Window, {
 		if (!basicForm.isValid()) {
 			return;
 		}
+		var path = Ext.getCmp('path').getValue();
 		var diskmngt = Ext.getCmp('diskmngt').getValue();
 
 		this.fireEvent("success", this, path, diskmngt);
