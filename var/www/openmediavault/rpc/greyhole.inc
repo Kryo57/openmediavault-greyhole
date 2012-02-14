@@ -136,8 +136,10 @@ class GreyholeRpc extends OMVRpc {
 		}
 
 		// Modify result data
-		$object['enable']    = boolval($object['enable']);
-		$object['email_to']  = $object['email_to'];
+		$object['enable'] = boolval($object['enable']);
+
+		$object['email_to'] = $object['email_to'];
+
 		$object['log_level'] = $object['log_level'];
 
 		$object['delete_moves_to_trash']  = boolval($object['delete_moves_to_trash']);
@@ -181,6 +183,17 @@ class GreyholeRpc extends OMVRpc {
 				$xpath);
 		}
 
+		if (empty($data['email_to']))
+		{
+			$xpath_email  = "//system/email";
+			$object_email = $xmlConfig->get($xpath_email);
+			if (is_null($object_email))
+			{
+				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath_email);
+			}
+			$data['email_to'] = $object_email['primaryemail'];
+		}
+
 		// Prepare configuration data
 		$object = array(
 			'enable'								 => array_boolval($data, 'enable'),
@@ -199,10 +212,10 @@ class GreyholeRpc extends OMVRpc {
 			"smb_shares"						 => isset($oldObject['smb_shares']) ? $oldObject['smb_shares'] : array(),
 			"db"										 => array(
 				'db_engine' => 'mysql',
-				'db_host'   => $data['db_host'],
-				'db_user'   => $data['db_user'],
-				'db_pass'   => $data['db_pass'],
-				'db_name'   => $data['db_name'],
+				'db_host'	 => $data['db_host'],
+				'db_user'	 => $data['db_user'],
+				'db_pass'	 => $data['db_pass'],
+				'db_name'	 => $data['db_name'],
 			),
 		);
 
