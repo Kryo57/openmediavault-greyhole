@@ -780,6 +780,36 @@ class GreyholeRpc extends OMVRpc {
 		return $result;
 	}
 
+	public function poolmngt($data)
+	{
+		// Check permissions
+		$this->validateSession();
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		{
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
+		// Validate method parameters
+		$this->validateParams(__METHOD__, func_get_args());
+		// Get configuration data
+		$path = $data['path'];
+	
+		$greyhole_poolmngt_params = '';
+		if ($poolmngt == "wait_for")
+		{
+			$greyhole_poolmngt_params .= '--wait-for=' . $path;
+		}
+
+		$cmd = 'sudo greyhole ' . $greyhole_poolmngt_params . ' 2 >&1';
+		OMVUtil::exec($cmd, $output, $result);
+		if ($result !== 0)
+		{
+			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
+		}
+	
+		return 'success';
+	}
+	
 	public function balance()
 	{
 		// Check permissions

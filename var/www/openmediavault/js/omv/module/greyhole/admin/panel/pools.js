@@ -165,6 +165,15 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		var tbar = OMV.Module.Storage.Greyhole.Admin.PoolsPanel.superclass.initToolbar.apply(this);
 
 		tbar.insert(3, {
+			id     :this.getId() + "-poolmngt",
+			xtype  :"button",
+			text   :"Pool management",
+			icon   :"images/greyhole-poolmngt.png",
+			handler:this.cbpoolmngtBtnHdl,
+			scope  :this
+		});
+		
+		tbar.insert(4, {
 			id     :this.getId() + "-balance",
 			xtype  :"button",
 			text   :"Files balance",
@@ -173,7 +182,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			scope  :this
 		});
 
-		tbar.insert(4, {
+		tbar.insert(5, {
 			id     :this.getId() + "-fsck",
 			xtype  :"button",
 			text   :"Files check",
@@ -182,7 +191,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			scope  :this
 		});
 
-		tbar.insert(5, {
+		tbar.insert(6, {
 			id     :this.getId() + "-unfsck",
 			xtype  :"button",
 			text   :"Cancel all checks",
@@ -191,7 +200,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			scope  :this
 		});
 
-		tbar.insert(6, {
+		tbar.insert(7, {
 			id     :this.getId() + "-emptytrash",
 			xtype  :"button",
 			text   :"Empty trash",
@@ -199,7 +208,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			handler:this.cbemptytrashBtnHdl,
 			scope  :this
 		});
-		
+
 		return tbar;
 	},
 
@@ -231,6 +240,37 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		wnd.show();
 	},
 
+	/** POOL MANAGEMENT HANDLER */
+	cbpoolmngtBtnHdl:function () {
+		var wnd = new OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog({
+			listeners:{
+				success:function (wnd, path, diskmngt) {
+					this.dopoolmngt(path, diskmngt);
+				},
+				scope  :this
+			}
+		});
+		wnd.show();
+	},
+	dopoolmngt     :function (path, diskmngt) {
+		OMV.Ajax.request(this.cbpoolmngtLHdl, this, "Greyhole", "poolmngt", [
+			{
+				path		:String(path),
+				diskmngt	:String(diskmngt)
+			}
+		]);
+	},
+	cbpoolmngtLHdl  :function (id, response, error) {
+		if (error !== null) {
+			// Display error message
+			OMV.MessageBox.error(null, error);
+		} else {
+			OMV.MessageBox.hide();
+			this.doReload();
+		}
+	},
+	/** /POOL MANAGEMENT HANDLER */
+	
 	/** BALANCE HANDLER */
 	cbbalanceBtnHdl:function () {
 		this.dobalance();
