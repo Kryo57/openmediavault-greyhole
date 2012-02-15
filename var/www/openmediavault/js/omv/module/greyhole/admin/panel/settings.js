@@ -154,7 +154,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 					},
 					{
 						xtype   :"fieldset",
-						title   :"DB Settings",
+						title   :"Database Settings",
 						defaults:{
 							labelSeparator:""
 						},
@@ -167,6 +167,12 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 							},
 							{
 								xtype     :"textfield",
+								name      :"db_name",
+								fieldLabel:"Database Name",
+								allowBlank:false
+							},
+							{
+								xtype     :"textfield",
 								name      :"db_user",
 								fieldLabel:"Username",
 								allowBlank:false
@@ -175,13 +181,11 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 								xtype     :"passwordfield",
 								name      :"db_pass",
 								fieldLabel:"Password",
-								allowBlank:false
-							},
-							{
-								xtype     :"textfield",
-								name      :"db_name",
-								fieldLabel:"DB Name",
-								allowBlank:false
+								allowBlank:false,
+							},{
+				                xtype     : "label",
+                                hideLabel : true,
+				                text     :"Warning: Changing your database connection properties may result in stoping Greyhole. Stop Greyhole daemon before any change. Check that the values you're modifying are matching the one of your MySQL greyhole database before restarting Greyhole daemon."
 							}
 						]
 					}
