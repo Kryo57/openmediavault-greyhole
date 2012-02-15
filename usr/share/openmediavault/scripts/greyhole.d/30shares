@@ -39,10 +39,14 @@ do
 	# Get the shared folder reference and path
 	smb_share_ref=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/smbref")
 	smb_share_num_copies=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/num_copies")
+	smb_share_trash=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/trash")
+    smb_share_stiky_files=$(omv_config_get "//system/storage/greyhole/smb_shares/share[position()=${index}]/stiky_files")
 	smb_share_name=$(omv_config_get "//services/smb/shares/share[uuid='${smb_share_ref}']/name")
 
 	xmlstarlet sel -t -m "//system/storage/greyhole/smb_shares/share[position()=${index}]" \
 	  -o "num_copies[${smb_share_name}] = ${smb_share_num_copies}" -n \
+	  -i "stiky_files[${smb_share_name}] > 0" -o "stiky_files=${smb_share_name}/" -n \
+	  -i "trash[${smb_share_name}] > 0" -o "delete_moves_to_trash[${smb_share_name}] = ${smb_share_trash}" -n \
 	  ${OMV_CONFIG_FILE} | xmlstarlet unesc >> ${GREYHOLE_CONFIG}
 
 	index=$(( ${index} - 1 ))
