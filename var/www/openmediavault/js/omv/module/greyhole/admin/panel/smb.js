@@ -64,11 +64,18 @@ OMV.Module.Storage.Greyhole.Admin.SMBPanel = function (config) {
 					width    :20
 				},
 				{
-					header   :"Trash",
+					header   :"Stiky files",
+					sortable :true,
+					dataIndex:"stiky_files",
+					id       :"stiky_files",
+					width    :20
+				},
+				{
+					header   :"Use Trash",
 					sortable :true,
 					dataIndex:"trash",
 					id       :"trash",
-					width    :10
+					width    :20
 				}
 			]
 		})
