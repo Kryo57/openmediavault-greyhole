@@ -208,15 +208,18 @@ $moduleMgr->registerModule(new GreyholeModule());
 
 // Register new logfile type
 OMVLogFile::registerType("greyhole", array(
-																					"filename" => "greyhole.log",
-																					"filepath" => "/var/log/greyhole.log",
-																					"regex"		=> "/^(\S+\s+\d+\s+\S+)\s+\d+\s+(\S+)\: (.*)$/",
-																					"columns"	=> array(
-																						"date"      => 1,
-																						"component" => 2,
-																						"event"		 => 3
-																					)
-																		 )
+		"filename" => "greyhole.log",
+		"filepath" => "/var/log/greyhole.log",
+		"regex"		=> "/^(\S+\s+\d+\s+\S+) \s+ (\S+)\: (.*)$/",
+		"columns"	=> array(
+			"date" => array(
+				"index" => 1,
+				"func" => create_function('$v', 'return strpdate($v,"M j G:i:s");')
+				),
+			"component" => 2,
+			"event"		 => 3
+		)
+	)
 );
 
 

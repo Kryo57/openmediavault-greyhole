@@ -91,7 +91,8 @@ class GreyholeRpc extends OMVRpc {
 					"properties":{
 						"uuid":{' . $GLOBALS['OMV_JSONSCHEMA_UUID_UNDEFINED'] . '},
 						"smbref":{' . $GLOBALS['OMV_JSONSCHEMA_UUID'] . '},
-						"num_copies":{"type":"integer"}
+						"num_copies":{"type":"integer"},
+						"trash":{"type":"boolean"}
 					}
 				}'
 			),
@@ -678,7 +679,8 @@ class GreyholeRpc extends OMVRpc {
 		$object = array(
 			"uuid"			 => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
 			"smbref"		 => $data['smbref'],
-			"num_copies" => (int) $data['num_copies'],
+			"num_copies"     => (int) $data['num_copies'],
+		    "trash"          => array_boolval($data, 'trash'),
 		);
 		// Set configuration data
 		$success = FALSE;

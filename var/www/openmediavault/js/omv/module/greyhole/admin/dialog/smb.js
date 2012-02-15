@@ -95,6 +95,15 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 								}),
 								plugins      :[ OMV.form.plugins.FieldInfo ],
 								infoText     :"This is the number of copies of each file you want Greyhole to keep per Share. This is not the number of duplicates! 2 copies = 1 duplicate."
+							},
+							{
+								xtype     :"checkbox",
+								name      :"trash",
+								fieldLabel:"Use Trash",
+								checked   :false,
+								inputValue:0,
+								plugins   :[ OMV.form.plugins.FieldInfo ],
+								infoText  :"You can specify per-share trash preferences that will override the global trash preference."
 							}
 						];
 					},

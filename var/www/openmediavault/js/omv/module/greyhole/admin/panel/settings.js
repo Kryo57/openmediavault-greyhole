@@ -75,28 +75,6 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 						infoText  :"Will receive email reports for daily fsck, or when all drives are out of available space."
 					},
 					{
-						xtype        :"combo",
-						name         :"log_level",
-						hiddenName   :"log_level",
-						fieldLabel   :"Log level",
-						mode         :"local",
-						store        :new Ext.data.SimpleStore({
-							fields:[ "value", "text" ],
-							data  :[
-								[ "ERROR", "Error" ],
-								[ "WARN", "Warn" ],
-								[ "INFO", "Info" ],
-								[ "DEBUG", "Debug" ]
-							]
-						}),
-						displayField :"text",
-						valueField   :"value",
-						allowBlank   :false,
-						editable     :false,
-						triggerAction:"all",
-						value        :"INFO"
-					},
-					{
 						xtype     :"checkbox",
 						name      :"delete_moves_to_trash",
 						fieldLabel:"Trash deletes",
@@ -139,6 +117,28 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 						inputValue:1,
 						plugins   :[ OMV.form.plugins.FieldInfo ],
 						infoText  :"Disable to get more speed, but this might break some files, if any application change your files while Greyhole tries to work on them."
+					},
+					{
+						xtype        :"combo",
+						name         :"log_level",
+						hiddenName   :"log_level",
+						fieldLabel   :"Log level",
+						mode         :"local",
+						store        :new Ext.data.SimpleStore({
+							fields:[ "value", "text" ],
+							data  :[
+								[ "ERROR", "Error" ],
+								[ "WARN", "Warn" ],
+								[ "INFO", "Info" ],
+								[ "DEBUG", "Debug" ]
+							]
+						}),
+						displayField :"text",
+						valueField   :"value",
+						allowBlank   :false,
+						editable     :false,
+						triggerAction:"all",
+						value        :"INFO"
 					},
 					{
 						xtype     :"textfield",

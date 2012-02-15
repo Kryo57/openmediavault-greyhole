@@ -57,11 +57,18 @@ OMV.Module.Storage.Greyhole.Admin.SMBPanel = function (config) {
 					id       :"comment"
 				},
 				{
-					header   :"Copies",
+					header   :"Files copies",
 					sortable :true,
 					dataIndex:"num_copies",
 					id       :"num_copies",
-					width    :30
+					width    :20
+				},
+				{
+					header   :"Trash",
+					sortable :true,
+					dataIndex:"trash",
+					id       :"trash",
+					width    :10
 				}
 			]
 		})
@@ -83,7 +90,8 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 					{ name:"uuid" },
 					{ name:"name" },
 					{ name:"comment" },
-					{ name:"num_copies" }
+					{ name:"num_copies" },
+					{ name:"trash" },
 				]
 			})
 		});
