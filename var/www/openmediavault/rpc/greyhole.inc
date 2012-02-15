@@ -819,6 +819,56 @@ class GreyholeRpc extends OMVRpc {
 		return $result;
 	}
 
+	public function getpooldiskCandidates()
+	{
+		//		$this->debug(var_export(func_get_args(), TRUE));
+		global $xmlConfig;
+		// Check permissions
+		$this->validateSession();
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		{
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
+	
+		// Get Pool Disks
+		$xpath               = "//system/storage/greyhole/pool_disks/disk";
+		$greyhole_pool_disks = $xmlConfig->getList($xpath);
+		if (is_null($greyhole_pool_disks))
+		{
+			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
+		}
+		$result = array();
+		// Add additional informations.
+		foreach ($greyhole_pool_disks as $objectk => &$objectv)
+		{
+			$xpath        = sprintf("//system/fstab/mntent[uuid='%s']", $objectv['mntentref']);
+			$fstab_object = $xmlConfig->get($xpath);
+			if (is_null($fstab_object))
+			{
+				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
+			}
+	
+			if (! is_null($fstab_object) && ! empty($fstab_object))
+			{
+				$fs = new OMVFilesystem($fstab_object['fsname']);
+				if (TRUE === $fs->exists())
+				{
+					$objectv['volume'] = $fs->getDeviceFile();
+					$objectv['label']  = $fs->getLabel();
+				}
+			}
+	
+			$object   = array(
+					'show' => 'Pool Disk: ' . $objectv['label'] . ' (' . $objectv['volume'] . ')',
+					'path' => $fstab_object['dir'] . '/.greyhole',
+			);
+			$result[] = $object;
+		}
+	
+		return $result;
+	}
+	
 	public function poolmngt($data)
 	{
 		// Check permissions
