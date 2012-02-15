@@ -117,7 +117,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 					{
 						xtype     :"numberfield",
 						name      :"df_cache_time",
-						fieldLabel:"DF Cache Time",
+						fieldLabel:"Disk Free space Cache time",
 						inputValue:10,
 						plugins   :[ OMV.form.plugins.FieldInfo ],
 						infoText  :"How long should free disk space calculations be cached (in seconds). Use 0 to disable caching."
