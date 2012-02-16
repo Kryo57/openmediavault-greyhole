@@ -307,67 +307,6 @@ class GreyholeRpc extends OMVRpc {
 		return $this->applyFilter($greyhole_pool_disks, $start, $count, $sortField, $sortDir);
 	}
 
-	public function getPoolDiskCandidates()
-	{
-		//		$this->debug(var_export(func_get_args(), TRUE));
-		global $xmlConfig;
-		// Check permissions
-		$this->validateSession();
-		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
-		{
-			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
-		}
-		$this->commitSession();
-		// Get list of mount points, except bind mounts.
-		$xpath   = "//system/fstab/mntent[not(contains(opts,'bind'))]";
-		$objects = $xmlConfig->getList($xpath);
-		if (is_null($objects))
-		{
-			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
-				$xpath);
-		}
-		// Get the filesystem details for each mount point.
-		$result = array();
-		foreach ($objects as $objectk => $objectv)
-		{
-			$fs = new OMVFilesystem($objectv['fsname']);
-			if (! $fs->exists())
-			{
-				//				throw new OMVException(OMVErrorMsg::E_MISC_FAILURE,
-				//				  sprintf(gettext("Filesystem '%s' not found"),
-				//				  $objectv['fsname']));
-				continue;
-			}
-			// Skip the filesystems that are not mounted at the moment.
-			if (FALSE === $fs->isMounted())
-			{
-				continue;
-			}
-
-			if (NULL !== ($xmlConfig->get("//system/storage/greyhole/pool_disks/disk[mntentref='{$objectv['uuid']}']")))
-			{
-				continue;
-			}
-			// Get the filesystem details.
-			$object = array(
-				"uuid"				=> $objectv['uuid'],
-				"devicefile"	=> $fs->getDeviceFile(),
-				"description" => $fs->getDeviceFile() // Default value
-			);
-			// Get some more filesystem details if possible.
-			if (FALSE !== ($fsStats = $fs->getStatistics()))
-			{
-				$label                 = $fs->getLabel();
-				$object['description'] = sprintf(
-					gettext("%s (%s available)"), ! empty($label) ?
-																							$label : $object['devicefile'],
-					binary_format($fsStats['available']));
-			}
-			$result[] = $object;
-		}
-		return $result;
-	}
-
 	/**
 	 * Get a shared folder config object.
 	 */
