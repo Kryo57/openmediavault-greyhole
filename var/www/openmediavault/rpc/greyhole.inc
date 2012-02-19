@@ -758,7 +758,7 @@ class GreyholeRpc extends OMVRpc {
 		return $result;
 	}
 
-	public function getpooldiskCandidates()
+	public function getpoolmngtCandidates()
 	{
 		//		$this->debug(var_export(func_get_args(), TRUE));
 		global $xmlConfig;

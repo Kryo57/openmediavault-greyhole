@@ -60,7 +60,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog,
 								valueField   :"uuid",
 								store        :new OMV.data.Store({
 									remoteSort:false,
-									proxy     :new OMV.data.DataProxy("Greyhole", "getPoolDiskCandidates"),
+									proxy     :new OMV.data.DataProxy("Greyhole", "getpoolmngtCandidates"),
 									reader    :new Ext.data.JsonReader({
 										idProperty:"uuid",
 										fields    :[
