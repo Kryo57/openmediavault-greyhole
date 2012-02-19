@@ -617,11 +617,11 @@ class GreyholeRpc extends OMVRpc {
 		// Prepare configuration data. Use the name of the shared folder
 		// as the relative directory name of the share.
 		$object = array(
-			"uuid"			 => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
-			"smbref"		 => $data['smbref'],
-			"num_copies"     => (int) $data['num_copies'],
-		    "stiky_files"    => array_boolval($data, 'stiky_files'),
-		    "trash"          => array_boolval($data, 'trash'),
+			"uuid"           => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
+			"smbref"         => $data['smbref'],
+			"num_copies"		 => (int) $data['num_copies'],
+			"stiky_files"		=> array_boolval($data, 'stiky_files'),
+			"trash"					=> array_boolval($data, 'trash'),
 		);
 		// Set configuration data
 		$success = FALSE;
@@ -769,7 +769,7 @@ class GreyholeRpc extends OMVRpc {
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
 		$this->commitSession();
-	
+
 		// Get Pool Disks
 		$xpath               = "//system/storage/greyhole/pool_disks/disk";
 		$greyhole_pool_disks = $xmlConfig->getList($xpath);
@@ -787,7 +787,7 @@ class GreyholeRpc extends OMVRpc {
 			{
 				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
 			}
-	
+
 			if (! is_null($fstab_object) && ! empty($fstab_object))
 			{
 				$fs = new OMVFilesystem($fstab_object['fsname']);
@@ -797,17 +797,17 @@ class GreyholeRpc extends OMVRpc {
 					$objectv['label']  = $fs->getLabel();
 				}
 			}
-	
+
 			$object   = array(
-					'show' => 'Pool Disk: ' . $objectv['label'] . ' (' . $objectv['volume'] . ')',
-					'path' => $fstab_object['dir'] . '/.greyhole',
+				'show' => 'Pool Disk: ' . $objectv['label'] . ' (' . $objectv['volume'] . ')',
+				'path' => $fstab_object['dir'] . '/.greyhole',
 			);
 			$result[] = $object;
 		}
-	
+
 		return $result;
 	}
-	
+
 	public function poolmngt($data)
 	{
 		// Check permissions

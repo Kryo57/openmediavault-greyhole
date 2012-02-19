@@ -68,7 +68,7 @@ OMV.Module.Storage.Greyhole.Admin.SMBPanel = function (config) {
 					sortable :true,
 					dataIndex:"stiky_files",
 					id       :"stiky_files",
-					renderer: OMV.util.Format.booleanRenderer(),
+					renderer :OMV.util.Format.booleanRenderer(),
 					width    :20
 				},
 				{
@@ -76,7 +76,7 @@ OMV.Module.Storage.Greyhole.Admin.SMBPanel = function (config) {
 					sortable :true,
 					dataIndex:"trash",
 					id       :"trash",
-					renderer: OMV.util.Format.booleanRenderer(),
+					renderer :OMV.util.Format.booleanRenderer(),
 					width    :20
 				}
 			]

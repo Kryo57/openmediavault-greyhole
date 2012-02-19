@@ -255,11 +255,11 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		});
 		wnd.show();
 	},
-	dopoolmngt     :function (path, diskmngt) {
+	dopoolmngt      :function (path, diskmngt) {
 		OMV.Ajax.request(this.cbpoolmngtLHdl, this, "Greyhole", "poolmngt", [
 			{
-				path		:String(path),
-				diskmngt	:String(diskmngt)
+				path    :String(path),
+				diskmngt:String(diskmngt)
 			}
 		]);
 	},

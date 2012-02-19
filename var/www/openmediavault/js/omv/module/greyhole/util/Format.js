@@ -8,30 +8,30 @@
 
 Ext.ns("OMV.Module.Storage.Greyhole.Util");
 
-OMV.Module.Storage.Greyhole.Util.Format = function() {
-	var f = function() {};
+OMV.Module.Storage.Greyhole.Util.Format = function () {
+	var f = function () {};
 	f.prototype = OMV.util.Format;
-	var o = function() {};
-	Ext.extend(o, f, function() {
+	var o = function () {};
+	Ext.extend(o, f, function () {
 		return {
-			bytesToSize : function(bytes) {
+			bytesToSize:function (bytes) {
 				var sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 				if (bytes == 0) return 'n/a';
 				var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-				return ((i == 0)? (bytes / Math.pow(1024, i)) : (bytes / Math.pow(1024, i)).toFixed(1)) + ' ' + sizes[i];
+				return ((i == 0) ? (bytes / Math.pow(1024, i)) : (bytes / Math.pow(1024, i)).toFixed(1)) + ' ' + sizes[i];
 			},
 
-			timeInterval : function(seconds) {
-				var weeks    = Math.floor (seconds / 604800),
-						days    = Math.floor ((seconds % 604800) / 86400),
-						hours   = Math.floor ((seconds % 86400) / 3600),
-						minutes = Math.floor ((seconds % 3600) / 60),
-						secondsLeft = Math.floor (seconds % 60),
-						w = weeks   + 'w',
-						d = days    + 'd',
-						h = hours   + 'h',
-						m = minutes + 'm',
-						s = secondsLeft + 's';
+			timeInterval:function (seconds) {
+				var weeks = Math.floor(seconds / 604800),
+								days = Math.floor((seconds % 604800) / 86400),
+								hours = Math.floor((seconds % 86400) / 3600),
+								minutes = Math.floor((seconds % 3600) / 60),
+								secondsLeft = Math.floor(seconds % 60),
+								w = weeks + 'w',
+								d = days + 'd',
+								h = hours + 'h',
+								m = minutes + 'm',
+								s = secondsLeft + 's';
 
 				if (weeks) {
 					return w + ' ' + d;
@@ -48,7 +48,7 @@ OMV.Module.Storage.Greyhole.Util.Format = function() {
 				return s;
 			},
 
-			rate : function(Bps) {
+			rate:function (Bps) {
 				var speed = Math.floor(Bps / 1000);
 
 				if (speed <= 999.95) // 0 KBps to 999 K
@@ -70,11 +70,11 @@ OMV.Module.Storage.Greyhole.Util.Format = function() {
 	return new o();
 }();
 
-Number.prototype.toTruncFixed = function(place) {
-        var ret = Math.floor(this * Math.pow (10, place)) / Math.pow(10, place);
-        return ret.toFixed(place);
+Number.prototype.toTruncFixed = function (place) {
+	var ret = Math.floor(this * Math.pow(10, place)) / Math.pow(10, place);
+	return ret.toFixed(place);
 };
 
-Number.prototype.toStringWithCommas = function() {
-    return this.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
+Number.prototype.toStringWithCommas = function () {
+	return this.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
 };
