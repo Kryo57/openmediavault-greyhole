@@ -79,7 +79,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog, OMV.Window, {
 					valueField   :"path",
 					store        :new OMV.data.Store({
 						remoteSort:false,
-						proxy     :new OMV.data.DataProxy("Greyhole", "getpoolmngtCandidates"),
+						proxy     :new OMV.data.DataProxy("Greyhole", "getPoolMngtCandidates"),
 						reader    :new Ext.data.JsonReader({
 							idProperty:"path",
 							fields    :[

@@ -668,7 +668,7 @@ class GreyholeRpc extends OMVRpc {
 		$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY, "org.openmediavault.system.storage.greyhole.smb_shares.share", $object);
 	}
 
-	public function getfsckCandidates()
+	public function getFsckCandidates()
 	{
 		//		$this->debug(var_export(func_get_args(), TRUE));
 		global $xmlConfig;
@@ -758,7 +758,7 @@ class GreyholeRpc extends OMVRpc {
 		return $result;
 	}
 
-	public function getpoolmngtCandidates()
+	public function getPoolMngtCandidates()
 	{
 		//		$this->debug(var_export(func_get_args(), TRUE));
 		global $xmlConfig;
@@ -808,7 +808,7 @@ class GreyholeRpc extends OMVRpc {
 		return $result;
 	}
 
-	public function poolmngt($data)
+	public function poolMngt($data)
 	{
 		// Check permissions
 		$this->validateSession();
@@ -950,7 +950,7 @@ class GreyholeRpc extends OMVRpc {
 		return 'success';
 	}
 
-	public function emptytrash()
+	public function emptyTrash()
 	{
 		// Check permissions
 		$this->validateSession();

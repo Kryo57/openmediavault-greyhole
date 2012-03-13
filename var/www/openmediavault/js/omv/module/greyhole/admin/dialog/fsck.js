@@ -79,7 +79,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.FSCKDialog, OMV.Window, {
 					valueField   :"path",
 					store        :new OMV.data.Store({
 						remoteSort:false,
-						proxy     :new OMV.data.DataProxy("Greyhole", "getfsckCandidates"),
+						proxy     :new OMV.data.DataProxy("Greyhole", "getFsckCandidates"),
 						reader    :new Ext.data.JsonReader({
 							idProperty:"path",
 							fields    :[

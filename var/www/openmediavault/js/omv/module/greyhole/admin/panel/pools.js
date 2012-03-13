@@ -256,7 +256,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		wnd.show();
 	},
 	dopoolmngt      :function (path, diskmngt) {
-		OMV.Ajax.request(this.cbpoolmngtLHdl, this, "Greyhole", "poolmngt", [
+		OMV.Ajax.request(this.cbpoolmngtLHdl, this, "Greyhole", "poolMngt", [
 			{
 				path    :String(path),
 				diskmngt:String(diskmngt)
@@ -350,7 +350,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		this.doemptytrash();
 	},
 	doemptytrash      :function () {
-		OMV.Ajax.request(this.cbemptytrashLHdl, this, "Greyhole", "emptytrash", []);
+		OMV.Ajax.request(this.cbemptytrashLHdl, this, "Greyhole", "emptyTrash", []);
 	},
 	cbemptytrashLHdl  :function (id, response, error) {
 		if (error !== null) {
