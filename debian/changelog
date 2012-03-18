@@ -1,3 +1,18 @@
+openmediavault-greyhole (0.2) stable; urgency=low
+
+  * Github Issue #4 - Remove Samba Shares to the Greyhole Storage
+  * Github Issue #6 - Remove a disk from Greyhole storage pool
+  * Github Issue #7 - Replace/Failure of a disk in Greyhole storage pool (Storage Pool tab)
+  * Github Issue #8 - Empty Greyhole trash (Share tab)
+  * Github Issue #13 - Add DB Section within Settings Tab
+  * Github Issue #14 - Add Greyhole Log in OMV Log Manager
+  * Github Issue #15 - Catch OMV e-mail notification to notify greyhole fsck alerts
+  * Github Issue #16 - Change Fsck dialog in pool tab + Add Fsck dialog in share tab
+  * Github Issue #18 - Sticky files
+  * Github Issue #19 - Trash per share
+
+ -- Marcel Beck <marcel.beck@mbeck.org>  Sun, 18 Mar 2012 12:09:27 +0100
+
 openmediavault-greyhole (0.1) stable; urgency=low
 
   * Initial public release
