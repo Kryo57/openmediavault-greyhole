@@ -139,6 +139,25 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 
 	initToolbar:function () {
 		var tbar = OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.initToolbar.apply(this);
+
+		tbar.insert(3, {
+			id     :this.getId() + "-fsck",
+			xtype  :"button",
+			text   :"Files check",
+			icon   :"images/greyhole-fsck.png",
+			handler:this.cbfsckBtnHdl,
+			scope  :this
+		});
+
+		tbar.insert(4, {
+			id     :this.getId() + "-unfsck",
+			xtype  :"button",
+			text   :"Cancel all checks",
+			icon   :"images/greyhole-unfsck.png",
+			handler:this.cbunfsckBtnHdl,
+			scope  :this
+		});
+
 		return tbar;
 	},
 
@@ -168,7 +187,61 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 			}
 		});
 		wnd.show();
+	},
+
+	/** FSCK HANDLER */
+	cbfsckBtnHdl:function () {
+		var wnd = new OMV.Module.Storage.Greyhole.Admin.FSCKDialog({
+			listeners:{
+				success:function (wnd, path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata) {
+					this.dofsck(path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata);
+				},
+				scope  :this
+			},
+			type     :"smb"
+		});
+		wnd.show();
+	},
+	dofsck      :function (path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata) {
+		OMV.Ajax.request(this.cbfsckLHdl, this, "Greyhole", "fsck", [
+			{
+				path                    :String(path),
+				email_report            :Boolean(email_report),
+				checksums               :Boolean(checksums),
+				dont_walk_metadata_store:Boolean(dont_walk_metadata_store),
+				find_orphaned_files     :Boolean(find_orphaned_files),
+				delete_orphaned_metadata:Boolean(delete_rphaned_metadata)
+			}
+		]);
+	},
+	cbfsckLHdl  :function (id, response, error) {
+		if (error !== null) {
+			// Display error message
+			OMV.MessageBox.error(null, error);
+		} else {
+			OMV.MessageBox.hide();
+			this.doReload();
+		}
+	},
+	/** /FSCK HANDLER */
+
+	/** CANCEL FSCK HANDLER */
+	cbunfsckBtnHdl:function () {
+		this.dounfsck();
+	},
+	dounfsck      :function () {
+		OMV.Ajax.request(this.cbunfsckLHdl, this, "Greyhole", "unfsck", []);
+	},
+	cbunfsckLHdl  :function (id, response, error) {
+		if (error !== null) {
+			// Display error message
+			OMV.MessageBox.error(null, error);
+		} else {
+			OMV.MessageBox.hide();
+			this.doReload();
+		}
 	}
+	/** /CANCEL FSCK HANDLER */
 });
 
 OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {

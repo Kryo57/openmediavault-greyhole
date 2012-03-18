@@ -300,7 +300,8 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 					this.dofsck(path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata);
 				},
 				scope  :this
-			}
+			},
+			type   :"pool"
 		});
 		wnd.show();
 	},
