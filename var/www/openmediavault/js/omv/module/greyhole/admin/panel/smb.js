@@ -45,7 +45,7 @@ OMV.Module.Storage.Greyhole.Admin.SMBPanel = function (config) {
 		colModel         :new Ext.grid.ColumnModel({
 			columns:[
 				{
-					header   :"Shared folder",
+					header   :"SMB Share",
 					sortable :true,
 					dataIndex:"name",
 					id       :"name"
