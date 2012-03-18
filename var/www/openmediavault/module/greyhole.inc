@@ -31,6 +31,9 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 
 	/**
 	 * Get the module name.
+	 *
+	 * @static
+	 * @return string
 	 */
 	public static function getName()
 	{
@@ -39,6 +42,9 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 
 	/**
 	 * Get the module status.
+	 *
+	 * @return array
+	 * @throws OMVException
 	 */
 	public function getStatus()
 	{
@@ -64,6 +70,8 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 
 	/**
 	 * Update the service.
+	 *
+	 * @throws OMVException
 	 */
 	public function updateService()
 	{
@@ -87,6 +95,11 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		}
 	}
 
+	/**
+	 * Create SMB Share
+	 *
+	 * @throws OMVException
+	 */
 	public function create_smb_share()
 	{
 		global $xmlConfig;
@@ -109,6 +122,13 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		}
 	}
 
+	/**
+	 * Modify SMB Share
+	 *
+	 * @param $object
+	 *
+	 * @throws OMVException
+	 */
 	public function modify_smb_share($object)
 	{
 		global $xmlConfig;
@@ -160,6 +180,11 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		}
 	}
 
+	/**
+	 * Delete SMB Share
+	 *
+	 * @throws OMVException
+	 */
 	public function delete_smb_share()
 	{
 		global $xmlConfig;
@@ -184,6 +209,8 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 
 	/**
 	 * Bind listeners.
+	 *
+	 * @param OMVNotifyDispatcher $dispatcher
 	 */
 	function bindListeners(OMVNotifyDispatcher $dispatcher)
 	{
