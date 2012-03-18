@@ -617,8 +617,8 @@ class GreyholeRpc extends OMVRpc {
 		// Prepare configuration data. Use the name of the shared folder
 		// as the relative directory name of the share.
 		$object = array(
-			"uuid"           => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
-			"smbref"         => $data['smbref'],
+			"uuid"					 => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
+			"smbref"				 => $data['smbref'],
 			"num_copies"		 => (int) $data['num_copies'],
 			"stiky_files"		=> array_boolval($data, 'stiky_files'),
 			"trash"					=> array_boolval($data, 'trash'),
