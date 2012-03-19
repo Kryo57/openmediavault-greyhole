@@ -19,7 +19,7 @@ OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 				sortable :true,
 				dataIndex:"date",
 				id       :"date",
-				width    :50,
+				width    :40,
 				renderer :OMV.util.Format.localeTimeRenderer()
 			},
 			{
