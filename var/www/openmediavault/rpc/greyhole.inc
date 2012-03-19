@@ -68,7 +68,11 @@ class GreyholeRpc extends OMVRpc {
 					"df_cache_time":{"type":"integer"},
 					"log_memory_usage":{"type":"boolean"},
 					"check_for_open_files":{"type":"boolean"},
-					"extraoptions":{"type":"string"}
+					"extraoptions":{"type":"string"},
+					"db_host":{"type":"string"},
+					"db_user":{"type":"string"},
+					"db_pass":{"type":"string"},
+					"db_name":{"type":"string"}
 				}
 			}'
 			),
@@ -87,7 +91,9 @@ class GreyholeRpc extends OMVRpc {
 					"properties":{
 						"uuid":{' . $GLOBALS['OMV_JSONSCHEMA_UUID_UNDEFINED'] . '},
 						"smbref":{' . $GLOBALS['OMV_JSONSCHEMA_UUID'] . '},
-						"num_copies":{"type":"integer"}
+						"num_copies":{"type":"string"},
+						"sticky_files":{"type":"boolean"},
+						"trash":{"type":"boolean"}
 					}
 				}'
 			),
@@ -132,16 +138,23 @@ class GreyholeRpc extends OMVRpc {
 		}
 
 		// Modify result data
-		$object['enable']    = boolval($object['enable']);
-		$object['email_to']  = $object['email_to'];
-		$object['log_level'] = $object['log_level'];
+		$object['enable'] = boolval($object['enable']);
+
+		//$object['email_to'] = $object['email_to'];
+
+		//$object['log_level'] = $object['log_level'];
 
 		$object['delete_moves_to_trash']  = boolval($object['delete_moves_to_trash']);
 		$object['balance_modified_files'] = boolval($object['balance_modified_files']);
 
-		$object['df_cache_time']        = $object['df_cache_time'];
+		//$object['df_cache_time']        = $object['df_cache_time'];
 		$object['log_memory_usage']     = boolval($object['log_memory_usage']);
 		$object['check_for_open_files'] = boolval($object['check_for_open_files']);
+
+		$object['db_host'] = $object['db']['db_host'];
+		$object['db_user'] = $object['db']['db_user'];
+		$object['db_pass'] = $object['db']['db_pass'];
+		$object['db_name'] = $object['db']['db_name'];
 
 		return $object;
 	}
@@ -149,7 +162,9 @@ class GreyholeRpc extends OMVRpc {
 	/**
 	 * Set configuration data for service.
 	 *
-	 * @param $data array configuration data
+	 * @param array $data Settings object
+	 *
+	 * @throws OMVException
 	 */
 	function setSettings($data)
 	{
@@ -172,6 +187,17 @@ class GreyholeRpc extends OMVRpc {
 				$xpath);
 		}
 
+		if (empty($data['email_to']))
+		{
+			$xpath_email  = "//system/email";
+			$object_email = $xmlConfig->get($xpath_email);
+			if (is_null($object_email))
+			{
+				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath_email);
+			}
+			$data['email_to'] = $object_email['primaryemail'];
+		}
+
 		// Prepare configuration data
 		$object = array(
 			'enable'								 => array_boolval($data, 'enable'),
@@ -188,7 +214,13 @@ class GreyholeRpc extends OMVRpc {
 
 			"pool_disks"						 => isset($oldObject['pool_disks']) ? $oldObject['pool_disks'] : array(),
 			"smb_shares"						 => isset($oldObject['smb_shares']) ? $oldObject['smb_shares'] : array(),
-			"db"										 => isset($oldObject['db']) ? $oldObject['db'] : array(),
+			"db"										 => array(
+				'db_engine' => 'mysql',
+				'db_host'	 => $data['db_host'],
+				'db_user'	 => $data['db_user'],
+				'db_pass'	 => $data['db_pass'],
+				'db_name'	 => $data['db_name'],
+			),
 		);
 
 		// Set configuration object
@@ -209,7 +241,15 @@ class GreyholeRpc extends OMVRpc {
 	}
 
 	/**
-	 * Get list of shared folder configuration objects.
+	 * Get Pool List
+	 *
+	 * @param int		$start
+	 * @param int		$count
+	 * @param string $sortField
+	 * @param string $sortDir
+	 *
+	 * @return array
+	 * @throws OMVException
 	 */
 	function getPoolList($start, $count, $sortField, $sortDir)
 	{
@@ -277,69 +317,13 @@ class GreyholeRpc extends OMVRpc {
 		return $this->applyFilter($greyhole_pool_disks, $start, $count, $sortField, $sortDir);
 	}
 
-	public function getPoolDiskCandidates()
-	{
-		//		$this->debug(var_export(func_get_args(), TRUE));
-		global $xmlConfig;
-		// Check permissions
-		$this->validateSession();
-		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
-		{
-			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
-		}
-		$this->commitSession();
-		// Get list of mount points, except bind mounts.
-		$xpath   = "//system/fstab/mntent[not(contains(opts,'bind'))]";
-		$objects = $xmlConfig->getList($xpath);
-		if (is_null($objects))
-		{
-			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
-				$xpath);
-		}
-		// Get the filesystem details for each mount point.
-		$result = array();
-		foreach ($objects as $objectk => $objectv)
-		{
-			$fs = new OMVFilesystem($objectv['fsname']);
-			if (! $fs->exists())
-			{
-				//				throw new OMVException(OMVErrorMsg::E_MISC_FAILURE,
-				//				  sprintf(gettext("Filesystem '%s' not found"),
-				//				  $objectv['fsname']));
-				continue;
-			}
-			// Skip the filesystems that are not mounted at the moment.
-			if (FALSE === $fs->isMounted())
-			{
-				continue;
-			}
-
-			if (NULL !== ($xmlConfig->get("//system/storage/greyhole/pool_disks/disk[mntentref='{$objectv['uuid']}']")))
-			{
-				continue;
-			}
-			// Get the filesystem details.
-			$object = array(
-				"uuid"				=> $objectv['uuid'],
-				"devicefile"	=> $fs->getDeviceFile(),
-				"description" => $fs->getDeviceFile() // Default value
-			);
-			// Get some more filesystem details if possible.
-			if (FALSE !== ($fsStats = $fs->getStatistics()))
-			{
-				$label                 = $fs->getLabel();
-				$object['description'] = sprintf(
-					gettext("%s (%s available)"), ! empty($label) ?
-																							$label : $object['devicefile'],
-					binary_format($fsStats['available']));
-			}
-			$result[] = $object;
-		}
-		return $result;
-	}
-
 	/**
-	 * Get a shared folder config object.
+	 * Get specific Pool Disk
+	 *
+	 * @param string $uuid Pool disk UUID
+	 *
+	 * @return array
+	 * @throws OMVException
 	 */
 	function getPoolDisk($uuid)
 	{
@@ -376,7 +360,11 @@ class GreyholeRpc extends OMVRpc {
 	}
 
 	/**
-	 * Set (add/update) a shared folder config object.
+	 * Set (add/update) a pool disk object.
+	 *
+	 * @param array $data Pool disk object
+	 *
+	 * @throws OMVException
 	 */
 	function setPoolDisk($data)
 	{
@@ -444,10 +432,12 @@ class GreyholeRpc extends OMVRpc {
 	}
 
 	/**
-	 * Delete a shared folder config object.
+	 * Delete a pool disk
 	 *
-	 * @param uuid			The UUID of the configuration object to delete.
-	 * @param recursive Remove the shared folder and its content recursively.
+	 * @param string	$uuid			The UUID of the configuration object to delete.
+	 * @param boolean $recursive Remove the shared folder and its content recursively.
+	 *
+	 * @throws OMVException
 	 */
 	function deletePoolDisk($uuid, $recursive)
 	{
@@ -488,7 +478,79 @@ class GreyholeRpc extends OMVRpc {
 		$dispatcher->notify(OMV_NOTIFY_DELETE, "org.openmediavault.service.greyhole.pool_disks.disk", $object, $recursive);
 	}
 
+	/**
+	 * Get pool disk candidates
+	 *
+	 * @return array
+	 * @throws OMVException
+	 */
+	public function getPoolDiskCandidates()
+	{
+		//		$this->debug(var_export(func_get_args(), TRUE));
+		global $xmlConfig;
+		// Check permissions
+		$this->validateSession();
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		{
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
+		// Get list of mount points, except bind mounts.
+		$xpath   = "//system/fstab/mntent[not(contains(opts,'bind'))]";
+		$objects = $xmlConfig->getList($xpath);
+		if (is_null($objects))
+		{
+			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
+				$xpath);
+		}
+		// Get the filesystem details for each mount point.
+		$result = array();
+		foreach ($objects as $objectk => $objectv)
+		{
+			$fs = new OMVFilesystem($objectv['fsname']);
+			if (! $fs->exists())
+			{
+				//				throw new OMVException(OMVErrorMsg::E_MISC_FAILURE,
+				//				  sprintf(gettext("Filesystem '%s' not found"),
+				//				  $objectv['fsname']));
+				continue;
+			}
+			// Skip the filesystems that are not mounted at the moment.
+			if (FALSE === $fs->isMounted())
+			{
+				continue;
+			}
 
+			if (NULL !== ($xmlConfig->get("//system/storage/greyhole/pool_disks/disk[mntentref='{$objectv['uuid']}']")))
+			{
+				continue;
+			}
+			// Get the filesystem details.
+			$object = array(
+				"uuid"				=> $objectv['uuid'],
+				"devicefile"	=> $fs->getDeviceFile(),
+				"description" => $fs->getDeviceFile() // Default value
+			);
+			// Get some more filesystem details if possible.
+			if (FALSE !== ($fsStats = $fs->getStatistics()))
+			{
+				$label                 = $fs->getLabel();
+				$object['description'] = sprintf(
+					gettext("%s (%s available)"), ! empty($label) ?
+																							$label : $object['devicefile'],
+					binary_format($fsStats['available']));
+			}
+			$result[] = $object;
+		}
+		return $result;
+	}
+
+	/**
+	 * Count pool disks
+	 *
+	 * @return array
+	 * @throws OMVException
+	 */
 	public function getPoolDiskCount()
 	{
 		//		$this->debug(var_export(func_get_args(), TRUE));
@@ -520,7 +582,12 @@ class GreyholeRpc extends OMVRpc {
 		return $result;
 	}
 
-
+	/**
+	 * Get SMB share candidates
+	 *
+	 * @return array
+	 * @throws OMVException
+	 */
 	public function getSMBShareCandidates()
 	{
 		//		$this->debug(var_export(func_get_args(), TRUE));
@@ -559,9 +626,16 @@ class GreyholeRpc extends OMVRpc {
 		return $result;
 	}
 
-
 	/**
-	 * Get list of shared folder configuration objects.
+	 * Get SMB list
+	 *
+	 * @param int		$start
+	 * @param int		$count
+	 * @param string $sortField
+	 * @param string $sortDir
+	 *
+	 * @return array
+	 * @throws OMVException
 	 */
 	public function getSMBList($start, $count, $sortField, $sortDir)
 	{
@@ -603,6 +677,11 @@ class GreyholeRpc extends OMVRpc {
 
 	/**
 	 * Get a shared folder config object.
+	 *
+	 * @param $uuid SMB share UUID
+	 *
+	 * @return array
+	 * @throws OMVException
 	 */
 	public function getSBMShare($uuid)
 	{
@@ -631,6 +710,10 @@ class GreyholeRpc extends OMVRpc {
 
 	/**
 	 * Set (add/update) a shared folder config object.
+	 *
+	 * @param array $data
+	 *
+	 * @throws OMVException
 	 */
 	public function setSMBShare($data)
 	{
@@ -648,9 +731,11 @@ class GreyholeRpc extends OMVRpc {
 		// Prepare configuration data. Use the name of the shared folder
 		// as the relative directory name of the share.
 		$object = array(
-			"uuid"			 => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
-			"smbref"		 => $data['smbref'],
-			"num_copies" => (int) $data['num_copies'],
+			"uuid"						=> ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
+			"smbref"					=> $data['smbref'],
+			"num_copies"			=> (int) $data['num_copies'],
+			"sticky_files"		=> array_boolval($data, 'sticky_files'),
+			"trash"					 => array_boolval($data, 'trash'),
 		);
 		// Set configuration data
 		$success = FALSE;
@@ -658,9 +743,7 @@ class GreyholeRpc extends OMVRpc {
 		if ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED'])
 		{
 			// Check uniqueness
-			if (TRUE === $xmlConfig->exists("//system/storage/greyhole/smb_shares/share[" .
-																			"uuid='{$object['uuid']}']")
-			)
+			if (TRUE === $xmlConfig->exists("//system/storage/greyhole/smb_shares/share[" . "uuid='{$object['uuid']}']"))
 			{
 				throw new OMVException(OMVErrorMsg::E_CONFIG_OBJECT_UNIQUENESS);
 			}
@@ -697,7 +780,116 @@ class GreyholeRpc extends OMVRpc {
 		$dispatcher->notify(($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY, "org.openmediavault.system.storage.greyhole.smb_shares.share", $object);
 	}
 
-	public function getfsckCandidates()
+	/**
+	 * Get fsck candidates
+	 *
+	 * @return array
+	 * @throws OMVException
+	 */
+	public function getFsckCandidates($start, $count, $sortField, $sortDir, $params)
+	{
+		global $xmlConfig;
+		// Check permissions
+		$this->validateSession();
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		{
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
+
+		$type   = $params['type'];
+		$result = array();
+		// Add additional informations.
+		if (in_array($type, array('all', 'smb')))
+		{
+			// Get SMB Shares
+			$xpath               = "//system/storage/greyhole/smb_shares/share";
+			$greyhole_smb_shares = $xmlConfig->getList($xpath);
+			if (is_null($greyhole_smb_shares))
+			{
+				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
+			}
+
+			foreach ($greyhole_smb_shares as $objectk => &$objectv)
+			{
+				$xpath      = sprintf("//services/smb/shares/share[uuid='%s']", $objectv['smbref']);
+				$smb_object = $xmlConfig->get($xpath);
+				if (is_null($smb_object))
+				{
+					throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
+				}
+
+				$xpath         = sprintf("//system/shares/sharedfolder[uuid='%s']", $smb_object['sharedfolderref']);
+				$shared_object = $xmlConfig->get($xpath);
+				if (is_null($shared_object))
+				{
+					throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
+				}
+
+				$xpath        = sprintf("//system/fstab/mntent[uuid='%s']", $shared_object['mntentref']);
+				$fstab_object = $xmlConfig->get($xpath);
+				if (is_null($fstab_object))
+				{
+					throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
+				}
+
+				$object   = array(
+					'type' => 'SMB Share',
+					'name' => $smb_object['name'],
+					'show' => 'SMB Share: ' . $smb_object['name'],
+					'path' => $fstab_object['dir'] . '/' . $shared_object['reldirpath'],
+				);
+				$result[] = $object;
+			}
+		}
+
+		// Get Pool Disks
+		if (in_array($type, array('all', 'pool')))
+		{
+			$xpath               = "//system/storage/greyhole/pool_disks/disk";
+			$greyhole_pool_disks = $xmlConfig->getList($xpath);
+			if (is_null($greyhole_pool_disks))
+			{
+				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
+			}
+			// Add additional informations.
+			foreach ($greyhole_pool_disks as $objectk => &$objectv)
+			{
+				$xpath        = sprintf("//system/fstab/mntent[uuid='%s']", $objectv['mntentref']);
+				$fstab_object = $xmlConfig->get($xpath);
+				if (is_null($fstab_object))
+				{
+					throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
+				}
+
+				if (! is_null($fstab_object) && ! empty($fstab_object))
+				{
+					$fs = new OMVFilesystem($fstab_object['fsname']);
+					if (TRUE === $fs->exists())
+					{
+						$objectv['volume'] = $fs->getDeviceFile();
+						$objectv['label']  = $fs->getLabel();
+					}
+				}
+
+				$object   = array(
+					'show' => 'Pool Disk: ' . $objectv['label'] . ' (' . $objectv['volume'] . ')',
+					'path' => $fstab_object['dir'] . '/.greyhole',
+				);
+				$result[] = $object;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Get pool managment candidates
+	 *
+	 * @return array
+	 * @throws OMVException
+	 */
+	public function getPoolMngtCandidates()
 	{
 		//		$this->debug(var_export(func_get_args(), TRUE));
 		global $xmlConfig;
@@ -709,47 +901,6 @@ class GreyholeRpc extends OMVRpc {
 		}
 		$this->commitSession();
 
-		// Get SMB Shares
-		$xpath               = "//system/storage/greyhole/smb_shares/share";
-		$greyhole_smb_shares = $xmlConfig->getList($xpath);
-		if (is_null($greyhole_smb_shares))
-		{
-			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
-		}
-		$result = array();
-		// Add additional informations.
-		foreach ($greyhole_smb_shares as $objectk => &$objectv)
-		{
-			$xpath      = sprintf("//services/smb/shares/share[uuid='%s']", $objectv['smbref']);
-			$smb_object = $xmlConfig->get($xpath);
-			if (is_null($smb_object))
-			{
-				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
-			}
-
-			$xpath         = sprintf("//system/shares/sharedfolder[uuid='%s']", $smb_object['sharedfolderref']);
-			$shared_object = $xmlConfig->get($xpath);
-			if (is_null($shared_object))
-			{
-				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
-			}
-
-			$xpath        = sprintf("//system/fstab/mntent[uuid='%s']", $shared_object['mntentref']);
-			$fstab_object = $xmlConfig->get($xpath);
-			if (is_null($fstab_object))
-			{
-				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
-			}
-
-			$object   = array(
-				'type' => 'SMB Share',
-				'name' => $smb_object['name'],
-				'show' => 'SMB Share: ' . $smb_object['name'],
-				'path' => $fstab_object['dir'] . '/' . $shared_object['reldirpath'],
-			);
-			$result[] = $object;
-		}
-
 		// Get Pool Disks
 		$xpath               = "//system/storage/greyhole/pool_disks/disk";
 		$greyhole_pool_disks = $xmlConfig->getList($xpath);
@@ -757,6 +908,7 @@ class GreyholeRpc extends OMVRpc {
 		{
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
 		}
+		$result = array();
 		// Add additional informations.
 		foreach ($greyhole_pool_disks as $objectk => &$objectv)
 		{
@@ -787,6 +939,61 @@ class GreyholeRpc extends OMVRpc {
 		return $result;
 	}
 
+	/**
+	 * Pool managment
+	 *
+	 * @param array $data
+	 *
+	 * @return string
+	 * @throws OMVException
+	 */
+	public function poolMngt($data)
+	{
+		// Check permissions
+		$this->validateSession();
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		{
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
+		// Validate method parameters
+		$this->validateParams(__METHOD__, func_get_args());
+		// Get configuration data
+		$path = $data['path'];
+
+		$greyhole_poolmngt_params = '';
+
+		switch ($data['poolmngt'])
+		{
+			case 'wait_for':
+				$greyhole_poolmngt_params .= '--wait-for=';
+				break;
+			case 'going':
+				$greyhole_poolmngt_params .= '--going=';
+				break;
+			case 'gone':
+				$greyhole_poolmngt_params .= '--gone=';
+				break;
+			case 'replaced':
+				$greyhole_poolmngt_params .= '--replaced=';
+				break;
+		}
+		$cmd = 'sudo greyhole ' . $greyhole_poolmngt_params . $path . ' 2 >&1';
+		OMVUtil::exec($cmd, $output, $result);
+		if ($result !== 0)
+		{
+			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
+		}
+
+		return 'success';
+	}
+
+	/**
+	 * Balance
+	 *
+	 * @return string
+	 * @throws OMVException
+	 */
 	public function balance()
 	{
 		// Check permissions
@@ -807,6 +1014,14 @@ class GreyholeRpc extends OMVRpc {
 		return 'success';
 	}
 
+	/**
+	 * fsck
+	 *
+	 * @param array $data
+	 *
+	 * @return string
+	 * @throws OMVException
+	 */
 	public function fsck($data)
 	{
 		// Check permissions
@@ -868,6 +1083,12 @@ class GreyholeRpc extends OMVRpc {
 		return 'success';
 	}
 
+	/**
+	 * Cancel fsck
+	 *
+	 * @return string
+	 * @throws OMVException
+	 */
 	public function unfsck()
 	{
 		// Check permissions
@@ -888,7 +1109,13 @@ class GreyholeRpc extends OMVRpc {
 		return 'success';
 	}
 
-	public function emptytrash()
+	/**
+	 * Empty trash
+	 *
+	 * @return string
+	 * @throws OMVException
+	 */
+	public function emptyTrash()
 	{
 		// Check permissions
 		$this->validateSession();

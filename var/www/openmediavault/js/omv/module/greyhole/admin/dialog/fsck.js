@@ -39,7 +39,8 @@ OMV.Module.Storage.Greyhole.Admin.FSCKDialog = function (config) {
 				handler:this.cbCancelBtnHdl.createDelegate(this),
 				scope  :this
 			}
-		]
+		],
+		type       :"all"
 	};
 	Ext.apply(initialConfig, config);
 	OMV.Module.Storage.Greyhole.Admin.FSCKDialog.superclass.constructor.call(this, initialConfig);
@@ -79,7 +80,9 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.FSCKDialog, OMV.Window, {
 					valueField   :"path",
 					store        :new OMV.data.Store({
 						remoteSort:false,
-						proxy     :new OMV.data.DataProxy("Greyhole", "getfsckCandidates"),
+						proxy     :new OMV.data.DataProxy("Greyhole", "getFsckCandidates", [
+							{ "type":this.type }
+						]),
 						reader    :new Ext.data.JsonReader({
 							idProperty:"path",
 							fields    :[
