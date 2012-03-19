@@ -64,10 +64,10 @@ OMV.Module.Storage.Greyhole.Admin.SMBPanel = function (config) {
 					width    :20
 				},
 				{
-					header   :"Stiky files",
+					header   :"Sticky files",
 					sortable :true,
-					dataIndex:"stiky_files",
-					id       :"stiky_files",
+					dataIndex:"sticky_files",
+					id       :"sticky_files",
 					renderer :OMV.util.Format.booleanRenderer(),
 					width    :20
 				},
@@ -100,7 +100,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 					{ name:"name" },
 					{ name:"comment" },
 					{ name:"num_copies" },
-					{ name:"stiky_files" },
+					{ name:"sticky_files" },
 					{ name:"trash" },
 				]
 			})

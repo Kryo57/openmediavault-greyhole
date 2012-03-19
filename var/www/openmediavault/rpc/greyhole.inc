@@ -92,7 +92,7 @@ class GreyholeRpc extends OMVRpc {
 						"uuid":{' . $GLOBALS['OMV_JSONSCHEMA_UUID_UNDEFINED'] . '},
 						"smbref":{' . $GLOBALS['OMV_JSONSCHEMA_UUID'] . '},
 						"num_copies":{"type":"integer"},
-						"stiky_files":{"type":"boolean"},
+						"sticky_files":{"type":"boolean"},
 						"trash":{"type":"boolean"}
 					}
 				}'
@@ -731,11 +731,11 @@ class GreyholeRpc extends OMVRpc {
 		// Prepare configuration data. Use the name of the shared folder
 		// as the relative directory name of the share.
 		$object = array(
-			"uuid"					 => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
-			"smbref"				 => $data['smbref'],
-			"num_copies"		 => (int) $data['num_copies'],
-			"stiky_files"		=> array_boolval($data, 'stiky_files'),
-			"trash"					=> array_boolval($data, 'trash'),
+			"uuid"						=> ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
+			"smbref"					=> $data['smbref'],
+			"num_copies"			=> (int) $data['num_copies'],
+			"sticky_files"		=> array_boolval($data, 'sticky_files'),
+			"trash"					 => array_boolval($data, 'trash'),
 		);
 		// Set configuration data
 		$success = FALSE;
@@ -743,9 +743,7 @@ class GreyholeRpc extends OMVRpc {
 		if ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED'])
 		{
 			// Check uniqueness
-			if (TRUE === $xmlConfig->exists("//system/storage/greyhole/smb_shares/share[" .
-																			"uuid='{$object['uuid']}']")
-			)
+			if (TRUE === $xmlConfig->exists("//system/storage/greyhole/smb_shares/share[" . "uuid='{$object['uuid']}']"))
 			{
 				throw new OMVException(OMVErrorMsg::E_CONFIG_OBJECT_UNIQUENESS);
 			}
