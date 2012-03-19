@@ -91,7 +91,7 @@ class GreyholeRpc extends OMVRpc {
 					"properties":{
 						"uuid":{' . $GLOBALS['OMV_JSONSCHEMA_UUID_UNDEFINED'] . '},
 						"smbref":{' . $GLOBALS['OMV_JSONSCHEMA_UUID'] . '},
-						"num_copies":{"type":"integer"},
+						"num_copies":{"type":"string"},
 						"sticky_files":{"type":"boolean"},
 						"trash":{"type":"boolean"}
 					}

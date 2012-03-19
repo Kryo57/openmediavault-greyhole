@@ -101,7 +101,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 								name      :"sticky_files",
 								fieldLabel:"Sticky files",
 								checked   :false,
-								inputValue:0,
+								inputValue:1,
 								plugins   :[ OMV.form.plugins.FieldInfo ],
 								infoText  :"Sticky files are files that will always 'live' together in the storage pool. This will allow you to read (and read-only!) those files by using the storage pool drives themselves, instead of using the mounted shares."
 							},
@@ -110,7 +110,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 								name      :"trash",
 								fieldLabel:"Use Trash",
 								checked   :false,
-								inputValue:0,
+								inputValue:1,
 								plugins   :[ OMV.form.plugins.FieldInfo ],
 								infoText  :"You can specify per-share trash preferences that will override the global trash preference."
 							}
