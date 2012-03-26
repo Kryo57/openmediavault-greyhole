@@ -1,3 +1,9 @@
+openmediavault-greyhole (0.2.1) stable; urgency=high
+
+  * Fix Problem with SMB Shares
+
+ -- Marcel Beck <marcel.beck@mbeck.org>  Mon, 26 Mar 2012 21:44:14 +0200
+
 openmediavault-greyhole (0.2) stable; urgency=low
 
   * Github Issue #4 - Remove Samba Shares to the Greyhole Storage
