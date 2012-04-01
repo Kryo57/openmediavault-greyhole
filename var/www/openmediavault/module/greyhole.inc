@@ -205,6 +205,40 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		{
 			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
 		}
+
+		$xpath_smb_share = "//services/smb/shares/share[uuid='{$object['smbref']}']";
+		$smb_share       = $xmlConfig->get($xpath_smb_share);
+		
+		if (is_null($smb_share))
+		{
+			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath_smb_share);
+		}
+		
+		$xpath_shared_folder = "//system/shares/sharedfolder[uuid='{$smb_share['sharedfolderref']}']";
+		$shared_folder       = $xmlConfig->get($xpath_shared_folder);
+		
+		if (is_null($shared_folder))
+		{
+			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath_shared_folder);
+		}
+		
+		$xpath_mntent = "//system/fstab/mntent[uuid='{$shared_folder['mntentref']}']";
+		$mntent       = $xmlConfig->get($xpath_mntent);
+		
+		if (is_null($mntent))
+		{
+			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath_shared_folder);
+		}
+		
+		$dir = $mntent['dir'] . '/' . $shared_folder['name'];
+		
+		// TODO : Check the free space on the Landing Zone disk then execute this cmd in batch mode
+		// $cmd = 'sudo find ' . $dir . ' -type l -printf '%l\000' -printf '%p\000' | xargs -0 -l2 bash -s -c 'mv "$0" "$1"'';
+		// OMVUtil::exec($cmd, $output, $result);
+		// if ($result !== 0)
+		//{
+		//	throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
+		//}
 	}
 
 	/**
