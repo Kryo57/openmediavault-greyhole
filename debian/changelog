@@ -1,3 +1,9 @@
+openmediavault-greyhole (0.2.2) stable; urgency=high
+
+  * Github Issue #22 - Can't validate SMB dialog box when editing for sticky/trash options
+
+ -- Marcel Beck <marcel.beck@mbeck.org>  Sun, 01 Apr 2012 23:11:46 +0200
+
 openmediavault-greyhole (0.2.1) stable; urgency=high
 
   * Fix Problem with SMB Shares
