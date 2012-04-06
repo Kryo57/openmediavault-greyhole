@@ -368,7 +368,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		if (records.length <= 0)
 			return;
 		OMV.MessageBox.show({
-			title  :"Delete Pool Disk",
+			title  :"Remove Pool Disk",
 			msg    :"Do you want to remove the content of the pool disk directory " +
 							"recursively? Note, the data will be permanently " +
 							"deleted then. Select 'No' to delete the pool disk directory only " +
