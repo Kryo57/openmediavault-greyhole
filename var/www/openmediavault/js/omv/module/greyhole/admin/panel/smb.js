@@ -90,7 +90,10 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		this.store = new OMV.data.Store({
 			autoLoad  :true,
 			remoteSort:false,
-			proxy     :new OMV.data.DataProxy("Greyhole", "getSMBList"),
+			proxy: new OMV.data.DataProxy({
+																			"service": "Greyhole",
+																			"method": "getSMBList"
+																		}),
 			reader    :new Ext.data.JsonReader({
 				idProperty   :"uuid",
 				totalProperty:"total",
@@ -203,7 +206,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		wnd.show();
 	},
 	dofsck      :function (path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata) {
-		OMV.Ajax.request(this.cbfsckLHdl, this, "Greyhole", "fsck", [
+		OMV.Ajax.request(this.cbfsckLHdl, this, "Greyhole", "fsck",
 			{
 				path                    :String(path),
 				email_report            :Boolean(email_report),
@@ -212,7 +215,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 				find_orphaned_files     :Boolean(find_orphaned_files),
 				delete_orphaned_metadata:Boolean(delete_rphaned_metadata)
 			}
-		]);
+		);
 	},
 	cbfsckLHdl  :function (id, response, error) {
 		if (error !== null) {

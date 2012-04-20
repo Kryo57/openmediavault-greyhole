@@ -60,7 +60,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 								valueField   :"uuid",
 								store        :new OMV.data.Store({
 									remoteSort:false,
-									proxy     :new OMV.data.DataProxy("Greyhole", "getSMBShareCandidates"),
+									proxy: new OMV.data.DataProxy({"service": "Greyhole","method": "getSMBShareCandidates"}),
 									reader    :new Ext.data.JsonReader({
 										idProperty:"uuid",
 										fields    :[
@@ -84,7 +84,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 								valueField   :"number",
 								store        :new OMV.data.Store({
 									remoteSort:false,
-									proxy     :new OMV.data.DataProxy("Greyhole", "getPoolDiskCount"),
+									proxy: new OMV.data.DataProxy({"service": "Greyhole","method": "getPoolDiskCount"}),
 									reader    :new Ext.data.JsonReader({
 										idProperty:"number",
 										fields    :[
