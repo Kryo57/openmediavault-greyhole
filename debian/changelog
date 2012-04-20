@@ -1,3 +1,9 @@
+openmediavault-greyhole (0.3) unstable; urgency=high
+
+  * Github Issue #21 - OMV 0.3 Port
+
+ -- Marcel Beck <marcel.beck@mbeck.org>  Fri, 20 Apr 2012 23:43:11 +0200
+
 openmediavault-greyhole (0.2.2) stable; urgency=high
 
   * Github Issue #22 - Can't validate SMB dialog box when editing for sticky/trash options
