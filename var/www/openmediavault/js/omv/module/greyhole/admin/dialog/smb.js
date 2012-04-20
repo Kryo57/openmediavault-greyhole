@@ -50,8 +50,8 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 								xtype        :"combo",
 								name         :"smbref",
 								hiddenName   :"smbref",
-								fieldLabel   :"SMB Share",
-								emptyText    :"Select an SMB Share ...",
+								fieldLabel   :_("SMB Share"),
+								emptyText    :_("Select an SMB Share ..."),
 								allowBlank   :false,
 								allowNone    :false,
 								editable     :false,
@@ -74,8 +74,8 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 								xtype        :"combo",
 								name         :"num_copies",
 								hiddenName   :"num_copies",
-								fieldLabel   :"Number of Copies",
-								emptyText    :"Select Number of Copies ...",
+								fieldLabel   :_("Number of Copies"),
+								emptyText    :_("Select Number of Copies ..."),
 								allowBlank   :false,
 								allowNone    :false,
 								editable     :false,
@@ -94,25 +94,25 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog,
 									})
 								}),
 								plugins      :[ OMV.form.plugins.FieldInfo ],
-								infoText     :"This is the number of copies of each file you want Greyhole to keep per Share. This is not the number of duplicates! 2 copies = 1 duplicate."
+								infoText     :_("This is the number of copies of each file you want Greyhole to keep per Share. This is not the number of duplicates! 2 copies = 1 duplicate.")
 							},
 							{
 								xtype     :"checkbox",
 								name      :"sticky_files",
-								fieldLabel:"Sticky files",
+								fieldLabel:_("Sticky files"),
 								checked   :false,
 								inputValue:1,
 								plugins   :[ OMV.form.plugins.FieldInfo ],
-								infoText  :"Sticky files are files that will always 'live' together in the storage pool. This will allow you to read (and read-only!) those files by using the storage pool drives themselves, instead of using the mounted shares."
+								infoText  :_("Sticky files are files that will always 'live' together in the storage pool. This will allow you to read (and read-only!) those files by using the storage pool drives themselves, instead of using the mounted shares.")
 							},
 							{
 								xtype     :"checkbox",
 								name      :"trash",
-								fieldLabel:"Use Trash",
+								fieldLabel:_("Use Trash"),
 								checked   :false,
 								inputValue:1,
 								plugins   :[ OMV.form.plugins.FieldInfo ],
-								infoText  :"You can specify per-share trash preferences that will override the global trash preference."
+								infoText  :_("You can specify per-share trash preferences that will override the global trash preference.")
 							}
 						];
 					},

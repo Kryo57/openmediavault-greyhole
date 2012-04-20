@@ -49,34 +49,34 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 		colModel         :new Ext.grid.ColumnModel({
 			columns:[
 				{
-					header   :"Volume",
+					header   :_("Volume"),
 					sortable :true,
 					dataIndex:"volume",
 					id       :"volume",
 					width    :50
 				},
 				{
-					header   :"Label",
+					header   :_("Label"),
 					sortable :true,
 					dataIndex:"label",
 					id       :"label"
 				},
 				{
-					header   :"Filesystem",
+					header   :_("Filesystem"),
 					sortable :true,
 					dataIndex:"type",
 					id       :"type",
 					width    :50
 				},
 				{
-					header   :"Path",
+					header   :_("Path"),
 					sortable :true,
 					dataIndex:"path",
 					id       :"path",
 					width    :200
 				},
 				{
-					header   :"Space",
+					header   :_("Space"),
 					sortable :true,
 					dataIndex:"percent_space",
 					id       :"percent_space",
@@ -84,7 +84,7 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					scope    :this
 				},
 				{
-					header   :"Trash",
+					header   :_("Trash"),
 					sortable :true,
 					dataIndex:"trash_size",
 					id       :"trash_size",
@@ -93,7 +93,7 @@ OMV.Module.Storage.Greyhole.Admin.PoolsPanel = function (config) {
 					width    :50
 				},
 				{
-					header   :"Min Free",
+					header   :_("Min Free"),
 					sortable :true,
 					dataIndex:"min_free",
 					id       :"min_free",
@@ -170,7 +170,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		tbar.insert(3, {
 			id     :this.getId() + "-poolmngt",
 			xtype  :"button",
-			text   :"Pool management",
+			text   :_("Pool management"),
 			icon   :"images/greyhole-poolmngt.png",
 			handler:this.cbpoolmngtBtnHdl,
 			scope  :this
@@ -179,7 +179,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		tbar.insert(4, {
 			id     :this.getId() + "-balance",
 			xtype  :"button",
-			text   :"Files balance",
+			text   :_("Files balance"),
 			icon   :"images/greyhole-balance.png",
 			handler:this.cbbalanceBtnHdl,
 			scope  :this
@@ -188,7 +188,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		tbar.insert(5, {
 			id     :this.getId() + "-fsck",
 			xtype  :"button",
-			text   :"Files check",
+			text   :_("Files check"),
 			icon   :"images/greyhole-fsck.png",
 			handler:this.cbfsckBtnHdl,
 			scope  :this
@@ -197,7 +197,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		tbar.insert(6, {
 			id     :this.getId() + "-unfsck",
 			xtype  :"button",
-			text   :"Cancel all checks",
+			text   :_("Cancel all checks"),
 			icon   :"images/greyhole-unfsck.png",
 			handler:this.cbunfsckBtnHdl,
 			scope  :this
@@ -206,7 +206,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		tbar.insert(7, {
 			id     :this.getId() + "-emptytrash",
 			xtype  :"button",
-			text   :"Empty trash",
+			text   :_("Empty trash"),
 			icon   :"images/greyhole-emptytrash.png",
 			handler:this.cbemptytrashBtnHdl,
 			scope  :this
@@ -368,20 +368,20 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		if (records.length <= 0)
 			return;
 		OMV.MessageBox.show({
-			title  :"Delete Pool Disk",
-			msg    :"Do you want to remove the content of the pool disk directory " +
+			title  :_("Delete Pool Disk"),
+			msg    :_("Do you want to remove the content of the pool disk directory " +
 							"recursively? Note, the data will be permanently " +
 							"deleted then. Select 'No' to delete the pool disk directory only " +
-							"or 'Cancel' to abort.",
+							"or 'Cancel' to abort."),
 			buttons:Ext.Msg.YESNOCANCEL,
 			fn     :function (answer) {
 				this.deleteRecursive = false;
 				switch (answer) {
 					case "yes":
 						OMV.MessageBox.show({
-							title  :"Confirmation",
-							msg    :"Do you really want to remove the pool disk " +
-											"directory content?",
+							title  :_("Confirmation"),
+							msg    :_("Do you really want to remove the pool disk " +
+											"directory content?"),
 							buttons:OMV.Msg.YESCANCEL,
 							fn     :function (answer) {
 								if (answer === "yes") {

@@ -45,26 +45,26 @@ OMV.Module.Storage.Greyhole.Admin.SMBPanel = function (config) {
 		colModel         :new Ext.grid.ColumnModel({
 			columns:[
 				{
-					header   :"SMB Share",
+					header   :_("SMB Share"),
 					sortable :true,
 					dataIndex:"name",
 					id       :"name"
 				},
 				{
-					header   :"Comment",
+					header   :_("Comment"),
 					sortable :true,
 					dataIndex:"comment",
 					id       :"comment"
 				},
 				{
-					header   :"Files copies",
+					header   :_("Files copies"),
 					sortable :true,
 					dataIndex:"num_copies",
 					id       :"num_copies",
 					width    :20
 				},
 				{
-					header   :"Sticky files",
+					header   :_("Sticky files"),
 					sortable :true,
 					dataIndex:"sticky_files",
 					id       :"sticky_files",
@@ -72,7 +72,7 @@ OMV.Module.Storage.Greyhole.Admin.SMBPanel = function (config) {
 					width    :20
 				},
 				{
-					header   :"Use Trash",
+					header   :_("Use Trash"),
 					sortable :true,
 					dataIndex:"trash",
 					id       :"trash",
@@ -101,7 +101,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 					{ name:"comment" },
 					{ name:"num_copies" },
 					{ name:"sticky_files" },
-					{ name:"trash" },
+					{ name:"trash" }
 				]
 			})
 		});
@@ -143,7 +143,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		tbar.insert(3, {
 			id     :this.getId() + "-fsck",
 			xtype  :"button",
-			text   :"Files check",
+			text   :_("Files check"),
 			icon   :"images/greyhole-fsck.png",
 			handler:this.cbfsckBtnHdl,
 			scope  :this
@@ -152,7 +152,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		tbar.insert(4, {
 			id     :this.getId() + "-unfsck",
 			xtype  :"button",
-			text   :"Cancel all checks",
+			text   :_("Cancel all checks"),
 			icon   :"images/greyhole-unfsck.png",
 			handler:this.cbunfsckBtnHdl,
 			scope  :this
@@ -247,5 +247,5 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
 	cls     :OMV.Module.Storage.Greyhole.Admin.SMBPanel,
 	position:30,
-	title   :"SMB Shares"
+	title   :_("SMB Shares")
 });

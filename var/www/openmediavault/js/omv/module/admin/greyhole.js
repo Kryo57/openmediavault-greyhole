@@ -15,7 +15,7 @@ OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 		stateId  :"a4150311-5e3a-4693-8381-933088a9f98f",
 		columns  :[
 			{
-				header   :"Date & Time",
+				header   :_("Date & Time"),
 				sortable :true,
 				dataIndex:"date",
 				id       :"date",
@@ -23,14 +23,14 @@ OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 				renderer :OMV.util.Format.localeTimeRenderer()
 			},
 			{
-				header   :"Component",
+				header   :_("Component"),
 				sortable :true,
 				dataIndex:"component",
 				id       :"component",
 				width    :20
 			},
 			{
-				header   :"Event",
+				header   :_("Event"),
 				sortable :true,
 				dataIndex:"event",
 				id       :"event"

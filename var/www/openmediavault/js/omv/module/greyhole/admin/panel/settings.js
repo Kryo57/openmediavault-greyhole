@@ -35,7 +35,7 @@ Ext.ns("OMV.Module.Storage.Greyhole.Admin");
  */
 OMV.Module.Storage.Greyhole.Admin.SettingsPanel = function (config) {
 	var initialConfig = {
-		title       :"Settings",
+		title       :_("Settings"),
 		rpcService  :"Greyhole",
 		rpcGetMethod:"getSettings",
 		rpcSetMethod:"setSettings"
@@ -53,7 +53,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 		return [
 			{
 				xtype   :"fieldset",
-				title   :"General settings",
+				title   :_("General settings"),
 				defaults:{
 					labelSeparator:""
 				},
@@ -61,76 +61,76 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 					{
 						xtype     :"checkbox",
 						name      :"enable",
-						fieldLabel:"Enable",
+						fieldLabel:_("Enable"),
 						checked   :false,
 						inputValue:1
 					},
 					{
 						xtype     :"textfield",
 						name      :"email_to",
-						fieldLabel:"Email",
+						fieldLabel:_("Email"),
 						allowBlank:true,
 						vtype     :"email",
 						plugins   :[ OMV.form.plugins.FieldInfo ],
-						infoText  :"Will receive email reports for daily fsck, or when all drives are out of available space."
+						infoText  :_("Will receive email reports for daily fsck, or when all drives are out of available space.")
 					},
 					{
 						xtype     :"checkbox",
 						name      :"delete_moves_to_trash",
-						fieldLabel:"Trash deletes",
+						fieldLabel:_("Trash deletes"),
 						checked   :true,
 						inputValue:1,
 						plugins   :[ OMV.form.plugins.FieldInfo ],
-						infoText  :"Move deleted files to trash instead of deleting them (This is a global setting that can be overided by local option on each Greyhole share)"
+						infoText  :_("Move deleted files to trash instead of deleting them (This is a global setting that can be overided by local option on each Greyhole share)")
 					},
 					{
 						xtype     :"checkbox",
 						name      :"balance_modified_files",
-						fieldLabel:"Balance modified",
+						fieldLabel:_("Balance modified"),
 						checked   :false,
 						inputValue:1,
 						plugins   :[ OMV.form.plugins.FieldInfo ],
-						infoText  :"Enable this to use modified files copies to help balance the available space in your storage pool drives."
+						infoText  :_("Enable this to use modified files copies to help balance the available space in your storage pool drives.")
 					},
 					{
 						xtype     :"numberfield",
 						name      :"df_cache_time",
-						fieldLabel:"Disk Free space Cache time",
+						fieldLabel:_("Disk Free space Cache time"),
 						inputValue:10,
 						plugins   :[ OMV.form.plugins.FieldInfo ],
-						infoText  :"How long should free disk space calculations be cached (in seconds). Use 0 to disable caching."
+						infoText  :_("How long should free disk space calculations be cached (in seconds). Use 0 to disable caching.")
 					},
 					{
 						xtype     :"checkbox",
 						name      :"log_memory_usage",
-						fieldLabel:"Log Memory Usage",
+						fieldLabel:_("Log Memory Usage"),
 						checked   :false,
 						inputValue:1,
 						plugins   :[ OMV.form.plugins.FieldInfo ],
-						infoText  :"Log Greyhole memory usage on each log line."
+						infoText  :_("Log Greyhole memory usage on each log line.")
 					},
 					{
 						xtype     :"checkbox",
 						name      :"check_for_open_files",
-						fieldLabel:"Check for open Files",
+						fieldLabel:_("Check for open Files"),
 						checked   :false,
 						inputValue:1,
 						plugins   :[ OMV.form.plugins.FieldInfo ],
-						infoText  :"Disable to get more speed, but this might break some files, if any application change your files while Greyhole tries to work on them."
+						infoText  :_("Disable to get more speed, but this might break some files, if any application change your files while Greyhole tries to work on them.")
 					},
 					{
 						xtype        :"combo",
 						name         :"log_level",
 						hiddenName   :"log_level",
-						fieldLabel   :"Log level",
+						fieldLabel   :_("Log level"),
 						mode         :"local",
 						store        :new Ext.data.SimpleStore({
 							fields:[ "value", "text" ],
 							data  :[
-								[ "ERROR", "Error" ],
-								[ "WARN", "Warn" ],
-								[ "INFO", "Info" ],
-								[ "DEBUG", "Debug" ]
+								[ "ERROR", _("Error") ],
+								[ "WARN", _("Warn") ],
+								[ "INFO", _("Info") ],
+								[ "DEBUG", _("Debug") ]
 							]
 						}),
 						displayField :"text",
@@ -143,7 +143,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 					{
 						xtype     :"textfield",
 						name      :"extraoptions",
-						fieldLabel:"Extra options",
+						fieldLabel:_("Extra options"),
 						allowBlank:true,
 						autoCreate:{
 							tag         :"textarea",
@@ -154,7 +154,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 					},
 					{
 						xtype   :"fieldset",
-						title   :"Database Settings",
+						title   :_("Database Settings"),
 						defaults:{
 							labelSeparator:""
 						},
@@ -162,31 +162,31 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 							{
 								xtype     :"textfield",
 								name      :"db_host",
-								fieldLabel:"Hostname",
+								fieldLabel:_("Hostname"),
 								allowBlank:false
 							},
 							{
 								xtype     :"textfield",
 								name      :"db_name",
-								fieldLabel:"Database Name",
+								fieldLabel:_("Database Name"),
 								allowBlank:false
 							},
 							{
 								xtype     :"textfield",
 								name      :"db_user",
-								fieldLabel:"Username",
+								fieldLabel:_("Username"),
 								allowBlank:false
 							},
 							{
 								xtype     :"passwordfield",
 								name      :"db_pass",
-								fieldLabel:"Password",
+								fieldLabel:_("Password"),
 								allowBlank:false
 							},
 							{
 								xtype    :"label",
 								hideLabel:true,
-								text     :"Warning: Changing your database connection properties may result in stoping Greyhole. Stop Greyhole daemon before any change. Check that the values you're modifying are matching the one of your MySQL greyhole database before restarting Greyhole daemon."
+								text     :_("Warning: Changing your database connection properties may result in stoping Greyhole. Stop Greyhole daemon before any change. Check that the values you're modifying are matching the one of your MySQL greyhole database before restarting Greyhole daemon.")
 							}
 						]
 					}

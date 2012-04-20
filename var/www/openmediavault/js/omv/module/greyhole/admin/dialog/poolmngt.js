@@ -20,8 +20,8 @@ Ext.ns("OMV.Module.Storage.Greyhole.Admin");
  */
 OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog = function (config) {
 	var initialConfig = {
-		title      :'Disk Pool Management',
-		waitMsg    :"Starting disk pool management ...",
+		title      :_('Disk Pool Management'),
+		waitMsg    :_("Starting disk pool management ..."),
 		width      :550,
 		autoHeight :true,
 		layout     :"fit",
@@ -69,8 +69,8 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog, OMV.Window, {
 					name         :"path",
 					id           :"path",
 					hiddenName   :"path",
-					fieldLabel   :"Pool disk",
-					emptyText    :"Select a Pool Disk...",
+					fieldLabel   :_("Pool disk"),
+					emptyText    :_("Select a Pool Disk..."),
 					allowBlank   :false,
 					allowNone    :false,
 					editable     :false,
@@ -94,41 +94,41 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog, OMV.Window, {
 					name      :"diskmngt",
 					id        :"wait_for",
 					hideLabel :true,
-					boxLabel  :"Wait for",
+					boxLabel  :_("Wait for"),
 					checked   :true,
 					inputValue:"wait_for",
 					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"Tell Greyhole that the missing drive will return soon, and that it shouldn't re-create additional file copies to replace it."
+					infoText  :_("Tell Greyhole that the missing drive will return soon, and that it shouldn't re-create additional file copies to replace it.")
 				},
 				{
 					xtype     :"radio",
 					name      :"diskmngt",
 					id        :"going",
 					hideLabel :true,
-					boxLabel  :"Going",
+					boxLabel  :_("Going"),
 					inputValue:"going",
 					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"Tell Greyhole that you want to remove a drive. Greyhole will then make sure you don't loose any files, and that the correct number of file copies are created to replace the missing drive."
+					infoText  :_("Tell Greyhole that you want to remove a drive. Greyhole will then make sure you don't loose any files, and that the correct number of file copies are created to replace the missing drive.")
 				},
 				{
 					xtype     :"radio",
 					name      :"diskmngt",
 					id        :"gone",
 					hideLabel :true,
-					boxLabel  :"Gone",
+					boxLabel  :_("Gone"),
 					inputValue:"gone",
 					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"Tell Greyhole that the missing drive at is gone for good. Greyhole will start replacing the missing file copies instantly."
+					infoText  :_("Tell Greyhole that the missing drive at is gone for good. Greyhole will start replacing the missing file copies instantly.")
 				},
 				{
 					xtype     :"radio",
 					name      :"diskmngt",
 					id        :"replaced",
 					hideLabel :true,
-					boxLabel  :"Replaced",
+					boxLabel  :_("Replaced"),
 					inputValue:"replaced",
 					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"Tell Greyhole that you replaced the drive."
+					infoText  :_("Tell Greyhole that you replaced the drive.")
 				}
 			]
 		});
