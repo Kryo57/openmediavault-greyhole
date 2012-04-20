@@ -192,6 +192,36 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		wnd.show();
 	},
 
+	startDeletion	:function (model, records) {
+		if (records.length <= 0)
+			return;
+		OMV.MessageBox.show({
+			title  :"Remove share from Greyhole",
+			msg    :"Do you want to remove this share from Greyhole? " +
+							"Note, you must check your Greyhole logs " +
+							"to see if this action have completely succeded.",
+			buttons:Ext.Msg.YESCANCEL,
+			fn     :function (answer) {
+				switch (answer) {
+					case "yes":
+						OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.startDeletion.call(this, model, records);
+						break;
+					case "no":
+						break;
+				}
+			},
+			scope  :this,
+			icon   :Ext.Msg.QUESTION
+		});
+	},
+	doDeletion:function (record) {
+		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "deleteSMBShare", [ record.get("uuid") ]);
+	},
+	afterDeletion:function () {
+		OMV.Module.Storage.Greyhole.SMBPanel.PoolsPanel.superclass.afterDeletion.apply(this, arguments);
+	},
+	
+	
 	/** FSCK HANDLER */
 	cbfsckBtnHdl:function () {
 		var wnd = new OMV.Module.Storage.Greyhole.Admin.FSCKDialog({

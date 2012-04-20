@@ -705,7 +705,37 @@ class GreyholeRpc extends OMVRpc {
 		return $this->applyFilter($objects, $data['start'], $data['limit'], $data['sortfield'], $data['sortdir']);
 	}
 
+	/**
+	 * Remove a Samba share from Greyhole
+	 *
+	 * @param string $shareName
+	 *
+	 * @return string
+	 * @throws OMVException
+	 */
+	public function deleteSMBShare($smbRef)
+	{
+		// Check permissions
+		$this->validateSession();
+		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		{
+			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
+		}
+		$this->commitSession();
+	
+		// $cmd = 'sudo greyhole --remove-share=' . $smbRef . ' 2 >&1';
+		// OMVUtil::exec($cmd, $output, $result);
 
+		// if ($result !== 0)
+		// {
+			// TODO : How to check the command return code if not enough space instead of an error?
+			// throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
+		// }
+	
+		return 'success';
+	}
+	
+	
 	/**
 	 * Get a shared folder config object.
 	 *
