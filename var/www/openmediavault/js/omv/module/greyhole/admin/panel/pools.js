@@ -369,10 +369,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			return;
 		OMV.MessageBox.show({
 			title  :_("Delete Pool Disk"),
-			msg    :_("Do you want to remove the content of the pool disk directory " +
-							"recursively? Note, the data will be permanently " +
-							"deleted then. Select 'No' to delete the pool disk directory only " +
-							"or 'Cancel' to abort."),
+			msg    :_("Do you want to remove the content of the pool disk directory recursively? Note, the data will be permanently deleted then. Select 'No' to delete the pool disk directory only or 'Cancel' to abort."),
 			buttons:Ext.Msg.YESNOCANCEL,
 			fn     :function (answer) {
 				this.deleteRecursive = false;
@@ -380,8 +377,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 					case "yes":
 						OMV.MessageBox.show({
 							title  :_("Confirmation"),
-							msg    :_("Do you really want to remove the pool disk " +
-											"directory content?"),
+							msg    :_("Do you really want to remove the pool disk directory content?"),
 							buttons:OMV.Msg.YESCANCEL,
 							fn     :function (answer) {
 								if (answer === "yes") {
