@@ -1,6 +1,7 @@
 openmediavault-greyhole (0.3) unstable; urgency=high
 
-  * Github Issue #21 - OMV 0.3 Port
+  * Github Issue Fix #21 - OMV 0.3 Port
+  * Github Issue Fix #29 - Error when selecting log entry in OMV log tab
 
  -- Marcel Beck <marcel.beck@mbeck.org>  Fri, 20 Apr 2012 23:43:11 +0200
 
