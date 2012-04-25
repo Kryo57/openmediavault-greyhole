@@ -1,36 +1,28 @@
 #!/usr/bin/make -f
 
-#export DH_VERBOSE=1
+include ../openmediavault.mk
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp configure-stamp
 	dh_clean
 
 install:
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
-
-binary-indep: install
-	dh_testdir
-	dh_testroot
 	dh_install
-
-	# Remove '.git' directories
-	find $(CURDIR)/debian/openmediavault-greyhole -name .git -type d -print0 -prune | xargs -0 rm -rf
-
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole
-
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole.d/10main
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole.d/20pool
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole.d/30shares
-
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/samba.d/11greyhole
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/samba.d/21greyhole
 
+binary-indep: install omv_clean_scm
+	dh_testdir
+	dh_testroot
 	dh_installchangelogs
 	dh_installdebconf
 	dh_lintian
@@ -42,7 +34,7 @@ binary-indep: install
 	dh_md5sums
 	dh_builddeb
 
-binary-arch: install
+binary-arch:
 # We have nothing to do by default.
 
 binary: binary-indep binary-arch
