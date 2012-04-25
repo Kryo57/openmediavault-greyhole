@@ -30,12 +30,12 @@ OMV.Module.Storage.Greyhole.Admin.PoolMngtDialog = function (config) {
 		buttonAlign:"center",
 		buttons    :[
 			{
-				text   :"OK",
+				text   :_("OK"),
 				handler:this.cbOkBtnHdl.createDelegate(this),
 				scope  :this
 			},
 			{
-				text   :"Cancel",
+				text   :_("Cancel"),
 				handler:this.cbCancelBtnHdl.createDelegate(this),
 				scope  :this
 			}

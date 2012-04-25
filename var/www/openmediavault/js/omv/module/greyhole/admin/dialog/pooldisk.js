@@ -24,7 +24,7 @@ OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog = function (config)
 		rpcService  :"Greyhole",
 		rpcGetMethod:"getPoolDisk",
 		rpcSetMethod:"setPoolDisk",
-		title       :((config.uuid == OMV.UUID_UNDEFINED) ? _("Add") : _("Edit")) + _(" pool disk"),
+		title       :(config.uuid == OMV.UUID_UNDEFINED) ? _("Add pool disk") : _("Edit pool disk"),
 		width       :550,
 		autoHeight  :true
 	};
