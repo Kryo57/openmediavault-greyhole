@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2011 Stephane Bocquet
  * @copyright Copyright (c) 2011 Marcel Beck
  * @version $Id: greyhole.js 12 2011-11-07 18:52:10Z
- *					stephane_bocquet@hotmail.com $
+ *          stephane_bocquet@hotmail.com $
  *
  * This file is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -90,10 +90,10 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		this.store = new OMV.data.Store({
 			autoLoad  :true,
 			remoteSort:false,
-			proxy: new OMV.data.DataProxy({
-																			"service": "Greyhole",
-																			"method": "getSMBList"
-																		}),
+			proxy     :new OMV.data.DataProxy({
+				"service":"Greyhole",
+				"method" :"getSMBList"
+			}),
 			reader    :new Ext.data.JsonReader({
 				idProperty   :"uuid",
 				totalProperty:"total",
@@ -192,7 +192,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		wnd.show();
 	},
 
-	startDeletion	:function (model, records) {
+	startDeletion:function (model, records) {
 		if (records.length <= 0)
 			return;
 		OMV.MessageBox.show({
@@ -214,14 +214,13 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 			icon   :Ext.Msg.QUESTION
 		});
 	},
-	doDeletion:function (record) {
+	doDeletion   :function (record) {
 		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "deleteSMBShare", [ record.get("uuid") ]);
 	},
 	afterDeletion:function () {
 		OMV.Module.Storage.Greyhole.SMBPanel.PoolsPanel.superclass.afterDeletion.apply(this, arguments);
 	},
-	
-	
+
 	/** FSCK HANDLER */
 	cbfsckBtnHdl:function () {
 		var wnd = new OMV.Module.Storage.Greyhole.Admin.FSCKDialog({
@@ -237,14 +236,14 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 	},
 	dofsck      :function (path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata) {
 		OMV.Ajax.request(this.cbfsckLHdl, this, "Greyhole", "fsck",
-			{
-				path                    :String(path),
-				email_report            :Boolean(email_report),
-				checksums               :Boolean(checksums),
-				dont_walk_metadata_store:Boolean(dont_walk_metadata_store),
-				find_orphaned_files     :Boolean(find_orphaned_files),
-				delete_orphaned_metadata:Boolean(delete_rphaned_metadata)
-			}
+						{
+							path                    :String(path),
+							email_report            :Boolean(email_report),
+							checksums               :Boolean(checksums),
+							dont_walk_metadata_store:Boolean(dont_walk_metadata_store),
+							find_orphaned_files     :Boolean(find_orphaned_files),
+							delete_orphaned_metadata:Boolean(delete_rphaned_metadata)
+						}
 		);
 	},
 	cbfsckLHdl  :function (id, response, error) {

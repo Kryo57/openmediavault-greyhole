@@ -18,8 +18,7 @@ Ext.ns("OMV.Module.Storage.Greyhole.Admin");
  * @class OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog
  * @derived OMV.CfgObjectDialog
  */
-OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog = function (config)
-{
+OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog = function (config) {
 	var initialConfig = {
 		rpcService  :"Greyhole",
 		rpcGetMethod:"getPoolDisk",
@@ -32,22 +31,19 @@ OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog = function (config)
 	OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog.superclass.constructor.call(this, initialConfig);
 };
 Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog, OMV.CfgObjectDialog, {
-	initComponent:function ()
-	{
+	initComponent:function () {
 		OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog.superclass.initComponent.apply(this, arguments);
 		// Register event handler
 		this.on("load", this._updateFormFields, this);
 	},
 
-	getFormConfig:function ()
-	{
+	getFormConfig:function () {
 		return {
 			autoHeight:true
 		};
 	},
 
-	getFormItems:function ()
-	{
+	getFormItems:function () {
 		return [
 			{
 				xtype        :"combo",
@@ -62,16 +58,16 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog, OMV.CfgObjectDialog
 				displayField :"description",
 				valueField   :"uuid",
 				store        :new OMV.data.Store({
-																					 remoteSort:false,
-																					 proxy: new OMV.data.DataProxy({"service": "Greyhole","method": "getPoolDiskCandidates"}),
-																					 reader    :new Ext.data.JsonReader({
-																																								idProperty:"uuid",
-																																								fields    :[
-																																									{ name:"uuid" },
-																																									{ name:"description" }
-																																								]
-																																							})
-																				 })
+					remoteSort:false,
+					proxy     :new OMV.data.DataProxy({"service":"Greyhole", "method":"getPoolDiskCandidates"}),
+					reader    :new Ext.data.JsonReader({
+						idProperty:"uuid",
+						fields    :[
+							{ name:"uuid" },
+							{ name:"description" }
+						]
+					})
+				})
 			},
 			{
 				xtype     :"numberfield",
@@ -87,18 +83,14 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolDiskDialog, OMV.CfgObjectDialog
 	/**
 	 * Private function to update the states of various form fields.
 	 */
-	_updateFormFields:function ()
-	{
-		if (this.uuid == OMV.UUID_UNDEFINED)
-		{
+	_updateFormFields:function () {
+		if (this.uuid == OMV.UUID_UNDEFINED) {
 			return;
 		}
 		var fields = [ "name", "mntentref" ];
-		for (var i = 0; i < fields.length; i++)
-		{
+		for (var i = 0; i < fields.length; i++) {
 			var field = this.findFormField(fields[i]);
-			if (!Ext.isEmpty(field))
-			{
+			if (!Ext.isEmpty(field)) {
 				field.setReadOnly(true);
 			}
 		}

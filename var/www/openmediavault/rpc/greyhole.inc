@@ -167,7 +167,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -214,7 +214,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -299,7 +299,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -333,7 +333,7 @@ class GreyholeRpc extends OMVRpc {
 			// description, to the returned objects.
 			$xpath        = sprintf("//system/fstab/mntent[uuid='%s']", $objectv['mntentref']);
 			$fstab_object = $xmlConfig->get($xpath);
-			if (!is_null($fstab_object) && !empty($fstab_object))
+			if (! is_null($fstab_object) && ! empty($fstab_object))
 			{
 				$fs = new OMVFilesystem($fstab_object['fsname']);
 				if (TRUE === $fs->exists())
@@ -372,7 +372,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -410,7 +410,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -481,7 +481,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -522,7 +522,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -539,7 +539,7 @@ class GreyholeRpc extends OMVRpc {
 		foreach ($objects as $objectk => $objectv)
 		{
 			$fs = new OMVFilesystem($objectv['fsname']);
-			if (!$fs->exists())
+			if (! $fs->exists())
 			{
 				//				throw new OMVException(OMVErrorMsg::E_MISC_FAILURE,
 				//				  sprintf(gettext("Filesystem '%s' not found"),
@@ -566,7 +566,7 @@ class GreyholeRpc extends OMVRpc {
 			if (FALSE !== ($fsStats = $fs->getStatistics()))
 			{
 				$label                 = $fs->getLabel();
-				$object['description'] = sprintf(gettext("%s (%s available)"), !empty($label) ? $label : $object['devicefile'], binary_format($fsStats['available']));
+				$object['description'] = sprintf(gettext("%s (%s available)"), ! empty($label) ? $label : $object['devicefile'], binary_format($fsStats['available']));
 			}
 			$result[] = $object;
 		}
@@ -585,7 +585,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -598,7 +598,7 @@ class GreyholeRpc extends OMVRpc {
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
 		}
 		$result = array();
-		for ($i = 1; $i <= $count; $i++)
+		for ($i = 1;$i <= $count;$i ++)
 		{
 			$result[] = array(
 				'number' => $i,
@@ -621,7 +621,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -669,7 +669,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -688,7 +688,7 @@ class GreyholeRpc extends OMVRpc {
 		{
 			$xpath    = sprintf("//services/smb/shares/share[uuid='%s']", $objectv['smbref']);
 			$meobject = $xmlConfig->get($xpath);
-			if (!is_null($meobject) && !empty($meobject))
+			if (! is_null($meobject) && ! empty($meobject))
 			{
 				$objectv['name']    = $meobject['name'];
 				$objectv['comment'] = $meobject['comment'];
@@ -714,7 +714,7 @@ class GreyholeRpc extends OMVRpc {
 		// Check permissions
 		$this->validateSession();
 
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -749,7 +749,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -823,7 +823,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -855,7 +855,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -926,7 +926,7 @@ class GreyholeRpc extends OMVRpc {
 					throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
 				}
 
-				if (!is_null($fstab_object) && !empty($fstab_object))
+				if (! is_null($fstab_object) && ! empty($fstab_object))
 				{
 					$fs = new OMVFilesystem($fstab_object['fsname']);
 					if (TRUE === $fs->exists())
@@ -959,7 +959,7 @@ class GreyholeRpc extends OMVRpc {
 		global $xmlConfig;
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -983,7 +983,7 @@ class GreyholeRpc extends OMVRpc {
 				throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
 			}
 
-			if (!is_null($fstab_object) && !empty($fstab_object))
+			if (! is_null($fstab_object) && ! empty($fstab_object))
 			{
 				$fs = new OMVFilesystem($fstab_object['fsname']);
 				if (TRUE === $fs->exists())
@@ -1015,7 +1015,7 @@ class GreyholeRpc extends OMVRpc {
 	{
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -1060,7 +1060,7 @@ class GreyholeRpc extends OMVRpc {
 	{
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -1088,7 +1088,7 @@ class GreyholeRpc extends OMVRpc {
 	{
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -1155,7 +1155,7 @@ class GreyholeRpc extends OMVRpc {
 	{
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}
@@ -1181,7 +1181,7 @@ class GreyholeRpc extends OMVRpc {
 	{
 		// Check permissions
 		$this->validateSession();
-		if (!$this->hasRole(OMV_ROLE_ADMINISTRATOR))
+		if (! $this->hasRole(OMV_ROLE_ADMINISTRATOR))
 		{
 			throw new OMVException(OMVErrorMsg::E_RPC_SERVICE_INVALID_PERMISSION);
 		}

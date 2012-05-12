@@ -9,8 +9,7 @@
 	// require("js/omv/module/greyhole/admin.js")
 	// require("js/omv/util/Format.js")
 
-OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config)
-{
+OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 	var initialConfig = {
 		title    :_("Greyhole"),
 		stateId  :"a4150311-5e3a-4693-8381-933088a9f98f",

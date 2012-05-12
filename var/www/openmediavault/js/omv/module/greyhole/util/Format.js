@@ -15,8 +15,8 @@ OMV.Module.Storage.Greyhole.Util.Format = function () {
 	Ext.extend(o, f, function () {
 		return {
 			bytesToSize:function (bytes) {
-				var sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-				if (bytes == 0) return 'n/a';
+				var sizes = [_('Bytes'), _('KiB'), _('MiB'), _('GiB'), _('TiB'), _('PiB'), _('EiB'), _('ZiB'), _('YiB')];
+				if (bytes == 0) return _('n/a');
 				var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
 				return ((i == 0) ? (bytes / Math.pow(1024, i)) : (bytes / Math.pow(1024, i)).toFixed(1)) + ' ' + sizes[i];
 			},
@@ -52,18 +52,18 @@ OMV.Module.Storage.Greyhole.Util.Format = function () {
 				var speed = Math.floor(Bps / 1000);
 
 				if (speed <= 999.95) // 0 KBps to 999 K
-					return [ speed.toTruncFixed(0), 'KB/s' ].join(' ');
+					return [ speed.toTruncFixed(0), _('KB/s') ].join(' ');
 
 				speed /= 1000;
 
 				if (speed <= 99.995) // 1 M to 99.99 M
-					return [ speed.toTruncFixed(2), 'MB/s' ].join(' ');
+					return [ speed.toTruncFixed(2), _('MB/s') ].join(' ');
 				if (speed <= 999.95) // 100 M to 999.9 M
-					return [ speed.toTruncFixed(1), 'MB/s' ].join(' ');
+					return [ speed.toTruncFixed(1), _('MB/s') ].join(' ');
 
 				// insane speeds
 				speed /= 1000;
-				return [ speed.toTruncFixed(2), 'GB/s' ].join(' ');
+				return [ speed.toTruncFixed(2), _('GB/s') ].join(' ');
 			}
 		};
 	}());

@@ -18,8 +18,7 @@ Ext.ns("OMV.Module.Storage.Greyhole.Admin");
  * @class OMV.Module.Storage.Greyhole.Admin.SMBDialog
  * @derived OMV.CfgObjectDialog
  */
-OMV.Module.Storage.Greyhole.Admin.SMBDialog = function (config)
-{
+OMV.Module.Storage.Greyhole.Admin.SMBDialog = function (config) {
 	var initialConfig = {
 		rpcService  :"Greyhole",
 		rpcGetMethod:"getSBMShare",
@@ -32,22 +31,19 @@ OMV.Module.Storage.Greyhole.Admin.SMBDialog = function (config)
 	OMV.Module.Storage.Greyhole.Admin.SMBDialog.superclass.constructor.call(this, initialConfig);
 };
 Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog, OMV.CfgObjectDialog, {
-	initComponent:function ()
-	{
+	initComponent:function () {
 		OMV.Module.Storage.Greyhole.Admin.SMBDialog.superclass.initComponent.apply(this, arguments);
 		// Register event handler
 		this.on("load", this._updateFormFields, this);
 	},
 
-	getFormConfig:function ()
-	{
+	getFormConfig:function () {
 		return {
 			autoHeight:true
 		};
 	},
 
-	getFormItems:function ()
-	{
+	getFormItems:function () {
 		return [
 			{
 				xtype        :"combo",
@@ -62,16 +58,16 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog, OMV.CfgObjectDialog, {
 				displayField :"name",
 				valueField   :"uuid",
 				store        :new OMV.data.Store({
-																					 remoteSort:false,
-																					 proxy     :new OMV.data.DataProxy({"service":"Greyhole", "method":"getSMBShareCandidates"}),
-																					 reader    :new Ext.data.JsonReader({
-																																								idProperty:"uuid",
-																																								fields    :[
-																																									{ name:"uuid" },
-																																									{ name:"name" }
-																																								]
-																																							})
-																				 })
+					remoteSort:false,
+					proxy     :new OMV.data.DataProxy({"service":"Greyhole", "method":"getSMBShareCandidates"}),
+					reader    :new Ext.data.JsonReader({
+						idProperty:"uuid",
+						fields    :[
+							{ name:"uuid" },
+							{ name:"name" }
+						]
+					})
+				})
 			},
 			{
 				xtype        :"combo",
@@ -86,16 +82,16 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog, OMV.CfgObjectDialog, {
 				displayField :"name",
 				valueField   :"number",
 				store        :new OMV.data.Store({
-																					 remoteSort:false,
-																					 proxy     :new OMV.data.DataProxy({"service":"Greyhole", "method":"getPoolDiskCount"}),
-																					 reader    :new Ext.data.JsonReader({
-																																								idProperty:"number",
-																																								fields    :[
-																																									{ name:"number" },
-																																									{ name:"name" }
-																																								]
-																																							})
-																				 }),
+					remoteSort:false,
+					proxy     :new OMV.data.DataProxy({"service":"Greyhole", "method":"getPoolDiskCount"}),
+					reader    :new Ext.data.JsonReader({
+						idProperty:"number",
+						fields    :[
+							{ name:"number" },
+							{ name:"name" }
+						]
+					})
+				}),
 				plugins      :[ OMV.form.plugins.FieldInfo ],
 				infoText     :_("This is the number of copies of each file you want Greyhole to keep per Share. This is not the number of duplicates! 2 copies = 1 duplicate.")
 			},
@@ -123,18 +119,14 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBDialog, OMV.CfgObjectDialog, {
 	/**
 	 * Private function to update the states of various form fields.
 	 */
-	_updateFormFields:function ()
-	{
-		if (this.uuid == OMV.UUID_UNDEFINED)
-		{
+	_updateFormFields:function () {
+		if (this.uuid == OMV.UUID_UNDEFINED) {
 			return;
 		}
 		var fields = [ "name", "smbref" ];
-		for (var i = 0; i < fields.length; i++)
-		{
+		for (var i = 0; i < fields.length; i++) {
 			var field = this.findFormField(fields[i]);
-			if (!Ext.isEmpty(field))
-			{
+			if (!Ext.isEmpty(field)) {
 				field.setReadOnly(true);
 			}
 		}

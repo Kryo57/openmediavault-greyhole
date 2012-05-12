@@ -2,10 +2,10 @@
 /**
  * vim: tabstop=4
  *
- * @license		http://www.gnu.org/licenses/gpl.html GPL Version 3
- * @author		 Stephane Bocquet <stephane_bocquet@hotmail.com>
- * @copyright	Copyright (c) 2011 Ian Moore
- * @version		$Id: greyhole.inc 8 2011-11-07 02:22:11Z stephane_bocquet@hotmail.com $
+ * @license    http://www.gnu.org/licenses/gpl.html GPL Version 3
+ * @author     Stephane Bocquet <stephane_bocquet@hotmail.com>
+ * @copyright  Copyright (c) 2011 Ian Moore
+ * @version    $Id: greyhole.inc 8 2011-11-07 02:22:11Z stephane_bocquet@hotmail.com $
  *
  * This file is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  * This file is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -61,8 +61,8 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 		$cmd = sprintf("sudo /etc/init.d/greyhole status");
 		OMVUtil::exec($cmd, $output, $result);
 		return array(
-			"name"		=> $this->getName(),
-			"title"	 => gettext("Greyhole"),
+			"name"    => $this->getName(),
+			"title"   => gettext("Greyhole"),
 			"enabled" => boolval($object['enable']),
 			"running" => (strpos($output[0], 'Greyhole is running.') > - 1)
 		);
@@ -240,7 +240,6 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath);
 		}
 
-
 	}
 
 	/**
@@ -273,14 +272,14 @@ $moduleMgr->registerModule(new GreyholeModule());
 OMVLogFile::registerType("greyhole", array(
 																					"filename" => "greyhole.log",
 																					"filepath" => "/var/log/greyhole.log",
-																					"regex"		=> "/^(\S+\s+\d+\s+\S+)\s+\d+\s+(\S+)\: (.*)$/",
-																					"columns"	=> array(
-																						"date"			=> array(
+																					"regex"    => "/^(\S+\s+\d+\s+\S+)\s+\d+\s+(\S+)\: (.*)$/",
+																					"columns"  => array(
+																						"date"      => array(
 																							"index" => 1,
-																							"func"	=> create_function('$v', 'return strpdate($v,"M j G:i:s");')
+																							"func"  => create_function('$v', 'return strpdate($v,"M j G:i:s");')
 																						),
 																						"component" => 2,
-																						"event"		 => 3
+																						"event"     => 3
 																					)
 																		 )
 );
