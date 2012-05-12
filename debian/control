@@ -2,10 +2,9 @@ Source: openmediavault-greyhole
 Section: net
 Priority: optional
 Maintainer: Marcel Beck <marcel.beck@mbeck.org>
- Stéphane Bocquet <stephane_bocquet@hotmail.com>
 Build-Depends: debhelper (>> 7)
 Standards-Version: 3.6.10
-Homepage: https://github.com/OMV-Plugins/openmediavault-greyhole
+Homepage: http://omv-plugins.org
 
 Package: openmediavault-greyhole
 Architecture: all
