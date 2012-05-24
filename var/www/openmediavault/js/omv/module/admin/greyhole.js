@@ -9,6 +9,13 @@
 	// require("js/omv/module/greyhole/admin.js")
 	// require("js/omv/util/Format.js")
 
+Ext.ns("OMV.Module.Diagnostics.LogPlugin");
+
+/**
+ * @class OMV.Module.Diagnostics.LogPlugin.Greyhole
+ * @derived OMV.Module.Diagnostics.LogPlugin
+ * Class that implements the 'Greyhole' log file diagnostics plugin
+ */
 OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 	var initialConfig = {
 		title    :_("Greyhole"),
@@ -44,8 +51,7 @@ OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 		]
 	};
 	Ext.apply(initialConfig, config);
-	OMV.Module.Diagnostics.LogPlugin.Greyhole.superclass.constructor.call(
-					this, initialConfig);
+	OMV.Module.Diagnostics.LogPlugin.Greyhole.superclass.constructor.call(this, initialConfig);
 };
 
 Ext.extend(OMV.Module.Diagnostics.LogPlugin.Greyhole, OMV.Module.Diagnostics.LogPlugin, {});
