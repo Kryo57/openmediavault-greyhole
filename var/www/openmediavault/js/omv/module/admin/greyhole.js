@@ -51,6 +51,7 @@ OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 		]
 	};
 	Ext.apply(initialConfig, config);
+	Ext.ns("OMV.Module.Diagnostics.LogPlugin.Greyhole");
 	OMV.Module.Diagnostics.LogPlugin.Greyhole.superclass.constructor.call(this, initialConfig);
 };
 
