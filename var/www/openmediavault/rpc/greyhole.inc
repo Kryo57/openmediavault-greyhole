@@ -1037,7 +1037,7 @@ class GreyholeRpc extends OMVRpc {
 				$greyhole_poolmngt_params .= '--gone=';
 				break;
 			case 'replaced':
-				$greyhole_poolmngt_params .= '--replaced=';
+				$greyhole_poolmngt_params .= '--replace=';
 				break;
 		}
 		$cmd = 'sudo greyhole ' . $greyhole_poolmngt_params . $data['path'] . ' 2 >&1';
