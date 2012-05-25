@@ -196,11 +196,9 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		if (records.length <= 0)
 			return;
 		OMV.MessageBox.show({
-			title  :"Remove share from Greyhole",
-			msg    :"Do you want to remove this share from Greyhole? " +
-							"Note, you must check your Greyhole logs " +
-							"to see if this action have completely succeded.",
-			buttons:Ext.Msg.YESCANCEL,
+			title  :_("Remove share from Greyhole"),
+			msg    :_("Do you want to remove this share from Greyhole? Note, you must check your Greyhole logs to see if this action have completely succeded."),
+			buttons:Ext.Msg.YESNO,
 			fn     :function (answer) {
 				switch (answer) {
 					case "yes":
@@ -215,10 +213,10 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		});
 	},
 	doDeletion   :function (record) {
-		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "deleteSMBShare", [ record.get("uuid") ]);
+		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "deleteSMBShare", {uuid:record.get("uuid") });
 	},
 	afterDeletion:function () {
-		OMV.Module.Storage.Greyhole.SMBPanel.PoolsPanel.superclass.afterDeletion.apply(this, arguments);
+		OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.afterDeletion.apply(this, arguments);
 	},
 
 	/** FSCK HANDLER */
