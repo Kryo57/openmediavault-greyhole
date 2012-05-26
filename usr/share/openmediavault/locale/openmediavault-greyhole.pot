@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openmediavault-greyhole\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-12 11:10+0200\n"
+"POT-Creation-Date: 2012-05-26 09:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,9 @@ msgid "Do you really want to remove the pool disk directory content?"
 msgstr ""
 
 msgid "Do you want to remove the content of the pool disk directory recursively? Note, the data will be permanently deleted then. Select 'No' to delete the pool disk directory only or 'Cancel' to abort."
+msgstr ""
+
+msgid "Do you want to remove this share from Greyhole? Note, you must check your Greyhole logs to see if this action have completely succeded."
 msgstr ""
 
 msgid "Don't walk metadata store"
@@ -184,6 +187,9 @@ msgid "Pool management"
 msgstr ""
 
 msgid "Read ALL files in your storage pool, and check that file copies are identical. This will identify any problem you might have with your file-systems. NOTE: this can take a LONG time to complete, since it will read everything from all your drives!"
+msgstr ""
+
+msgid "Remove share from Greyhole"
 msgstr ""
 
 msgid "Replaced"

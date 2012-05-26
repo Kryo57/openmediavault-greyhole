@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Stéphane BOCQUET <sbocquet4772@gmail.com>, 2012.
+# Stéphane BOCQUET <stephane_bocquet@hotmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: OMV Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-12 11:10+0200\n"
-"PO-Revision-Date: 2012-05-03 09:53+0000\n"
-"Last-Translator: Stéphane BOCQUET <sbocquet4772@gmail.com>\n"
+"POT-Creation-Date: 2012-05-26 09:42+0200\n"
+"PO-Revision-Date: 2012-05-26 07:42+0000\n"
+"Last-Translator: Marcel Beck <fo3nik5@gmail.com>\n"
 "Language-Team: French (http://www.transifex.net/projects/p/OMVPlugins/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,6 +84,11 @@ msgid ""
 "Note, the data will be permanently deleted then. Select 'No' to delete the "
 "pool disk directory only or 'Cancel' to abort."
 msgstr "Voulez-vous supprimer récursivement le contenu du répertoire du pool? (remarque: les données seront définitivement supprimées). Sélectionnez 'Non' pour seulement supprimer le répertoire du pool de votre disque ou 'Annuler' pour annuler l'action."
+
+msgid ""
+"Do you want to remove this share from Greyhole? Note, you must check your "
+"Greyhole logs to see if this action have completely succeded."
+msgstr ""
 
 msgid "Don't walk metadata store"
 msgstr "Ne pas parcourir les métadonnées"
@@ -175,10 +181,10 @@ msgstr "Min. Libre (Go)"
 msgid ""
 "Move deleted files to trash instead of deleting them (This is a global "
 "setting that can be overided by local option on each Greyhole share)"
-msgstr "Déplace les fichiers dans une poubelle au lieu de les supprimer définitivement (remarque: ceci est un paramètre global qui peut être remplacé par une option locale à chaque partage Greyhole)"
+msgstr "Déplace les fichiers supprimés dans une poubelle au lieu de les supprimer définitivement (remarque: ceci est un paramètre global qui peut être remplacé par une option locale à chaque partage Greyhole)"
 
 msgid "Number of Copies"
-msgstr "Nombres de copies"
+msgstr "Copies"
 
 msgid "OK"
 msgstr "OK"
@@ -202,6 +208,9 @@ msgid ""
 "everything from all your drives!"
 msgstr "Lis tous les fichiers dans votre pool de stockage, et vérifie que les copies de fichiers sont identiques. Cela permet d'identifier tout problème que vous pourriez avoir avec vos systèmes de fichiers. (remarque: cette action peut être relativement longue car elle va lire tous les fichiers de tous vos disques!)"
 
+msgid "Remove share from Greyhole"
+msgstr ""
+
 msgid "Replaced"
 msgstr "Remplacé"
 
@@ -218,7 +227,7 @@ msgid ""
 msgstr "Recherche des fichiers avec aucune métadonnée dans le pool de stockage. Cela vous permet d'ajouter des fichiers existants sur un disque dans votre pool sans avoir à les copier manuellement."
 
 msgid "Select Number of Copies ..."
-msgstr "Sélectionner le nombre de copies ..."
+msgstr "Sélectionnez le nombre de copies ..."
 
 msgid "Select a Path ..."
 msgstr "Sélectionnez le chemin ..."
@@ -289,7 +298,7 @@ msgstr "Espace libre que vous souhaitez réserver sur chaque disque (remarque: i
 msgid ""
 "This is the number of copies of each file you want Greyhole to keep per "
 "Share. This is not the number of duplicates! 2 copies = 1 duplicate."
-msgstr "Nombre de copies de chaque fichier par dossier partagé. (remarque: Ceci n'est pas le nombre de duplicata! 2 copies = 1 duplicata)."
+msgstr "Nombre de copies de chaque fichier par dossier partagé. Ceci n'est pas le nombre de duplicata! 2 copies = 1 duplicata."
 
 msgid "Trash"
 msgstr "Poubelle"
@@ -333,7 +342,7 @@ msgstr "Cette adresse mail reçoit les rapports de vérifications quotidiens ou 
 msgid ""
 "You can specify per-share trash preferences that will override the global "
 "trash preference."
-msgstr "Vous pouvez définir vos préférences de poubelle pour chaque dossier partagé localement. Elles prévaudront sur le paramètre global."
+msgstr "Vous pouvez définir vos préférences de suppression pour chaque dossier partagé. Elles prévaudront sur le paramètre global."
 
 msgid "n/a"
 msgstr "n/a"
