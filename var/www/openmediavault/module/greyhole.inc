@@ -227,43 +227,10 @@ class GreyholeModule extends OMVModuleAbstract implements OMVINotifyListener, OM
 	 *
 	 * @throws OMVException
 	 */
-	public function delete_smb_share($object)
+	public function delete_smb_share()
 	{
-		global $xmlConfig;
-
-		if (is_null($object))
-		{
-			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED);
-		}
-
 		// Create greyhole.conf file
 		$this->mkConf();
-
-		$xpath_greyhole_smb_share = "//system/storage/greyhole/smb_shares/share[uuid='{$object['uuid']}']";
-		$xpath_smb_share          = "//services/smb/shares/share[uuid='{$object['smbref']}']";
-		$smb_share                = $xmlConfig->get($xpath_smb_share);
-
-		if (is_null($smb_share))
-		{
-			throw new OMVException(OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED, $xpath_smb_share);
-		}
-
-		$cmd = 'sudo greyhole --remove-share ' . $smb_share['name'] . ' 2>&1';
-		OMVUtil::exec($cmd, $output, $result);
-		if ($result !== 0)
-		{
-			throw new OMVException(OMVErrorMsg::E_EXEC_FAILED, $cmd, implode("\n", $output));
-		}
-
-		if (FALSE === ($meObject = $xmlConfig->delete($xpath_greyhole_smb_share)))
-		{
-			throw new OMVException(OMVErrorMsg::E_CONFIG_OBJECT_NOT_FOUND, $xpath_greyhole_smb_share);
-		}
-		// Save the configuration.
-		if (FALSE === $xmlConfig->save())
-		{
-			throw new OMVException(OMVErrorMsg::E_CONFIG_SAVE_FAILED, $xmlConfig->getError());
-		}
 	}
 
 	/**

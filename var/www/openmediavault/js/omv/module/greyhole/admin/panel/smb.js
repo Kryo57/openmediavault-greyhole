@@ -143,6 +143,15 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 	initToolbar:function () {
 		var tbar = OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.initToolbar.apply(this);
 
+		tbar.insert(2, {
+			id     :this.getId() + "-remove",
+			xtype  :"button",
+			text   :_("Remove"),
+			icon   :"images/delete.png",
+			handler:this.cbRemoveShareBtnHdl,
+			scope  :this
+		});
+
 		tbar.insert(3, {
 			id     :this.getId() + "-fsck",
 			xtype  :"button",
@@ -192,31 +201,46 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		wnd.show();
 	},
 
-	startDeletion:function (model, records) {
-		if (records.length <= 0)
-			return;
+	cbRemoveShareBtnHdl:function () {
+		var selModel = this.getSelectionModel();
+		var record = selModel.getSelected();
 		OMV.MessageBox.show({
-			title  :_("Remove share from Greyhole"),
-			msg    :_("Do you want to remove this share from Greyhole? Note, you must check your Greyhole logs to see if this action have completely succeded."),
+			title  :_("Confirmation"),
+			msg    :_("Do you want to remove the selected share from Greyhole?"),
 			buttons:Ext.Msg.YESNO,
 			fn     :function (answer) {
-				switch (answer) {
-					case "yes":
-						OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.startDeletion.call(this, model, records);
-						break;
-					case "no":
-						break;
-				}
+				if (answer == "no")
+					return;
+				var wnd = new OMV.ExecCmdDialog({
+					title               :_("Revmoing share ..."),
+					rpcService          :"Greyhole",
+					rpcMethod           :"removeSMBShare",
+					rpcArgs             :{ "uuid":record.get('uuid') },
+					hideStart           :true,
+					hideStop            :true,
+					killCmdBeforeDestroy:false,
+					listeners           :{
+						finish   :function (wnd, response) {
+							wnd.appendValue("\n" + _("Done ..."));
+							wnd.setButtonDisabled("close", false);
+						},
+						exception:function (wnd, error) {
+							OMV.MessageBox.error(null, error);
+							wnd.setButtonDisabled("close", false);
+						},
+						close    :function () {
+							this.doReload();
+						},
+						scope    :this
+					}
+				});
+				wnd.setButtonDisabled("close", true);
+				wnd.show();
+				wnd.start();
 			},
 			scope  :this,
 			icon   :Ext.Msg.QUESTION
 		});
-	},
-	doDeletion   :function (record) {
-		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "deleteSMBShare", {uuid:record.get("uuid") });
-	},
-	afterDeletion:function () {
-		OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.afterDeletion.apply(this, arguments);
 	},
 
 	/** FSCK HANDLER */
