@@ -214,7 +214,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 				if (answer == "no")
 					return;
 				var wnd = new OMV.ExecCmdDialog({
-					title               :_("Revmoing share ..."),
+					title               :_("Removing share ..."),
 					rpcService          :"Greyhole",
 					rpcMethod           :"removeSMBShare",
 					rpcArgs             :{ "uuid":record.get('uuid') },
