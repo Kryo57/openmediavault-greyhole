@@ -199,6 +199,6 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
 	cls     :OMV.Module.Storage.Greyhole.Admin.SettingsPanel,
 	position:10,
-	title   :"Settings"
+	title   :_("Settings")
 });
 

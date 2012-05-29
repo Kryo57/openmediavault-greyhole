@@ -444,5 +444,5 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
 	cls     :OMV.Module.Storage.Greyhole.Admin.PoolsPanel,
 	position:20,
-	title   :"Pool"
+	title   :_("Pool")
 });
