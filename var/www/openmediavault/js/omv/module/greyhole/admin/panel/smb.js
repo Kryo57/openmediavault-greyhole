@@ -143,6 +143,8 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 	initToolbar:function () {
 		var tbar = OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.initToolbar.apply(this);
 
+		tbar.remove(2);
+
 		tbar.insert(2, {
 			id     :this.getId() + "-remove",
 			xtype  :"button",

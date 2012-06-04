@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OMV Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-26 09:42+0200\n"
-"PO-Revision-Date: 2012-05-26 07:42+0000\n"
+"POT-Creation-Date: 2012-05-29 15:09+0200\n"
+"PO-Revision-Date: 2012-05-29 13:09+0000\n"
 "Last-Translator: Marcel Beck <fo3nik5@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.net/projects/p/OMVPlugins/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -85,13 +85,14 @@ msgid ""
 "pool disk directory only or 'Cancel' to abort."
 msgstr "Вы хотите удалить контент каталога дискового пула? Отметьте, данные будут удалены. Выберите 'Нет' удалить дисковый каталог пула только или 'Отмена' прерывать."
 
-msgid ""
-"Do you want to remove this share from Greyhole? Note, you must check your "
-"Greyhole logs to see if this action have completely succeded."
+msgid "Do you want to remove the selected share from Greyhole?"
 msgstr ""
 
 msgid "Don't walk metadata store"
 msgstr "Не обходите хранилище метаданных"
+
+msgid "Done ..."
+msgstr ""
 
 msgid "Edit pool disk"
 msgstr "Редактирование дискового пула"
@@ -195,6 +196,9 @@ msgstr "Пароль"
 msgid "Path"
 msgstr "Путь"
 
+msgid "Pool"
+msgstr ""
+
 msgid "Pool disk"
 msgstr "Дисковый пул"
 
@@ -208,7 +212,10 @@ msgid ""
 "everything from all your drives!"
 msgstr "Считать ВСЕ файлы в своем пуле хранения, и проверьть, что идентичны файлов. Обнаруживает любую проблему, которая могла бы быть с файловой системой. Примечание: это может занять много времени, чтобы завершиться, так как это считает все из всех Ваших дисков!"
 
-msgid "Remove share from Greyhole"
+msgid "Remove"
+msgstr ""
+
+msgid "Removing share ..."
 msgstr ""
 
 msgid "Replaced"
