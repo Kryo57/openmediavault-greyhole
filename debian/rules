@@ -19,6 +19,7 @@ install:
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/greyhole.d/30shares
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/samba.d/11greyhole
 	chmod +x $(CURDIR)/debian/openmediavault-greyhole/usr/share/openmediavault/scripts/samba.d/21greyhole
+	chmod +x $(CURDIR)/debian/openmediavault-greyhole/etc/init.d/mountsmb-locally
 
 binary-indep: install omv_clean_scm
 	dh_testdir

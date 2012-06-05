@@ -146,12 +146,13 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		tbar.remove(2);
 
 		tbar.insert(2, {
-			id     :this.getId() + "-remove",
-			xtype  :"button",
-			text   :_("Remove"),
-			icon   :"images/delete.png",
-			handler:this.cbRemoveShareBtnHdl,
-			scope  :this
+			id      :this.getId() + "-remove",
+			xtype   :"button",
+			text    :_("Remove"),
+			icon    :"images/delete.png",
+			handler :this.cbRemoveShareBtnHdl,
+			scope   :this,
+			disabled:true
 		});
 
 		tbar.insert(3, {
@@ -173,6 +174,25 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		});
 
 		return tbar;
+	},
+
+	cbSelectionChangeHdl:function (model) {
+		OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.cbSelectionChangeHdl.apply(this, arguments);
+		// Process additional buttons
+		this.toggleButtons();
+	},
+
+	toggleButtons:function () {
+		var sm = this.getSelectionModel();
+		var records = sm.getSelections();
+
+		var tbarRemoveCtrl = this.getTopToolbar().findById(this.getId() + "-remove");
+
+		if (records.length <= 0) {
+			tbarRemoveCtrl.disable();
+		} else {
+			tbarRemoveCtrl.enable();
+		}
 	},
 
 	cbAddBtnHdl:function () {
