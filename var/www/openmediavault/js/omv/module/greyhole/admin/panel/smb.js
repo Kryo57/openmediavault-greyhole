@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2011 Stephane Bocquet
  * @copyright Copyright (c) 2011 Marcel Beck
  * @version $Id: greyhole.js 12 2011-11-07 18:52:10Z
- *					stephane_bocquet@hotmail.com $
+ *          stephane_bocquet@hotmail.com $
  *
  * This file is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -90,10 +90,10 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		this.store = new OMV.data.Store({
 			autoLoad  :true,
 			remoteSort:false,
-			proxy: new OMV.data.DataProxy({
-																			"service": "Greyhole",
-																			"method": "getSMBList"
-																		}),
+			proxy     :new OMV.data.DataProxy({
+				"service":"Greyhole",
+				"method" :"getSMBList"
+			}),
 			reader    :new Ext.data.JsonReader({
 				idProperty   :"uuid",
 				totalProperty:"total",
@@ -143,6 +143,18 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 	initToolbar:function () {
 		var tbar = OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.initToolbar.apply(this);
 
+		tbar.remove(2);
+
+		tbar.insert(2, {
+			id      :this.getId() + "-remove",
+			xtype   :"button",
+			text    :_("Remove"),
+			icon    :"images/delete.png",
+			handler :this.cbRemoveShareBtnHdl,
+			scope   :this,
+			disabled:true
+		});
+
 		tbar.insert(3, {
 			id     :this.getId() + "-fsck",
 			xtype  :"button",
@@ -162,6 +174,25 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		});
 
 		return tbar;
+	},
+
+	cbSelectionChangeHdl:function (model) {
+		OMV.Module.Storage.Greyhole.Admin.SMBPanel.superclass.cbSelectionChangeHdl.apply(this, arguments);
+		// Process additional buttons
+		this.toggleButtons();
+	},
+
+	toggleButtons:function () {
+		var sm = this.getSelectionModel();
+		var records = sm.getSelections();
+
+		var tbarRemoveCtrl = this.getTopToolbar().findById(this.getId() + "-remove");
+
+		if (records.length <= 0) {
+			tbarRemoveCtrl.disable();
+		} else {
+			tbarRemoveCtrl.enable();
+		}
 	},
 
 	cbAddBtnHdl:function () {
@@ -192,6 +223,48 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 		wnd.show();
 	},
 
+	cbRemoveShareBtnHdl:function () {
+		var selModel = this.getSelectionModel();
+		var record = selModel.getSelected();
+		OMV.MessageBox.show({
+			title  :_("Confirmation"),
+			msg    :_("Do you want to remove the selected share from Greyhole?"),
+			buttons:Ext.Msg.YESNO,
+			fn     :function (answer) {
+				if (answer == "no")
+					return;
+				var wnd = new OMV.ExecCmdDialog({
+					title               :_("Removing share ..."),
+					rpcService          :"Greyhole",
+					rpcMethod           :"removeSMBShare",
+					rpcArgs             :{ "uuid":record.get('uuid') },
+					hideStart           :true,
+					hideStop            :true,
+					killCmdBeforeDestroy:false,
+					listeners           :{
+						finish   :function (wnd, response) {
+							wnd.appendValue("\n" + _("Done ..."));
+							wnd.setButtonDisabled("close", false);
+						},
+						exception:function (wnd, error) {
+							OMV.MessageBox.error(null, error);
+							wnd.setButtonDisabled("close", false);
+						},
+						close    :function () {
+							this.doReload();
+						},
+						scope    :this
+					}
+				});
+				wnd.setButtonDisabled("close", true);
+				wnd.show();
+				wnd.start();
+			},
+			scope  :this,
+			icon   :Ext.Msg.QUESTION
+		});
+	},
+
 	/** FSCK HANDLER */
 	cbfsckBtnHdl:function () {
 		var wnd = new OMV.Module.Storage.Greyhole.Admin.FSCKDialog({
@@ -207,14 +280,14 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SMBPanel, OMV.grid.TBarGridPanel, {
 	},
 	dofsck      :function (path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata) {
 		OMV.Ajax.request(this.cbfsckLHdl, this, "Greyhole", "fsck",
-			{
-				path                    :String(path),
-				email_report            :Boolean(email_report),
-				checksums               :Boolean(checksums),
-				dont_walk_metadata_store:Boolean(dont_walk_metadata_store),
-				find_orphaned_files     :Boolean(find_orphaned_files),
-				delete_orphaned_metadata:Boolean(delete_rphaned_metadata)
-			}
+						{
+							path                    :String(path),
+							email_report            :Boolean(email_report),
+							checksums               :Boolean(checksums),
+							dont_walk_metadata_store:Boolean(dont_walk_metadata_store),
+							find_orphaned_files     :Boolean(find_orphaned_files),
+							delete_orphaned_metadata:Boolean(delete_rphaned_metadata)
+						}
 		);
 	},
 	cbfsckLHdl  :function (id, response, error) {

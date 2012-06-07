@@ -6,12 +6,19 @@
  * To change this template use File | Settings | File Templates.
  */
 
-// require("js/omv/module/greyhole/admin.js")
-// require("js/omv/util/Format.js")
+	// require("js/omv/module/greyhole/admin.js")
+	// require("js/omv/util/Format.js")
 
+Ext.ns("OMV.Module.Diagnostics.LogPlugin");
+
+/**
+ * @class OMV.Module.Diagnostics.LogPlugin.Greyhole
+ * @derived OMV.Module.Diagnostics.LogPlugin
+ * Class that implements the 'Greyhole' log file diagnostics plugin
+ */
 OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 	var initialConfig = {
-		title    :"Greyhole",
+		title    :_("Greyhole"),
 		stateId  :"a4150311-5e3a-4693-8381-933088a9f98f",
 		columns  :[
 			{
@@ -36,7 +43,7 @@ OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 				id       :"event"
 			}
 		],
-		rpcArgs  :"greyhole",
+		rpcArgs  :{ "id":"greyhole" },
 		rpcFields:[
 			{ name:"date" },
 			{ name:"component" },
@@ -44,11 +51,8 @@ OMV.Module.Diagnostics.LogPlugin.Greyhole = function (config) {
 		]
 	};
 	Ext.apply(initialConfig, config);
-	OMV.Module.Diagnostics.LogPlugin.Greyhole.superclass.constructor.call(
-					this, initialConfig);
+	OMV.Module.Diagnostics.LogPlugin.Greyhole.superclass.constructor.call(this, initialConfig);
 };
 
-Ext.extend(OMV.Module.Diagnostics.LogPlugin.Greyhole,
-				OMV.Module.Diagnostics.LogPlugin, {
-				});
+Ext.extend(OMV.Module.Diagnostics.LogPlugin.Greyhole, OMV.Module.Diagnostics.LogPlugin, {});
 OMV.preg("log", "greyhole", OMV.Module.Diagnostics.LogPlugin.Greyhole);

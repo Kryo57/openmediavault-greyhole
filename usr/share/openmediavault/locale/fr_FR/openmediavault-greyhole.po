@@ -1,0 +1,355 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Stéphane BOCQUET <sbocquet4772@gmail.com>, 2012.
+# Stéphane BOCQUET <stephane_bocquet@hotmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: OMV Plugins\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-07 19:25+0200\n"
+"PO-Revision-Date: 2012-05-29 13:51+0000\n"
+"Last-Translator: Stéphane BOCQUET <stephane_bocquet@hotmail.com>\n"
+"Language-Team: French (http://www.transifex.net/projects/p/OMVPlugins/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#, c-format
+msgid "%s (%s available)"
+msgstr "%s (%s disponible)"
+
+msgid "Add pool disk"
+msgstr "Ajouter un disque au pool"
+
+msgid "Balance modified"
+msgstr "Équilibrage"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Cancel all checks"
+msgstr "Annuler vérifications"
+
+msgid "Check for open Files"
+msgstr "Vérifier les fichiers ouverts"
+
+msgid "Checksums"
+msgstr "Checksums"
+
+msgid "Comment"
+msgstr "Commentaire"
+
+msgid "Component"
+msgstr "Composant"
+
+msgid "Confirmation"
+msgstr "Confirmation"
+
+msgid "Database Name"
+msgstr "Nom de la base de données"
+
+msgid "Database Settings"
+msgstr "Paramètres de la base données"
+
+msgid "Date & Time"
+msgstr "Date & Heure"
+
+msgid "Debug"
+msgstr "Débug"
+
+msgid "Delete Pool Disk"
+msgstr "Supprimer un disque du pool"
+
+msgid "Delete orphaned metadata"
+msgstr "Supprimer les métadonnées orphelines"
+
+msgid ""
+"Disable to get more speed, but this might break some files, if any "
+"application change your files while Greyhole tries to work on them."
+msgstr "Désactiver cette option fait fonctioner Greyhole plus rapidement, mais cela peut endommager certains fichiers si une application modifie vos fichiers pendant que Greyhole essaie de travailler avec eux."
+
+msgid "Disk Free space Cache time"
+msgstr "Durée du cache"
+
+msgid "Do you really want to remove the pool disk directory content?"
+msgstr "Voulez-vous vraiment supprimer le contenu du répertoire du pool?"
+
+msgid ""
+"Do you want to remove the content of the pool disk directory recursively? "
+"Note, the data will be permanently deleted then. Select 'No' to delete the "
+"pool disk directory only or 'Cancel' to abort."
+msgstr "Voulez-vous supprimer récursivement le contenu du répertoire du pool? (remarque: les données seront définitivement supprimées). Sélectionnez 'Non' pour seulement supprimer le répertoire du pool de votre disque ou 'Annuler' pour annuler l'action."
+
+msgid "Do you want to remove the selected share from Greyhole?"
+msgstr "Voulez-vous supprimer le partage Samba de Greyhole ?"
+
+msgid "Don't walk metadata store"
+msgstr "Ne pas parcourir les métadonnées"
+
+msgid "Done ..."
+msgstr "Terminé ..."
+
+msgid "Edit pool disk"
+msgstr "Modifier un disque du pool"
+
+msgid "Email"
+msgstr "Mail"
+
+msgid "Email report"
+msgstr "Rapport par mail"
+
+msgid "Empty trash"
+msgstr "Vider la corbeille"
+
+msgid "Enable"
+msgstr "Activer"
+
+msgid ""
+"Enable this to use modified files copies to help balance the available space"
+" in your storage pool drives."
+msgstr "Activer cette option utilise les fichiers modifiés pour équilibrer la place disponible sur les disques durs de votre pool de stockage."
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid "Event"
+msgstr "Evénement"
+
+msgid "Extra options"
+msgstr "Options complémenaires"
+
+msgid "Files balance"
+msgstr "Équilibrer"
+
+msgid "Files check"
+msgstr "Vérifier les fichiers"
+
+msgid "Files copies"
+msgstr "Nbre copies"
+
+msgid "Filesystem"
+msgstr "Système de fichiers"
+
+msgid "Find orphaned files"
+msgstr "Chercher les fichiers orphelins"
+
+msgid "General settings"
+msgstr "Paramètres généraux"
+
+msgid "Going"
+msgstr "Va disparaître"
+
+msgid "Gone"
+msgstr "Disparu"
+
+msgid "Greyhole"
+msgstr "Greyhole"
+
+msgid "Hostname"
+msgstr "Nom de l'hôte"
+
+msgid ""
+"How long should free disk space calculations be cached (in seconds). Use 0 "
+"to disable caching."
+msgstr "Durée du cache du calcul de l'espace libre (en secondes). Utilisez 0 pour désactiver le cache."
+
+msgid "Info"
+msgstr "Information"
+
+msgid "Label"
+msgstr "Libellé"
+
+msgid "Log Greyhole memory usage on each log line."
+msgstr "Tracer l'utilisation mémoire de Greyhole sur chaque ligne de journalisation."
+
+msgid "Log Memory Usage"
+msgstr "Tracer l'usage mémoire"
+
+msgid "Log level"
+msgstr "Niveau de journalisation"
+
+msgid "Min Free"
+msgstr "Min. Libre"
+
+msgid "Min Free (GiB)"
+msgstr "Min. Libre (Go)"
+
+msgid ""
+"Move deleted files to trash instead of deleting them (This is a global "
+"setting that can be overided by local option on each Greyhole share)"
+msgstr "Déplace les fichiers supprimés dans une poubelle au lieu de les supprimer définitivement (remarque: ceci est un paramètre global qui peut être remplacé par une option locale à chaque partage Greyhole)"
+
+msgid "Number of Copies"
+msgstr "Copies"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Path"
+msgstr "Chemin"
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Pool disk"
+msgstr "Pool de disque"
+
+msgid "Pool management"
+msgstr "Gestion du pool"
+
+msgid ""
+"Read ALL files in your storage pool, and check that file copies are "
+"identical. This will identify any problem you might have with your file-"
+"systems. NOTE: this can take a LONG time to complete, since it will read "
+"everything from all your drives!"
+msgstr "Lis tous les fichiers dans votre pool de stockage, et vérifie que les copies de fichiers sont identiques. Cela permet d'identifier tout problème que vous pourriez avoir avec vos systèmes de fichiers. (remarque: cette action peut être relativement longue car elle va lire tous les fichiers de tous vos disques!)"
+
+msgid "Remove"
+msgstr "Supprimer"
+
+msgid "Removing share ..."
+msgstr "Supprime le partage ..."
+
+msgid "Replaced"
+msgstr "Remplacé"
+
+msgid "SMB Share"
+msgstr "Partage Samba"
+
+msgid "SMB Shares"
+msgstr "Partages Samba"
+
+msgid ""
+"Scan for files with no metadata in the storage pool drives. This will allow "
+"you to include existing files on a drive in your storage pool without having"
+" to copy them manually."
+msgstr "Recherche des fichiers avec aucune métadonnée dans le pool de stockage. Cela vous permet d'ajouter des fichiers existants sur un disque dans votre pool sans avoir à les copier manuellement."
+
+msgid "Select Number of Copies ..."
+msgstr "Sélectionnez le nombre de copies ..."
+
+msgid "Select a Path ..."
+msgstr "Sélectionnez le chemin ..."
+
+msgid "Select a Pool Disk..."
+msgstr "Sélectionnez un disque du pool..."
+
+msgid "Select a volume..."
+msgstr "Sélectionnez un volume ..."
+
+msgid "Select an SMB Share ..."
+msgstr "Sélectionnez un partage Samba ..."
+
+msgid ""
+"Send an email when fsck completes, to report on what was checked, and any "
+"error that was found."
+msgstr "Envois un mail quand la vérification est terminée, pour faire un rapport sur ce qui a été vérifié, et chaque erreur qui a été trouvé."
+
+msgid "Settings"
+msgstr "Paramètres"
+
+msgid "Space"
+msgstr "Espace"
+
+msgid ""
+"Speed up fsck by skipping the scan of the metadata store directories. "
+"Scanning the metadata stores is only required to re-create symbolic links "
+"that might be missing from your shared directories."
+msgstr "Accélère la vérification en omettant de l'analyse les répertoires de stockage des métadonnées. Scanner les métadonnées n'est seulement nécessaire que lors de la re-création des liens symboliques qui pourraient être absents de vos répertoires partagés."
+
+msgid "Starting disk pool management ..."
+msgstr "Démarre la gestion du pool ..."
+
+msgid "Sticky files"
+msgstr "Fichiers joints"
+
+msgid ""
+"Sticky files are files that will always 'live' together in the storage pool."
+" This will allow you to read (and read-only!) those files by using the "
+"storage pool drives themselves, instead of using the mounted shares."
+msgstr "Les fichiers joints sont des fichiers qui sont toujours stocké ensemble dans le pool de stockage. Cela vous permet de lire (et de lire seulement!) ces fichiers en utilisant directement le pool de stockage lui même, au lieu d'utiliser les partages Samba."
+
+msgid ""
+"Tell Greyhole that the missing drive at is gone for good. Greyhole will "
+"start replacing the missing file copies instantly."
+msgstr "Préviens Greyhole que le disque manquant est parti pour de bon. Greyhole va alors commencer à remplacer les copies de fichiers manquantes instantanément."
+
+msgid ""
+"Tell Greyhole that the missing drive will return soon, and that it shouldn't"
+" re-create additional file copies to replace it."
+msgstr "Préviens Greyhole que le disque manquant sera bientôt de retour, et qu'il ne doit pas re-créer de copies de fichiers supplémentaires pour les remplacer."
+
+msgid "Tell Greyhole that you replaced the drive."
+msgstr "Préviens Greyhole que le disque a été remplacé."
+
+msgid ""
+"Tell Greyhole that you want to remove a drive. Greyhole will then make sure "
+"you don't loose any files, and that the correct number of file copies are "
+"created to replace the missing drive."
+msgstr "Préviens Greyhole que vous souhaitez retirer un disque. Greyhole va alors s'assurer que vous ne perdiez pas de fichiers, et que le nombre exact de copies de fichiers soit créés pour remplacer celles du disque manquant."
+
+msgid ""
+"This is how much free space you want to reserve on each drive. This is a "
+"soft limit that will be ignored if the necessary hard drives are below their"
+" minimum."
+msgstr "Espace libre que vous souhaitez réserver sur chaque disque (remarque: il s'agit d'une limite logicielle qui sera ignorée si les disques durs nécessaires aux copies sont déjà en dessous de leur minimum)."
+
+msgid ""
+"This is the number of copies of each file you want Greyhole to keep per "
+"Share. This is not the number of duplicates! 2 copies = 1 duplicate."
+msgstr "Nombre de copies de chaque fichier par dossier partagé. Ceci n'est pas le nombre de duplicata! 2 copies = 1 duplicata."
+
+msgid "Trash"
+msgstr "Poubelle"
+
+msgid "Trash deletes"
+msgstr "Poubelle"
+
+msgid "Use Trash"
+msgstr "Poubelle"
+
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgid "Volume"
+msgstr "Volume"
+
+msgid "Wait for"
+msgstr "En attente"
+
+msgid "Warn"
+msgstr "Avertissement"
+
+msgid ""
+"Warning: Changing your database connection properties may result in stoping "
+"Greyhole. Stop Greyhole daemon before any change. Check that the values "
+"you're modifying are matching the one of your MySQL greyhole database before"
+" restarting Greyhole daemon."
+msgstr "Attention: La modification de vos paramètres de connexion à la base de données peut entraîner l'arrêt de Greyhole. Arrêtez le démon Greyhole avant toute modification. Vérifier que les valeurs que vous modifiez correspondent bien à celles de votre base de données 'greyhole' MySQL avant de redémarrer le démon Greyhole."
+
+msgid ""
+"When fsck find metadata files with no file copies, delete those metadata "
+"files. If the file copies re-appear later, you'll need to run fsck with "
+"--find-orphaned-files to have them reappear in your shares."
+msgstr "Lorsque la vérification trouve des fichiers de métadonnées sans aucune copie de fichier correspondante, elle supprime ces fichiers des métadonnées. Si les copies de fichiers réapparaissent plus tard, vous devrez d'exécuter la vérification avec l'option 'Trouver les fichiers orphelins' pour les voir réapparaître dans vos dossiers partagés."
+
+msgid ""
+"Will receive email reports for daily fsck, or when all drives are out of "
+"available space."
+msgstr "Cette adresse mail reçoit les rapports de vérifications quotidiens ou lorsque les disques durs n'ont plus de place disponible."
+
+msgid ""
+"You can specify per-share trash preferences that will override the global "
+"trash preference."
+msgstr "Vous pouvez définir vos préférences de suppression pour chaque dossier partagé. Elles prévaudront sur le paramètre global."
+
+msgid "n/a"
+msgstr "n/a"

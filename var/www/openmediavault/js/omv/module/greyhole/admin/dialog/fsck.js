@@ -70,8 +70,8 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.FSCKDialog, OMV.Window, {
 					name         :"path",
 					id           :"path",
 					hiddenName   :"path",
-					fieldLabel   :"Path",
-					emptyText    :"Select a Path ...",
+					fieldLabel   :_("Path"),
+					emptyText    :_("Select a Path ..."),
 					allowBlank   :false,
 					allowNone    :false,
 					editable     :false,
@@ -80,7 +80,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.FSCKDialog, OMV.Window, {
 					valueField   :"path",
 					store        :new OMV.data.Store({
 						remoteSort:false,
-						proxy: new OMV.data.DataProxy({"service": "Greyhole","method": "getFsckCandidates", "extraParams" : { "type":this.type }}),
+						proxy     :new OMV.data.DataProxy({"service":"Greyhole", "method":"getFsckCandidates", "extraParams":{ "type":this.type }}),
 						reader    :new Ext.data.JsonReader({
 							idProperty:"path",
 							fields    :[
@@ -94,51 +94,51 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.FSCKDialog, OMV.Window, {
 					xtype     :"checkbox",
 					name      :"email_report",
 					id        :"email_report",
-					fieldLabel:"Email report",
+					fieldLabel:_("Email report"),
 					checked   :false,
 					inputValue:1,
 					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"Send an email when fsck completes, to report on what was checked, and any error that was found."
+					infoText  :_("Send an email when fsck completes, to report on what was checked, and any error that was found.")
 				},
 				{
 					xtype     :"checkbox",
 					name      :"checksums",
 					id        :"checksums",
-					fieldLabel:"Checksums",
+					fieldLabel:_("Checksums"),
 					checked   :false,
 					inputValue:1,
 					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"Read ALL files in your storage pool, and check that file copies are identical. This will identify any problem you might have with your file-systems. NOTE: this can take a LONG time to complete, since it will read everything from all your drives!"
+					infoText  :_("Read ALL files in your storage pool, and check that file copies are identical. This will identify any problem you might have with your file-systems. NOTE: this can take a LONG time to complete, since it will read everything from all your drives!")
 				},
 				{
 					xtype     :"checkbox",
 					name      :"dont_walk_metadata_store",
 					id        :"dont_walk_metadata_store",
-					fieldLabel:"Don't walk metadata store",
+					fieldLabel:_("Don't walk metadata store"),
 					checked   :false,
 					inputValue:1,
 					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"Speed up fsck by skipping the scan of the metadata store directories. Scanning the metadata stores is only required to re-create symbolic links that might be missing from your shared directories."
+					infoText  :_("Speed up fsck by skipping the scan of the metadata store directories. Scanning the metadata stores is only required to re-create symbolic links that might be missing from your shared directories.")
 				},
 				{
 					xtype     :"checkbox",
 					name      :"find_orphaned_files",
 					id        :"find_orphaned_files",
-					fieldLabel:"Find orphaned files",
+					fieldLabel:_("Find orphaned files"),
 					checked   :false,
 					inputValue:1,
 					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"Scan for files with no metadata in the storage pool drives. This will allow you to include existing files on a drive in your storage pool without having to copy them manually."
+					infoText  :_("Scan for files with no metadata in the storage pool drives. This will allow you to include existing files on a drive in your storage pool without having to copy them manually.")
 				},
 				{
 					xtype     :"checkbox",
 					name      :"delete_orphaned_metadata",
 					id        :"delete_orphaned_metadata",
-					fieldLabel:"Delete orphaned metadata",
+					fieldLabel:_("Delete orphaned metadata"),
 					checked   :false,
 					inputValue:1,
 					plugins   :[ OMV.form.plugins.FieldInfo ],
-					infoText  :"When fsck find metadata files with no file copies, delete those metadata files. If the file copies re-appear later, you'll need to run fsck with --find-orphaned-files to have them reappear in your shares."
+					infoText  :_("When fsck find metadata files with no file copies, delete those metadata files. If the file copies re-appear later, you'll need to run fsck with --find-orphaned-files to have them reappear in your shares.")
 				}
 			]
 		});

@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2011 Stephane Bocquet
  * @copyright Copyright (c) 2011 Marcel Beck
  * @version $Id: greyhole.js 12 2011-11-07 18:52:10Z
- *					stephane_bocquet@hotmail.com $
+ *          stephane_bocquet@hotmail.com $
  *
  * This file is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -112,7 +112,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 		this.store = new OMV.data.Store({
 			autoLoad  :true,
 			remoteSort:false,
-			proxy: new OMV.data.DataProxy({"service": "Greyhole","method": "getPoolList"}),
+			proxy     :new OMV.data.DataProxy({"service":"Greyhole", "method":"getPoolList"}),
 			reader    :new Ext.data.JsonReader({
 				idProperty   :"uuid",
 				totalProperty:"total",
@@ -257,10 +257,10 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 	},
 	dopoolmngt      :function (path, diskmngt) {
 		OMV.Ajax.request(this.cbpoolmngtLHdl, this, "Greyhole", "poolMngt",
-			{
-				path    :String(path),
-				diskmngt:String(diskmngt)
-			}
+						{
+							path    :String(path),
+							diskmngt:String(diskmngt)
+						}
 		);
 	},
 	cbpoolmngtLHdl  :function (id, response, error) {
@@ -301,20 +301,20 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 				},
 				scope  :this
 			},
-			type   :"pool"
+			type     :"pool"
 		});
 		wnd.show();
 	},
 	dofsck      :function (path, email_report, dont_walk_metadata_store, find_orphaned_files, checksums, delete_rphaned_metadata) {
 		OMV.Ajax.request(this.cbfsckLHdl, this, "Greyhole", "fsck",
-			{
-				path                    :String(path),
-				email_report            :Boolean(email_report),
-				checksums               :Boolean(checksums),
-				dont_walk_metadata_store:Boolean(dont_walk_metadata_store),
-				find_orphaned_files     :Boolean(find_orphaned_files),
-				delete_orphaned_metadata:Boolean(delete_rphaned_metadata)
-			}
+						{
+							path                    :String(path),
+							email_report            :Boolean(email_report),
+							checksums               :Boolean(checksums),
+							dont_walk_metadata_store:Boolean(dont_walk_metadata_store),
+							find_orphaned_files     :Boolean(find_orphaned_files),
+							delete_orphaned_metadata:Boolean(delete_rphaned_metadata)
+						}
 		);
 	},
 	cbfsckLHdl  :function (id, response, error) {
@@ -369,10 +369,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 			return;
 		OMV.MessageBox.show({
 			title  :_("Delete Pool Disk"),
-			msg    :_("Do you want to remove the content of the pool disk directory " +
-							"recursively? Note, the data will be permanently " +
-							"deleted then. Select 'No' to delete the pool disk directory only " +
-							"or 'Cancel' to abort."),
+			msg    :_("Do you want to remove the content of the pool disk directory recursively? Note, the data will be permanently deleted then. Select 'No' to delete the pool disk directory only or 'Cancel' to abort."),
 			buttons:Ext.Msg.YESNOCANCEL,
 			fn     :function (answer) {
 				this.deleteRecursive = false;
@@ -380,8 +377,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 					case "yes":
 						OMV.MessageBox.show({
 							title  :_("Confirmation"),
-							msg    :_("Do you really want to remove the pool disk " +
-											"directory content?"),
+							msg    :_("Do you really want to remove the pool disk directory content?"),
 							buttons:OMV.Msg.YESCANCEL,
 							fn     :function (answer) {
 								if (answer === "yes") {
@@ -448,5 +444,5 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 OMV.NavigationPanelMgr.registerPanel("storage", "greyhole", {
 	cls     :OMV.Module.Storage.Greyhole.Admin.PoolsPanel,
 	position:20,
-	title   :"Pool"
+	title   :_("Pool")
 });
