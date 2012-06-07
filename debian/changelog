@@ -1,3 +1,14 @@
+openmediavault-greyhole (0.3.2) unstable; urgency=high
+
+	* Github Issue Fix #33 - [SMB Shares] Remove button isn't greyed when no line is selected
+	* Github Issue Fix #32 - [Translation] Settings tab not translated
+  * Github Issue Fix #31 - [Pool] Pool management error when using Replace option
+  * Github Issue Fix #4 - Remove Samba Shares to the Greyhole Storage
+  * Add script to mount samba shares locally for local use of greyhole
+  * Update locale
+
+ -- Marcel Beck <marcel.beck@mbeck.org>  Thu, 07 Jun 2012 19:47:48 +0200
+
 openmediavault-greyhole (0.3.1) unstable; urgency=high
 
   * Various Fixes
