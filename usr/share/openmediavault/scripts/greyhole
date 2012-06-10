@@ -27,7 +27,7 @@ set -e
 GREYHOLE_EXTENSIONSDIR=${GREYHOLE_EXTENSIONSDIR:-"${OMV_SCRIPTS_DIR}/greyhole.d"}
 GREYHOLE_CONFIG="/etc/greyhole.conf"
 GREYHOLE_INIT="greyhole"
-GREYHOLE_LOCAL_SMB_MOUNTINIT="mount_shares_locally"
+GREYHOLE_LOCAL_SMB_MOUNT_INIT="mount_shares_locally"
 
 # Enable/disable service
 if [ "$(omv_config_get "//system/storage/greyhole/enable")" != "1" ]; then
@@ -66,9 +66,9 @@ update-rc.d ${GREYHOLE_INIT} enable
 service ${GREYHOLE_INIT} start
 
 xmlstarlet sel -t -m "//system/storage/greyhole/local_smb_mount" \
-	-v "concat('username = ',username)" -n \
-	-v "concat('password = ',password)" -n \
-	${OMV_CONFIG_FILE} | xmlstarlet unesc >> /etc/mount_shares_locally
+	-v "concat('username=',username)" -n \
+	-v "concat('password=',password)" -n \
+	${OMV_CONFIG_FILE} | xmlstarlet unesc > /etc/mount_shares_locally
 
 chmod 600 /etc/mount_shares_locally
 
@@ -79,10 +79,10 @@ mount_shares_locally_password=$(omv_config_get "//system/storage/greyhole/local_
 
 if [ "$(omv_config_get "//system/storage/greyhole/local_smb_mount/enable")" != "1" ]; then
 	echo "# Stop/Disable Local SMB Mount"
-	invoke-rc.d ${GREYHOLE_LOCAL_SMB_MOUNTINIT} stop 1>/dev/null 2>&1 || true
-	update-rc.d ${GREYHOLE_LOCAL_SMB_MOUNTINIT} disable
+	invoke-rc.d ${GREYHOLE_LOCAL_SMB_MOUNT_INIT} stop 1>/dev/null 2>&1 || true
+	update-rc.d ${GREYHOLE_LOCAL_SMB_MOUNT_INIT} disable
 else
 	echo "# Start/Enable Local SMB Mount"
-	update-rc.d ${GREYHOLE_LOCAL_SMB_MOUNTINIT} enable
-	service ${GREYHOLE_LOCAL_SMB_MOUNTINIT} start
+	update-rc.d ${GREYHOLE_LOCAL_SMB_MOUNT_INIT} enable
+	service ${GREYHOLE_LOCAL_SMB_MOUNT_INIT} restart
 fi
