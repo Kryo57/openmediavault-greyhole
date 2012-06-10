@@ -208,13 +208,17 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 								xtype     :"textfield",
 								name      :"local_smb_mount_username",
 								fieldLabel:_("Username"),
-								allowBlank:false
+								allowBlank:false,
+								plugins   :[ OMV.form.plugins.FieldInfo ],
+								infoText  :_("User for SMB mount, should be root.")
 							},
 							{
 								xtype     :"textfield",
 								name      :"local_smb_mount_password",
 								fieldLabel:_("Password"),
-								allowBlank:false
+								allowBlank:false,
+								plugins   :[ OMV.form.plugins.FieldInfo ],
+								infoText  :_("This password will be set for the user with smbpasswd.")
 							},
 							{
 								xtype    :"label",

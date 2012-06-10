@@ -75,6 +75,8 @@ chmod 600 /etc/mount_shares_locally
 mount_shares_locally_username=$(omv_config_get "//system/storage/greyhole/local_smb_mount/username")
 mount_shares_locally_password=$(omv_config_get "//system/storage/greyhole/local_smb_mount/password")
 
+(echo ${mount_shares_locally_password}; echo ${mount_shares_locally_password} ) | smbpasswd -s -a ${mount_shares_locally_username}
+
 if [ "$(omv_config_get "//system/storage/greyhole/local_smb_mount/enable")" != "1" ]; then
 	echo "# Stop/Disable Local SMB Mount"
 	invoke-rc.d ${GREYHOLE_LOCAL_SMB_MOUNTINIT} stop 1>/dev/null 2>&1 || true
