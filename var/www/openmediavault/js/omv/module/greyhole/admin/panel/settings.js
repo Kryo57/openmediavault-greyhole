@@ -215,6 +215,11 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 								name      :"local_smb_mount_password",
 								fieldLabel:_("Password"),
 								allowBlank:false
+							},
+							{
+								xtype    :"label",
+								hideLabel:true,
+								text     :_('Can Lead to Unexpected Behavior! The SMB Shares will be mounted locally, you can use them as shared folder.')
 							}
 						]
 					}
