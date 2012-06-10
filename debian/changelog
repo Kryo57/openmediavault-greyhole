@@ -1,3 +1,9 @@
+openmediavault-greyhole (0.3.3) unstable; urgency=high
+
+  * Github Issue Fix #34 - [Mount shares locally] Add cifs-utils package + Tuning
+
+ -- Marcel Beck <marcel.beck@mbeck.org>  Sun, 10 Jun 2012 18:09:35 +0200
+
 openmediavault-greyhole (0.3.2) unstable; urgency=high
 
   * Github Issue Fix #33 - [SMB Shares] Remove button isn't greyed when no line is selected

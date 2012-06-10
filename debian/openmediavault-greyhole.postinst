@@ -154,8 +154,31 @@ EOF
 		omv_config_add_element "//system/storage/greyhole" "extraoptions" "" true
 	fi
 
+	if ! omv_config_exists "//system/storage/greyhole/local_smb_mount"; then
+		echo "Adding extra options"
+		omv_config_add_element "//system/storage/greyhole" "local_smb_mount" "" true
+	fi
+
+	if ! omv_config_exists "//system/storage/greyhole/local_smb_mount/enable"; then
+		echo "Adding extra options"
+		omv_config_add_element "//system/storage/greyhole/local_smb_mount" "enable" "false" true
+	fi
+
+	if ! omv_config_exists "//system/storage/greyhole/local_smb_mount/username"; then
+		echo "Adding extra options"
+		omv_config_add_element "//system/storage/greyhole/local_smb_mount" "username" "" true
+	fi
+
+	if ! omv_config_exists "//system/storage/greyhole/local_smb_mount/password"; then
+		echo "Adding extra options"
+		omv_config_add_element "//system/storage/greyhole/local_smb_mount" "password" "" true
+	fi
+
 	echo "Creating Config Files"
 	omv-mkconf greyhole 1>/dev/null 2>&1
+
+	update-rc.d mount_shares_locally defaults
+	chkconfig --add mount_shares_locally
 
 	;;
 

@@ -1,0 +1,99 @@
+#!/bin/sh
+#
+### BEGIN INIT INFO
+# Provides:          mount_shares_locally
+# Required-Start:    $network $local_fs $remote_fs samba
+# Required-Stop:     $network $local_fs $remote_fs samba
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: mount Samba shares locally
+### END INIT INFO
+
+# Always mount as root?
+username="root"
+
+if [ -f /lib/lsb/init-functions ]; then
+        . /lib/lsb/init-functions
+fi
+
+LOCKFILE=/var/lock/mount_shares_locally
+
+lock_mount_shares_locally() {
+	if [ -x /usr/bin/lockfile-create ]; then
+			lockfile-create $LOCKFILE
+			lockfile-touch $LOCKFILE &
+	fi
+}
+
+unlock_mount_shares_locally() {
+	if [ -x /usr/bin/lockfile-create ] ; then
+		lockfile-remove $LOCKFILE
+	fi
+}
+
+start () {
+        uid=`id -u $username`
+        gid=`id -g $username`
+
+        log_daemon_msg "Mounting Samba shares locally..."
+
+        if [ ! -f /mount_shares_locally_loop ]; then
+			dd if=/dev/zero of=/mount_shares_locally_loop bs=1MiB count=42
+			loop_device=`losetup -f`
+			losetup ${loop_device} /mount_shares_locally_loop
+			mkfs.ext4 ${loop_device}
+			e2label ${loop_device} "Local_SMB_Shares"
+			blkid_uuid=`blkid -o value -s UUID ${loop_device}`
+        else
+			loop_device=`losetup -f`
+			losetup ${loop_device} /mount_shares_locally_loop
+			blkid_uuid=`blkid -o value -s UUID ${loop_device}`
+        fi
+		
+		echo -n ${blkid_uuid} > /tmp/mount_shares_locally_blkid_uuid
+		echo -n ${loop_device} > /tmp/mount_shares_locally_loop
+
+        omv-rpc "FileSystemMgmt" "mount" "{\"id\":\"${blkid_uuid}\"}"
+
+        cd /media/${blkid_uuid}
+        lock_mount_shares_locally
+        grep "^\[" /etc/samba/smb.conf | grep -v "\[global\]" | grep -v "\[homes\]" | awk -F'[' '{print $2}' | awk -F']' '{print $1}' | xargs -d "\n" mkdir -p
+        sleep 5
+        ls -1 | while read d; do
+			if [ "`mount | grep "//127.0.0.1/$d/* on " | wc -l`" = "0" ]; then
+					/sbin/mount.cifs "//127.0.0.1/$d" "$d" -o credentials=/etc/mount_shares_locally,uid=${uid},gid=${gid},file_mode=0660,dir_mode=0770,nobrl,hard,_netdev,iocharset=utf8,noserverino,mfsymlinks
+			else
+					echo "  Share [$d] is already mounted."
+			fi
+        done
+        unlock_mount_shares_locally
+        log_end_msg
+        return 0
+}
+
+stop () {
+        log_daemon_msg "Unmounting locally mounted Samba shares..."
+		blkid_uuid=`head -1 /tmp/mount_shares_locally_blkid_uuid`
+		loop_device=`head -1 /tmp/mount_shares_locally_loop`
+        /bin/umount -l /media/${blkid_uuid}/*
+		omv-rpc "FileSystemMgmt" "umount" "{\"id\":\"${blkid_uuid}\"}"
+		losetup -d ${loop_device}
+        log_end_msg
+        return 0
+}
+
+case "$1" in
+        start) 
+                start
+                ;;
+        stop)  
+                stop
+                ;;
+        restart)
+                $0 stop && sleep 2 && $0 start
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart}"
+                exit 2
+                ;;
+esac
