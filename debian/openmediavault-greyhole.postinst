@@ -178,7 +178,6 @@ EOF
 	omv-mkconf greyhole 1>/dev/null 2>&1
 
 	update-rc.d mount_shares_locally defaults
-	chkconfig --add mount_shares_locally
 
 	;;
 
