@@ -1,6 +1,7 @@
 openmediavault-greyhole (0.3.3) unstable; urgency=high
 
   * Github Issue Fix #34 - [Mount shares locally] Add cifs-utils package + Tuning
+  * Github Issue FIx #35 - [Mount shares locally] Password field isn't hidden
 
  -- Marcel Beck <marcel.beck@mbeck.org>  Sun, 10 Jun 2012 18:09:35 +0200
 
