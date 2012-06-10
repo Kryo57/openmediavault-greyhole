@@ -52,6 +52,7 @@ class GreyholeRpc extends OMVRpc {
 						"db_user":{"type":"string"},
 						"db_pass":{"type":"string"},
 						"db_name":{"type":"string"},
+						"local_smb_mount_enable":{"type":"boolean"},
 						"local_smb_mount_username":{"type":"string"},
 						"local_smb_mount_password":{"type":"string"}
 					}

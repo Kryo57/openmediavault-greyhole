@@ -199,7 +199,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 						items   :[
 							{
 								xtype     :"checkbox",
-								name      :"local_smb_mount_password_enable",
+								name      :"local_smb_mount_enable",
 								fieldLabel:_("Enable"),
 								checked   :false,
 								inputValue:1
