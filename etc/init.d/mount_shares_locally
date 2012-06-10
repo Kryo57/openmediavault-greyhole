@@ -57,7 +57,7 @@ start () {
 
 	cd /media/${blkid_uuid}
 	lock_mount_shares_locally
-	grep "^\[" /etc/samba/smb.conf | grep -v "\[global\]" | grep -v "\[homes\]" | awk -F'[' '{print $2}' | awk -F']' '{print $1}' | xargs -d "\n" mkdir -p
+	grep "^\[" /etc/samba/smb.conf | grep -v "\[global\]" | grep -v "\[homes\]" | awk -F'[' '{print $2}' | awk -F']' '{print $1}' | sort | uniq | xargs -d "\n" mkdir -p
 	sleep 5
 	ls -1 | while read d; do
 		if [ "`mount | grep "//127.0.0.1/$d/* on " | wc -l`" = "0" ]; then
