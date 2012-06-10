@@ -402,7 +402,7 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.PoolsPanel, OMV.grid.TBarGridPanel,
 	},
 
 	doDeletion:function (record) {
-		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "deletePoolDisk", [ record.get("uuid"), this.deleteRecursive ]);
+		OMV.Ajax.request(this.cbDeletionHdl, this, "Greyhole", "deletePoolDisk", { 'uuid': record.get("uuid"), 'recursive': this.deleteRecursive });
 	},
 
 	afterDeletion:function () {
