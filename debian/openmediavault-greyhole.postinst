@@ -47,18 +47,6 @@ case "$1" in
 		update-rc.d greyhole disable &>/dev/null
 	fi
 
-	########################################################################
-	# Update file permissions.
-	########################################################################
-	echo "Updating permissions"
-	omv_install_fixperms
-
-	########################################################################
-	# Install locale files.
-	########################################################################
-	echo "Install locale files ..."
-	omv_install_locale
-
 	# Check for XML config
 	if ! omv_config_exists "//system/storage/greyhole"; then
 		echo "Creating Initial Configuration"
