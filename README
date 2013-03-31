@@ -1,12 +1,12 @@
 These are the release notes for  openmediavault-greyhole
 
-openmediavault-greyhole is a plug-in for OpenMediaVault providing the functionality in Greyhole (ref. http://www.greyhole.net/). The software licensed under GPL 3+ with copyright ditributed among authors. See COPYING for details.
+openmediavault-greyhole is a plug-in for OpenMediaVault providing the functionality in Greyhole (ref. http://www.greyhole.net/). The software is licensed under GPL 3+ with copyright ditributed among authors. See COPYING for details.
 
 DOCUMENTATION
 Please refer to the web-site http://www.openmediavault.org/ for pointers to documentation.
 
 INSTALLING OPENMEDIAVAULT-GREYHOLE
-If you want the latest stable openmediavault-greyhole plug-in, simply use the binary distribution. You will find Debian packages here: http://packages.omv-plugins.org/ providing a list of available plugins in the OpenMediaVault web-interface. However, if you want to test, install or develop the plugin, you should consider downloading and compiling from source.
+If you want the latest stable openmediavault-greyhole plug-in, simply use the binary distribution. You will find Debian packages here: http://packages.omv-plugins.org/ providing a list of available plug-ins in the OpenMediaVault web-interface. However, if you want to test, install or develop the plugin, you should consider downloading and compiling from source.
 
 DOWNLOADING AND BUILDING OPENMEDIAVAULT-GREYHOLE
 For Debian based systems (such as OpenMediaVault itself), install dependencies with:
