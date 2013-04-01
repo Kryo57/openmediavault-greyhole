@@ -51,7 +51,10 @@ class GreyholeRpc extends OMVRpc {
 						"db_host":{"type":"string"},
 						"db_user":{"type":"string"},
 						"db_pass":{"type":"string"},
-						"db_name":{"type":"string"}
+						"db_name":{"type":"string"},
+						"local_smb_mount_enable":{"type":"boolean"},
+						"local_smb_mount_username":{"type":"string"},
+						"local_smb_mount_password":{"type":"string"}
 					}
 				}'
 			),
@@ -199,6 +202,10 @@ class GreyholeRpc extends OMVRpc {
 		$object['db_pass'] = $object['db']['db_pass'];
 		$object['db_name'] = $object['db']['db_name'];
 
+		$object['local_smb_mount_enable']   = $object['local_smb_mount']['enable'];
+		$object['local_smb_mount_username'] = $object['local_smb_mount']['username'];
+		$object['local_smb_mount_password'] = $object['local_smb_mount']['password'];
+
 		return $object;
 	}
 
@@ -262,6 +269,11 @@ class GreyholeRpc extends OMVRpc {
 				'db_user'   => $data['db_user'],
 				'db_pass'   => $data['db_pass'],
 				'db_name'   => $data['db_name'],
+			),
+			"local_smb_mount"        => array(
+				'enable'   => array_boolval($data, 'local_smb_mount_enable'),
+				'username' => $data['local_smb_mount_username'],
+				'password' => $data['local_smb_mount_password'],
 			),
 		);
 
@@ -345,13 +357,16 @@ class GreyholeRpc extends OMVRpc {
 				$objectv['path'] = $fstab_object['dir'] . '/.greyhole';
 			}
 
-			if (($greyhole_stats !== null) and isset($greyhole_stats->$objectv['path']))
+			if (isset($objectv['path']))
 			{
-				$objectv['total_space']               = $greyhole_stats->$objectv['path']->total_space;
-				$objectv['used_space']                = $greyhole_stats->$objectv['path']->used_space;
-				$objectv['free_space']                = $greyhole_stats->$objectv['path']->free_space;
-				$objectv['trash_size']                = $greyhole_stats->$objectv['path']->trash_size;
-				$objectv['potential_available_space'] = $greyhole_stats->$objectv['path']->potential_available_space;
+				if (($greyhole_stats !== null) and isset($greyhole_stats->$objectv['path']))
+				{
+					$objectv['total_space']               = $greyhole_stats->$objectv['path']->total_space;
+					$objectv['used_space']                = $greyhole_stats->$objectv['path']->used_space;
+					$objectv['free_space']                = $greyhole_stats->$objectv['path']->free_space;
+					$objectv['trash_size']                = $greyhole_stats->$objectv['path']->trash_size;
+					$objectv['potential_available_space'] = $greyhole_stats->$objectv['path']->potential_available_space;
+				}
 			}
 		}
 		// Filter result
@@ -759,11 +774,11 @@ class GreyholeRpc extends OMVRpc {
 		// Prepare configuration data. Use the name of the shared folder
 		// as the relative directory name of the share.
 		$object = array(
-			"uuid"            => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
-			"smbref"          => $data['smbref'],
-			"num_copies"      => intval($data['num_copies']),
-			"sticky_files"    => array_boolval($data, 'sticky_files'),
-			"trash"           => array_boolval($data, 'trash'),
+			"uuid"         => ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMVUtil::uuid() : $data['uuid'],
+			"smbref"       => $data['smbref'],
+			"num_copies"   => intval($data['num_copies']),
+			"sticky_files" => array_boolval($data, 'sticky_files'),
+			"trash"        => array_boolval($data, 'trash'),
 		);
 		// Set configuration data
 		$mode = ($data['uuid'] == $GLOBALS['OMV_UUID_UNDEFINED']) ? OMV_NOTIFY_CREATE : OMV_NOTIFY_MODIFY;

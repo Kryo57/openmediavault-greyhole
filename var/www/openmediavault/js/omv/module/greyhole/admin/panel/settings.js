@@ -189,6 +189,43 @@ Ext.extend(OMV.Module.Storage.Greyhole.Admin.SettingsPanel, OMV.FormPanelExt, {
 								text     :_("Warning: Changing your database connection properties may result in stoping Greyhole. Stop Greyhole daemon before any change. Check that the values you're modifying are matching the one of your MySQL greyhole database before restarting Greyhole daemon.")
 							}
 						]
+					},
+					{
+						xtype   :"fieldset",
+						title   :_("Local SMB Mount"),
+						defaults:{
+							labelSeparator:""
+						},
+						items   :[
+							{
+								xtype     :"checkbox",
+								name      :"local_smb_mount_enable",
+								fieldLabel:_("Enable"),
+								checked   :false,
+								inputValue:1
+							},
+							{
+								xtype     :"textfield",
+								name      :"local_smb_mount_username",
+								fieldLabel:_("Username"),
+								allowBlank:false,
+								plugins   :[ OMV.form.plugins.FieldInfo ],
+								infoText  :_("User for SMB mount, should be root.")
+							},
+							{
+								xtype     :"passwordfield",
+								name      :"local_smb_mount_password",
+								fieldLabel:_("Password"),
+								allowBlank:false,
+								plugins   :[ OMV.form.plugins.FieldInfo ],
+								infoText  :_("This password will be set for the user with smbpasswd.")
+							},
+							{
+								xtype    :"label",
+								hideLabel:true,
+								text     :_('Can Lead to Unexpected Behavior! The SMB Shares will be mounted locally, you can use them as shared folder.')
+							}
+						]
 					}
 				]
 			}
